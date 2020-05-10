@@ -1,0 +1,331 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 	
+\usepackage{fancyheadings}
+\usepackage[margin=3cm]{geometry}
+
+\title{CSC165H1 Problem Set 2}
+\author{Martin Chak, Tony Yang, Jack Liu}
+\date{February 10th, 2019}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+\begin{enumerate}
+%1A
+\item[a)] $Answer: \forall n \in\mathbb{Z}^+, DifferenceOfSquares(n) \Rightarrow (\exists k \in\mathbb{Z}, n = 2k -1) \lor (\exists m \in\mathbb{Z}, n = 4m)$\\
+
+%1B
+\item[b)] 
+$\forall n \in\mathbb{Z}^+, DifferenceOfSquares(n) \Rightarrow (\exists k \in\mathbb{Z}, n = 2k -1) \lor (\exists m \in\mathbb{Z}, n = 4m)$\\\\
+\textbf{Proof}:\\
+Let $n \in \mathbb{Z^+}$\\
+Assume $n$ is a difference of squares, i.e., there exist $p, q \in \mathbb{Z^+}$, such that $n = p^2 - q^2$\\
+We want to prove that: 
+\[(\exists k \in\mathbb{Z}, n = 2k -1) \lor (\exists m \in\mathbb{Z}, n = 4m)\]
+Since $p \in \mathbb{Z^+}$, $p$ is also $\in \mathbb{Z}$. By the quotient remainder theorem, we know when $p$ is divided by 2, the remainder is either 0 or 1\\\
+Since $q \in \mathbb{Z^+}$, $q$ is also $\in \mathbb{Z}$. By the quotient remainder theorem, we know when $q$ is divided by 2, the remainder is either 0 or 1\\\\
+Hence, we will divide our proof into 4 different cases depending on the remainder of $p$ and $q$ when they are divided by 2. Since we are proving an OR statement, we can choose which part of the OR statement we want to prove for each case.\\\\
+%CASE1
+\underline{\textbf{CASE 1:}} \\
+Assume the remainder when $p$ divided by 2 is 0, i.e., $\exists r_1 \in \mathbb{Z}$, $p = 2r_1$\\
+Assume the remainder when $q$ divided by 2 is 0, i.e., $\exists r_2 \in \mathbb{Z}$, $q = 2r_2$\\
+We will prove that 
+\[\exists m \in\mathbb{Z}, n = 4m\]
+Let $m$ = ${r_1}^2 - {r_2}^2$, since $r_1, r_2 \in \mathbb{Z}$, we conclude ${r_1}^2-{r_2}^2 \in \mathbb{Z}$
+\begin{align*}
+    4m &= 4({r_1}^2 - {r_2}^2)\\
+    4m &= 4{r_1}^2 - 4{r_2}^2\\
+    4m &= (2r_1)^2 - (2r_2)^2\\
+    4m &= p^2 - q^2 \\
+    4m &= n \tag{By assumption, $n = p^2 - q^2$}
+\end{align*}\\\\\\\\
+%CASE2
+\underline{\textbf{CASE 2:}} \\
+Assume the remainder when $p$ divided by 2 is 1, i.e., $\exists r_1 \in \mathbb{Z}$, $p = 2r_1 + 1$\\
+Assume the remainder when $q$ divided by 2 is 1, i.e., $\exists r_2 \in \mathbb{Z}$, $q = 2r_2 + 1$\\
+We will prove that 
+\[\exists m \in\mathbb{Z}, n = 4m\]
+Let $m$ = ${r_1}^2 + r_1 - {r_2}^2 - r_2$, since $r_1, r_2 \in \mathbb{Z}$, we conclude ${r_1}^2 + r_1 - {r_2}^2 - r_2 \in \mathbb{Z}$
+\begin{align*}
+    4m &= 4({r_1}^2 + r_1 - {r_2}^2 - r_2)\\
+    4m &= 4{r_1}^2 + 4r_1 - 4{r_2}^2 - 4r_2\\
+    4m &= 4{r_1}^2 + 4r_1 + 1 - 4{r_2}^2 - 4r_2 - 1\\
+    4m &= (2r_1 + 1)^2 - (2r_2 + 1)^2 \\
+    4m &= p^2 - q^2 \\
+    4m &= n \tag{By assumption, $n = p^2 - q^2$}
+\end{align*}\\
+%% should we add more tag
+%CASE3
+\underline{\textbf{CASE 3:}} \\
+Assume the remainder when $p$ divided by 2 is 0, i.e., $\exists r_1 \in \mathbb{Z}$, $p = 2r_1$\\
+Assume the remainder when $q$ divided by 2 is 1, i.e., $\exists r_2 \in \mathbb{Z}$, $q = 2r_2 + 1$\\
+We will prove that 
+\[\exists k \in\mathbb{Z}, n = 2k -1\]
+Let $k$ = $2{r_1}^2 - 2{r_2}^2 - 2r_2$, since $r_1, r_2 \in \mathbb{Z}$, we conclude $2{r_1}^2 - 2{r_2}^2 - 2r_2 \in \mathbb{Z}$
+\begin{align*}
+    2k &= 2({r_1}^2 - 2{r_2}^2 - 2r_2)\\
+    2k &= 4{r_1}^2 - 4{r_2}^2 - 4r_2\\
+    2k - 1 &= 4{r_1}^2 - 4{r_2}^2 - 4r_2 - 1\\
+    2k - 1 &= (2r_1)^2 - (2r_2 + 1)^2 \\
+    2k - 1 &= p^2 - q^2 \\
+    2k - 1 &= n \tag{By assumption, $n = p^2 - q^2$}
+\end{align*}\\
+%CASE4
+\underline{\textbf{CASE 4:}} \\
+Assume the remainder when $p$ divided by 2 is 1, i.e., $\exists r_1 \in \mathbb{Z}$, $p = 2r_1 + 1$\\
+Assume the remainder when $q$ divided by 2 is 0, i.e., $\exists r_2 \in \mathbb{Z}$, $q = 2r_2$\\
+We will prove that 
+\[\exists k \in\mathbb{Z}, n = 2k -1\]
+Let $k$ = $2{r_1}^2 + 2r_1 - 2{r_2}^2 + 1$, since $r_1, r_2 \in \mathbb{Z}$, we conclude $2{r_1}^2 + 2r_1 - 2{r_2}^2 + 1 \in \mathbb{Z}$
+\begin{align*}
+    2k - 1 &= 2(2{r_1}^2 + 2r_1 - 2{r_2}^2 + 1) - 1\\
+    2k - 1 &= 4{r_1}^2 + 4r_1 - 4{r_2}^2 + 1 \\
+    2k - 1 &= (4{r_1}^2 + 4r_1 + 1) - (4{r_2}^2) \\
+    2k - 1 &= (2r_1 + 1)^2 - (2r_2)^2 \\
+    2k - 1 &= p^2 - q^2 \\
+    2k - 1 &= n \tag{By assumption, $n = p^2 - q^2$}
+\end{align*}
+as required \hfill \Box\\\\\\\\
+\end{enumerate}
+\begin{enumerate}
+    \item[c)] Original Statement:
+    \[\forall x, y \in \mathbb{Z^+}, DifferenceOfSquares(x) \land DifferenceOfSquares(y) \Rightarrow DifferenceOfSquares(x+y)\]\\
+    We want to DISPROVE this statement by proving its negation TRUE. Its negation is:
+    \[\exists x, y \in \mathbb{Z^+}, DifferenceOfSquares(x) \land DifferenceOfSquares(y) \land \neg DifferenceOfSquares(x+y)\]
+    \underline{\textbf{PROOF:}}\\
+    Let $x = 3$, Let $y = 15$, so $x, y \in \mathbb{Z^+}$\\\\
+    \underline{\textbf{\emph{Part1:}}}\\ we want to prove $DifferenceOfSquares(x)$, i.e., $\exists p_1, q_1 \in \mathbb{Z^+}, x = {p_1}^{2} - {q_1}^{2}$ \\\\
+    Let $p_1 = 2$, Let $q_1 = 1$, so $p_1, q_1 \in \mathbb{Z^+}$\\
+    \[{p_1}^2 - {q_1}^2 = (2)^2 - (1)^2 = 4 - 1 = 3 = x\]
+    \underline{\textbf{\emph{Part2:}}}\\ we want to prove $DifferenceOfSquares(y)$, i.e., $\exists p_2, q_2 \in \mathbb{Z^+}, y = {p_2}^2 - {q_2}^2$ \\\\
+    Let $p_2 = 4$, Let $q_2 = 1$, so $p_2, q_2 \in \mathbb{Z^+}$
+    \[{p_2}^2 - {q_2}^2 = (4)^2 - (1)^2 = 16 - 1 = 15 = y\]
+     \underline{\textbf{\emph{Part3:}}}\\ we want to prove $\neg DifferenceOfSquares(x+y)$\\\\
+     From the contrapositive of part(a), we know:
+     \[\forall n \in \mathbb{Z^+}, (\forall k \in \mathbb{Z}, n \neq 2k + 1) \land (\forall m \in \mathbb{Z}, n \neq 4m) \Rightarrow \neg DifferenceOfSquares(n)\]
+     since $x + y = 3 + 15 = 18$, $x + y \in \mathbb{Z^+}$\\
+     since 18 is not an odd number, hence $\forall k \in \mathbb{Z}, x + y \neq 2k + 1$\\
+     since 18 is not divisble by 4, hence $\forall m \in \mathbb{Z}, x + y \neq 4m$\\\\
+     Since $x + y$ satisfies all of the hypotheses of the contrapositive of part(a), we conclude that $\neg DifferenceOfSquares(x+y)$\\\\
+     As required \hfill \square
+    
+\end{enumerate}
+
+\newpage
+
+\section*{Question 2}
+
+\begin{enumerate}
+\item[2.a)] \\
+\textbf{WTS} $\forall a,m,n \in\mathbb{Z},\forall e \in\mathbb{Z}^+, e = gcd(m, n) \Rightarrow e = gcd(n,m-an)$ \\
+- Let $a$, $m$, and $n$ be arbitrary integers and let $e$ be an arbitrary positive integer\\
+- Assuming $e = gcd(m, n)$, we can expand this statement to the following:\\
+\begin{center}
+\textbf{Assumption:} $(e|m)\land(e|n)\land(\forall k_1 \in\mathbb{N}, (k_1|m)\land(k_1|n)\Rightarrow k_1 \leq e)$\\
+\end{center}
+- Now we want to show the following: 
+\begin{center}
+$(e|n)\land(e|m-an)\land(\forall k_2 \in\mathbb{N}, (k_2|n)\land(k_2|m-an)\Rightarrow k_2 \leq e)$\\
+\end{center}
+- By assumption, $(e|n)$, so we will now prove the next two parts of the statement\\
+
+\underline{Part 1: Prove $(e|m-an)$}\\
+- By fact (2); $\forall s,t,d\in\mathbb{Z},(d|s)\land (d|t) \Rightarrow (\forall p,q\in\mathbb{Z}, (d|(ps+qt)))$\\
+- If we take $s$ = $m$, $t$ = $n$, and $d$ = $e$ then we know that for any $p$ and $q$ that $(e|pm+qn)$\\
+- We can then take $p$ = 1 and $q$ = $-a$ and then we know $(e|m-an)$\\
+
+\underline{Part 2: Prove $(\forall k_2 \in\mathbb{N}, (k_2|n)\land(k_2|m-an)\Rightarrow k_2 \leq e)$}\\
+- Since we know that $(e|n)$ and $(e|m-an)$ we can use fact (2) again \\
+- If we take $s$ = $n$, $t$ = $m-an$, and $d$ = $e$ then we know that for any $p$ and $q$ that $(e|pn+q(m-an))$\\
+- We can then take $p$ = $a$ and $q$ = 1 and then we know $(e|m)$\\
+- Now we have shown $(e|n)$ and $(e|m-an)$ also means $(e|m)$ is true \\
+- So now we let $k_2 \in \mathbb{N}$, and assume$(k_2|n)\land(k_2|m-an)$, and from above we have shown that this these two statements also imply $(k_2|m)$ \\
+- Now from our assumption of $(\forall k_1 \in\mathbb{N}, (k_1|m)\land(k_1|n)\Rightarrow k_1 \leq e)$ we know that $k_2$ satisfies the hypothesis of this fact so $k_2 \leq e$ as needed.\\
+
+\underline{Conclusion:}\\
+- We have shown that $(e|n)$ by assumption and $(e|m-an)$ by fact (2) and found that this also implies $(e|m)$, which we used to show that $(\forall k_2 \in\mathbb{N}, (k_2|n)\land(k_2|m-an)\Rightarrow k_2 \leq e)$ \\
+as required \hfill \Box
+
+
+
+\item[b)] $Answer: False.$\\ 
+\textbf{WTS} $\exists a,m,n \in\mathbb{Z}, \exists e \in\mathbb{Z}^+, e = gcd(m,n) \land e \neq gcd(m,m-an)$ \\
+Let $m$ = 8, $n$ = 2 and $a$ = 2\\
+\begin{align}
+    e &= gcd(8,2) \nonumber\\
+    e &= 2 \nonumber
+\end{align}
+But for $gcd(m,m-an)$:
+\begin{align}
+    gcd(8,8-2*2) &= gcd(8,4)\nonumber\\
+    gcd(8,4) &= 4 \nonumber\\
+    e &\neq 4 \nonumber
+\end{align}
+Therefore the original statement is false.
+
+\newpage
+%2C Proof Start
+\item[c)] \textbf{WTS} $\forall m,n \in\mathbb{Z},(\exists k \in\mathbb{Z}, m = 2k-1) \Rightarrow gcd(m,n) = gcd(m,2n)$\\
+- Let $m,n \in\mathbb{Z}$\\
+- Let $e = gcd(m,n)$, where $e\in\mathbb{Z}$\\
+- We must show that $gcd(m,n) = gcd(m,2n)$, so if we expand the definitions of gcd with our newly declared variable e:
+
+\begin{align}
+    ((e|m)\land(e|n)\land(\forall d\in\mathbb{Z},(d|m)\land(d|n)\land d\leq e)) \tag{1}
+\end{align}
+\begin{align}
+    ((e|m)\land(e|2n)\land(\forall d\in\mathbb{Z},(d|m)\land(d|2n)\land d\leq e)) \tag{2}
+\end{align}
+
+- Because we let $e = gcd(m,n)$, then we know all the statements of our first expanded $gcd$ definition (1) are true, so we only need to prove statement (2)\\
+- From our assumption of (1) $(e|m)$ is True, \\
+- Using fact (1); $\forall a,b,c \in\mathbb{N}, (a|b)\land(b|c)\Rightarrow(a|c)$. Since $(e|n)$ from assumption of (1) and $(n|2n)$, we know $(e|2n)$\\
+
+- Now all we have to show is \textbf{$(\forall d\in\mathbb{Z},(d|m)\land(d|2n)\land d\leq e)$}
+
+-  By assumption, $m$ is odd, so $(\exists k \in\mathbb{Z}, m = 2k-1)$, meaning that $m$ cannot be divided by an even number, since:
+\begin{align}
+    m &= 2k-1 \nonumber\\
+    \frac{m}{2} &= k-\frac{1}{2} \nonumber
+\end{align}
+- So because $k\in\mathbb{Z}$, $\frac{m}{2}$ cannot be a whole number, thus: $(\forall p \in\mathbb{Z}, m \neq 2p)$, or $(2\nmid m)$\\
+- Since we know that $e = gcd(m,n)$ and $m$ is odd, then we know $e$ must be odd or else it cannot be a divisor of $m$, if we apply this knowledge to statement (2), then we know that in the statement $(\forall d\in\mathbb{Z},(d|m)\land(d|2n)\land d\leq e)$ that $d$ must also be odd\\
+- And because we know $(e|2n)$, then there are integers $d$  where $(d|2n)$ or otherwise: $(\exists k_d \in\mathbb{Z}, 2n=dk_d)$ and then we can use the contra-positive of fact (3); $\forall a,b\in\mathbb{Z},(2|ab)\Rightarrow(2|a)\lor(2|b)$\\
+- According to fact (3), since $(2|2n)$, then $(2|d) \lor (2|k_d)$, but because we showed that $d$ must be odd and that odd numbers cannot be divisible by 2, then $k_d$ must be divisible by 2, which we can define as: $(\exists l \in\mathbb{Z}, k_d=2l)$\\
+- So now we can re-arrange the definition of $(d|2n)$ to find all the divisors of $2n$:
+
+\begin{align}
+    2n &= dk_d \nonumber \\
+    2n &= d(2l) \tag{3} \\
+    2n &= l(2d) \nonumber \\
+    n &= dl \tag{4}
+\end{align}
+- What these strings of equations mean is that if an integer $d$ is a divisor of $2n$, then $d$ or $l$ must either be double of a divisor of $n$ (statement (3)) or an original divisor of $n$ (statement(4))\\
+- Then the divisors of $2n$, are a union of the divisors of $n$, and all the divisors of $n$ multiplied by 2\\
+- Because any divisor of $n$ multiplied by 2 becomes even and because we have shown that any divisor of $m$ must be odd, then the common divisors of $m$ and $n$, and $m$ and $2n$ are the same, since the new divisors of $2n$ are all even and cannot be a divisor of $m$\\
+- Finally, because the common divisors between $m$ and $n$, and $m$ and $2n$ are the same, then they will also have the same greatest common divisor, proving the last statement  $(\forall d\in\mathbb{Z},(d|m)\land(d|2n)\land d\leq e)$, and also proving the entire claim of for all integers m and n, that if m is odd, then the gcd(m,n)=gcd(m,2n)
+as required \hfill \Box
+
+%2C Proof End
+\newpage
+
+\item[d)] \textbf{WTS} $\forall n\in\mathbb{N}, gcd(f(n),f(n+1)) = 1$, where $f(n) = n^2 + n + 1$\\
+- Let $n\in\mathbb{N}$\\
+- We know that 1 can divide any natural number, now we need to prove that it is the greatest common divisor\\
+- (2a) $\forall a,m,n \in\mathbb{Z},\forall e \in\mathbb{Z}^+, e = gcd(m, n) \Rightarrow e = gcd(n,m-an)$ \\
+- (2c) $\forall m,n \in\mathbb{Z},(\exists k \in\mathbb{Z}, m = 2k-1) \Rightarrow gcd(m,n) = gcd(m,2n)$\\
+- Now we only need to prove that the greatest common denominator between the two functions is 1, which we can do using what we proved in question (2a) and (2c):
+
+\begin{align*}
+    gcd(f(n),f(n+1)) &= gcd(n^2+n+1, n^2+3n+3)\nonumber\\
+    &= gcd(n^2+n+1, 2n+2)\nonumber\tag{(2a) subtract by $n^2+n+1$}\nonumber\\\intertext{- Before we can work with the next line using our proven statement of (2c), we need to show that the number which is not being doubled (in this case halved) to be odd, so we need to show $n^2+n+1$ is odd:}
+    n^2+n+1 &= 2(\frac{n^2+n}{2})+1\nonumber\\
+    &= 2(\frac{n(n+1)}{2})+1\nonumber\\\intertext{- Because of the statement $n(n+1)$, its product is even, because if $n$ is even, then $n+1$ is odd, or $n+1$ is even if $n$ is odd. And because at least one of the multipliers are even, they can be described in terms of 2 and an arbitrary integer. So to show that the original polynomial is odd, $(\exists d\in\mathbb{Z}, n^2+n+1 = 2d+1)$, and because we know $n(n+1)$ is even, we know $\frac{n(n+1)}{2}$ is an integer which we can describe with $d$:}
+    n^2+n+1&= 2d+1\nonumber\\\intertext{-Thus we can use (2c) on the statement: $gcd(n^2+n+1, 2n+2)$}
+    &= gcd(n^2+n+1, 2n+2)\nonumber\\
+    &= gcd(n^2+n+1,n+1)\nonumber\tag{(2c) $gcd(a,b) = gcd(a,2b)$}\\
+    &= gcd(n^2,n+1)\nonumber\tag{(2a) subtracting by $n+1$}\\
+    &= gcd(-n, n+1)\nonumber\tag{(2a) subtracting by $n(n+1)$}\\
+    &= gcd(1,n+1)\nonumber\tag{(2a) adding by $n+1$}\\
+    gcd(f(n),f(n+1)) &= 1\nonumber
+\end{align*}
+- Therefore, by using previous proven statements, we have shown that the $gcd(f(n),f(n+1)) = 1$
+
+\end{enumerate}
+
+\newpage
+
+\section*{Question 3}
+\begin{enumerate}
+    \item [3.a)]\\
+    We want to show that for the function $f(n) = \frac{1}{n+1}$.
+    \[\exists n_0 \in \mathbb{N}, \exists y \in \mathbb{R}^{\geq0}, \forall n \in \mathbb{N}, n \geq n_0 \Rightarrow f(n) \leq y\]
+    
+    Let $n_0 = 1$, Let $y = 1$, Let $n \in \mathbb{N}$, Assume $n \geq 1$ \\
+    
+    Now what we want to show is $f(n) \leq y$. \\
+    Starting with, 
+    \begin{align*}
+    n &\geq 1 \\
+    n + 1 &> 1 \\
+    \frac{1}{n+1} &< \frac{1}{1} \tag{By inequality rules}\\
+    f(n) &< y \\
+    \Rightarrow f(n) &\leq y
+    \end{align*}
+    as required \hfill \Box
+    \\
+    
+    \item [3.b)]
+    We want to show that for every \emph{strictly decreasing} function $f: \mathbb{N} \to \mathbb{R}^{\geq0}$,
+    
+    \[\exists n_0 \in \mathbb{N}, \exists y \in \mathbb{R}^{\geq0}, \forall n \in \mathbb{N}, n \geq n_0 \Rightarrow f(n) \leq y\]
+    
+    Recall that f is \emph{strictly decreasing} means, 
+    \[ \forall x_1, x_2 \in \mathbb{R}, x_1 < x_2 \Rightarrow f(x_1) > f(x_2)\]
+    
+    Let $f$ be a function $f: \mathbb{N} \to \mathbb{R}^{\geq0}$\\
+    Let $n_0 = 0$, Let $y = f(n_0)$, 
+    Let $n \in \mathbb{N}$ Assume $n \geq 0$ and that $f$ is \emph{strictly decreasing}\\
+     
+     Now there are two cases where we must show that $f(n) \leq y$ \\ \\
+     \underline{Case 1 (n = 0)}\\
+        \[n = 0 = n_0\Rightarrow f(n) = f(0) = f(n_0) = y \Rightarrow f(n) \leq y\]
+    \underline{Case 2 (n $>$ 0)}\\
+    \begin{align*}
+         & n > 0 = n_0\\
+         &\Rightarrow n > n_0\\
+         &\Rightarrow f(n) < f(n_0) \tag{because $f$ is \emph{strictly decreasing}}\\
+         &\Rightarrow f(n) \leq y \tag{because $f(n_0) = y$}
+    \end{align*}
+    Thus we have shown that when $n \geq 0, f(n) \leq y$ as required \hfill \Box
+    \newpage
+    \item[3.c)]
+        We want to prove that for every two eventually bounded functions $f_1, f_2 :\mathbb{N} \to \mathbb{R}$ That the function $f_1$ x $f_2$ is also eventually bounded.\\ \\
+        Let us define the function $g$ = $f_1$ x $f_2$
+        
+        
+        Defining the Predicate,
+        \[EB(f): \exists n_0 \in \mathbb{N}, \exists y \in \mathbb{R}^{\geq0}, \forall n \in \mathbb{N}, n \geq n_0 \Rightarrow f(n) \leq y\] 
+        \[\text{where } f \text{ is a function: } \mathbb{N}\to \mathbb{R}^{\geq0}\]
+        
+        We want to show,
+        \[EB(f_1) \wedge EB(f_2) \Rightarrow EB(g)\]
+        
+        Assuming, $EB(f_1)$ and $EB(f_2)$, this means that
+        \[(\exists n_{0_1} \in \mathbb{N}, \exists y_1 \in \mathbb{R}^{\geq0}, \forall n_1 \in \mathbb{N}, n_1 \geq n_{0_1} \Rightarrow f(n_1) \leq y_1)\] 
+        \[\textbf{AND}\]
+        \[(\exists n_{0_2} \in \mathbb{N}, \exists y_2 \in \mathbb{R}^{\geq0}, \forall n_2 \in \mathbb{N}, n_2 \geq n_{0_2} \Rightarrow f(n_2) \leq y_2)\]
+        
+        Now we will prove $EB(g)$
+        \[(\exists n_{0g} \in \mathbb{N}, \exists y_g \in \mathbb{R}^{\geq0}, \forall n_g \in \mathbb{N}, n_g \geq n_{0g} \Rightarrow g(n_g) \leq y_g)\]
+        
+        Let $n_{0g} =  n_{0_1} +  n_{0_2}$. Let $y_g =  y_1y_2$.
+        Let $n_g \in \mathbb{N}$.\\
+        \\
+        Assume $n_g \geq n_{0g}$
+        \begin{align*}
+            n_g &\geq n_{0g} \\
+            n_g &\geq n_{0_1} +  n_{0_2} \\
+            \Rightarrow n_g &\geq n_{0_1} \text{ and } n_g \geq n_{0_2} 
+            \tag{since $n_{0_1}$ and $n_{0_2} \in \mathbb{N}$} \\
+            \Rightarrow f_1(n_g) &\leq y_1 \text{ and } f_1(n_g) \leq y_2 \tag{By our assumptions $EB(f_1)$ and $EB(f_2)$}\\
+            \Rightarrow  f_1(n_g) &\text{ x }f_2(n_g) \leq y_1y_2 \tag{since $f_1$ and $f_2: \mathbb{N} \to \mathbb{R}^{\geq0}$} \\
+            \Rightarrow g(n_g) &\leq y_g \tag{since $g$ = $f_1$ x $f_2$ and $y_g =  y_1y_2$}
+        \end{align*}
+        as required \hfill \Box
+        
+    
+\end{enumerate}
+
+
+
+
+
+
+
+\end{document}

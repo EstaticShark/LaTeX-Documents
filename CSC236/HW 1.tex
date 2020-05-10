@@ -1,0 +1,320 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+
+\title{CSC236H1 Assignment 1}
+\author{Martin Chak and Tony Yang}
+\date{October 13, 2019}
+
+\begin{document}
+
+%BEGIN TITLE PAGE
+
+\maketitle
+
+%END TITLE PAGE
+
+\newpage
+
+%BEGIN Q1
+\section*{Question 1}
+
+\begin{text}
+    Recall the following definition for a graph $G = <V,E>$ that $V$ denotes the set of vertices and $E$ denotes the set of edges. We define the following
+\end{text}
+
+\begin{itemize}
+    \item Two vertices $u,v \in V$ are $connected$ $iff$ $G$ contains a $path$ from $u$ to $v$.
+    \item $G$ is $connected$ $iff$ every pair of distinct vertices in $V$ is connected.
+    \item For a vertex $u \in V$, the $degree$ of $u$, denoted by $d_{G}(u)$, is the number of edges in $G$ that are incident to $u$.
+\end{itemize}
+
+\noindent 
+\begin{text}
+    Let $G = <V,E>$ be an arbitrary (non-empty, undirected and simple graph). Using simple induction, we will prove that:
+\end{text}
+
+\begin{equation}
+    \forall n \in \mathbb{Z}^+, \exists u \in V s.t.\, |V| = n \land d_{G}(u) = |V| - 1 \Rightarrow \text{G is }connected \nonumber
+\end{equation}
+
+\noindent
+\begin{text}
+    We then define a predicate $P(n)$ such that:
+\end{text}
+
+\begin{equation}
+    P(n): \exists u \in V s.t.\, |V| = n \land d_{G}(u) = |V| - 1 \Rightarrow \text{G is }connected \nonumber
+\end{equation}
+
+\noindent
+\underline{Base Case:}
+
+\noindent
+\begin{text}
+    For our base case we let $n=1$ so that our graph $G$ has only 1 vertex and as a consequence only one edge. We want to prove $P(n)$. So we know that for the only vertex, $u$, in $G$ that $d_{G}(u) = 0 = |V| - 1$ and that $G$, which only contains a single vertex, is connected. Thus $P(n)$ holds for a graph with a single vertex.\\
+\end{text}
+
+\noindent
+\underline{Induction Step:}
+
+\noindent
+\begin{text}
+    Let $G = <V,E>$ be an arbitrary (un-directed and non-empty) graph. We then let $n \in \mathbb{Z}^+$ and make $G$ have $n$ amount of vertices. We also assume $P(n)$ holds. $(I.H)$\\
+
+    \noindent We now want to show that $P(n+1)$ holds. For a graph $G' = <V',E'>$, where there exists a vertex $u'$, such that $d_{G}(u') = |V'| - 1$. Thus we want to show that $G'$ is $connected$. We can show this by proving:
+\end{text}
+
+\begin{equation}
+    \forall u,v \in V', \exists p \in \text{Paths} \, s.t. \, p(u,v) \nonumber
+\end{equation}
+
+\noindent
+\begin{text}
+    We know by the induction hypothesis, that for $n$ amount of vertices, for a graph, $G$, if there exists a vertex $u$ such that its degree is $n-1$, then the entire graph $G$ is connected. We want to show that this is true also with one more vertex, which we will call $w$, added to vertex $u$ so that there are now $n+1$ vertices and $u$ has a degree of $n$.\\
+    
+    \noindent So by induction hypothesis, we know that there exists a path between all the vertices in the graph except $w$. We only know that $w$ is connected to $u$ by assumption, thus for all $v \in V$ we write the path between $v$ and $w$ as:
+\end{text}
+
+\begin{equation}
+    p(v,w) = p(v, u) \cup p(u, w)\nonumber
+\end{equation}
+
+\noindent
+\begin{text}
+    Thus we have shown that all vertices in the graph are connected, and have subsequently shown that $P(n+1)$ holds.
+\end{text}
+
+\hfill $\blacksquare$
+%END Q1
+
+\newpage
+
+%BEGIN Q2
+\section*{Question 2}
+
+\begin{text}
+    Consider the following description of a game:
+\end{text}
+
+\begin{enumerate}[label=(\alph*)]
+    \item There are $n$ people playing, one of whom leads the game. They are playing on a playing field
+with no obstacles. Everyone carries one water balloon.
+    \item Everyone walks around the playing field until the game leader yells “stop”. Assume that the leader
+will yell stop only when everyone is in a position where they have a unique closest neighbour.
+    \item Next, the leader yells “throw” and everyone throws their water balloon at their nearest neighbour
+(there is exactly one, by the assumption in the previous point).
+    \item A $survivor$ is anyone who is still dry at the end of the game (assuming everyone has perfect aim
+and the water balloons are designed so that they get only their intended target wet).
+\end{enumerate}
+
+\noindent 
+\begin{text}
+    Using complete induction, we will prove that:
+\end{text}
+
+\begin{equation}
+    \forall n \in \mathbb{N}, \exists k \in \mathbb{N} s.t.\, n = 2k + 1 \Rightarrow \text{There will be at least one survivor} \nonumber
+\end{equation}
+
+\noindent 
+\begin{text}
+    We then define a predicate $P(n)$ such that:
+\end{text}
+
+\begin{equation}
+    P(n): \exists k \in \mathbb{N} s.t.\, n = 2k + 1 \Rightarrow \text{There will be at least one survivor} \nonumber
+\end{equation}
+
+\noindent
+\underline{Base Case:}
+
+\noindent
+\textbf{n is even:} \text{$P(n)$ holds vacuously}
+
+\noindent
+\textbf{n = 1:} \text{There is only one player so no one can eliminate them, thus they are a survivor}
+
+\noindent
+\textbf{n = 3:}
+\begin{text}
+    There are only three people, then there will exist a pair that are the closest to each other (By assumption (b)). Then when the leader says throw, the pair will eliminate each other and the last person will be the survivor, no matter who they throw their balloon at.\\
+\end{text}
+
+\noindent
+\underline{Induction Step:}
+
+\noindent
+\begin{text}
+    Let $k \in \mathbb{Z}^+$ and assume that $k\geq 3$, then declare $j \in \mathbb{Z}^+$ such that $3 \leq j \leq k$ and assume that $P(j)$ holds. We want to show that $P(k+2)$ given that $k$ is odd.\\
+\end{text}
+
+\noindent
+\underline{Case 1:}
+\begin{text}
+    There is at least one pair that are each others' closest neighbour that has others throwing a balloon at one of them \\ 
+    
+    In this case, we know that excluding the pair, there are an odd number of people outside of the group(at most k people). Since everyone only has one balloon,  the game will have at least one winner as at least one balloon is wasted on the pair (at most k - 1 balloons left).\\
+\end{text}
+
+\noindent
+\underline{Case 2:}
+\begin{text}    
+    When there is at least one pair that throws balloons at each other, and no one throws balloons at either of the pair. \\ 
+    
+    In this case, we can think of each pair as having a game amongst themselves. We can define $m \in \mathbb{Z}^+$, where $m$ is the amount of lone pairs. Then we know there are $(k+2) - 2m$ remaining players. We also know that the remaining group has between 3 and k players since in order to use this case, there has to at least exist one lone pair, where the remaining group is k players. Or that there is the maximum amount of lone pairs, where the remaining group is made of three players (since the third player will always throw at on of the other two). Thus for this remaining group, we can use the I.H, where we assumed $P(j)$ and $3 \leq j \leq k$, therefore there will always be one survivor.\\
+\end{text}
+
+\noindent
+\begin{text}
+    Therefore when we play the game with an odd number of people, there will always exist one survivor.
+\end{text}
+
+\hfill $\blacksquare$
+
+
+%END Q2
+
+\newpage
+
+%BEGIN Q3
+\section*{Question 3}
+
+\begin{text}
+    Consider a soccer tournament in which every team plays every other team exactly once. There is a
+cycle of length m if there is a sequence of $m \geq 3$ teams, $T_1, T_2, ..., T_m$, such that $T_1$ beats $T_2$, $T_2$ beats $T_3, ..., T_{m - 1}$ beats $T_m$, and $T_m$ beats $T_1$. For example, consider the following tournament among 4 teams, $T_1, T_2, T_3$ and $T_4$ where $T_i \longrightarrow T_j$ means that team $i$ beats team $T_j$ . It contains a cycle of length 4, $T_1, T_2, T_3, T_4$ and two cycles of length 3, $T_1, T_3, T_4$ and $T_2, T_3, T_4$.
+\end{text}
+
+\noindent 
+\begin{text}
+    Using the Principle of Well-Ordering, we will prove:
+\end{text}
+
+\begin{equation}
+    \forall n \in \mathbb{Z}^+, P(n) \text{ holds} \tag{Where $n$ is the number of teams in the tournament}\nonumber
+\end{equation}
+
+\noindent 
+\begin{text}
+    We will define the predicate $P(n)$ as such:
+\end{text}
+
+\begin{equation}
+    P(n): n \geq 3 \land \text{T is a tournament with $n$ teams, no ties and has a cycle } \Rightarrow \exists c \in Cycle(T) \, s.t. \, |c| = 3 \nonumber
+\end{equation}
+
+\noindent 
+\begin{text}
+    We will use contradiction, first assume for any tournament $T$ with $n$ teams: $\exists n \in \mathbb{Z}^+ \, s.t. \, \neg P(n)$. Then we define a set $S$ such that $S = \{ n \in \mathbb{Z}^+ :$ In any tournament $T$ with $n$ teams, $ \neg P(n) \}$. Then by assumption of the contradiction, we know that there exists an $n$ where $\neg P(n)$ holds, thus $S$ must be a non-empty set, and then by the Principle of Well-Ordering there must exist an $a$ such that $a = min(S)$. Now that we have set up, we will prove that there is a contradiction with these statements.\\
+\end{text}
+
+\noindent 
+\begin{text}
+    We first make the claim that $a > 3$. We know that for any tournament with only 1 or 2 teams that $P(n)$ vacuously holds true and thus 1 and 2 cannot be in the set $S$ and as a consequence cannot be $a$. However, when we have a tournament with 3 teams, where we associate each team with a number - $T_1, T_2$ and $T_3$ - then we $P(n)$ will hold. Since if we let $T_1$ be any team we know has a win, and let $T_2$ be the team that loses to $T_1$, then $T_2$ must beat $T_3$ and $T_3$ must beat $T_1$, or else $P(n)$ will vacuously hold by having ties or for there not to exist a cycle in the tournament. Thus we know that $a$ must be greater than 3.\\
+\end{text}
+
+\noindent 
+\begin{text}
+    We know $a \geq 4$ since $P(1)$, $P(2)$ and $P(3)$ hold. But we know that for $P(3)$ specifically that this predicate holds because there exists a cycle of 3 in all of the tournaments that fit the predicate conditions. We know by assumption that for $a \geq 4$, $\neg P(a)$ holds, but we also know that for $a - 1 \geq 3$, $P(a-1)$ holds. Since we know $P(a-1)$ holds, we can add another team, $T_4$, to this same tournament to try to equivalently prove $P(a)$. If we add this new team, then every team will get to play against $T_4$ once and then there are a variety of ways the games can turn out. However, since we know $P(a-1)$ holds, then we know there must exist a cycle that is the length of three between the first three teams, thus $P(a)$ will hold despite whatever outcome the fourth team has with the others. This trend continues onto $a + 1$ and every subsequent tournament with $n \in \mathbb{Z}^+$ teams in it, therefore we have reached a contradiction that there is no $n \in \mathbb{Z}^+$ that doesn't fulfill $P(n)$\\
+\end{text}
+
+\noindent 
+\begin{text}
+    Thus we know that $\forall n \in \mathbb{Z}^+, P(n) \text{ holds}$ is true, as required.
+\end{text}
+
+\hfill $\blacksquare$
+
+%END Q3
+
+\newpage
+
+%BEGIN Q4
+\section*{Question 4}
+
+\begin{text}
+    Consider the set $S \subseteq \mathbb{N}^2$ defined recursively by the following rules:
+\end{text}
+
+\begin{itemize}
+    \item $(3,2) \in S;$ (Base rule)
+    \item $\text{if } (x,y) \in S, \text{ then } (3x-2y, x) \in S.$ (Recursion rule)
+\end{itemize}
+
+\noindent 
+\begin{text}
+    Using structural induction, we will prove that:
+\end{text}
+
+\begin{equation}
+    S \subseteq R, \text{ where } R = \{(2^{k + 1} + 1, \, 2^{k} + 1) \, | \, k \in \mathbb{N}\} \nonumber
+\end{equation}
+
+\noindent 
+\begin{text}
+    We define a predicate $P(x,y)$ such that:
+\end{text}
+
+\begin{equation}
+    P(x,y): \exists k \in \mathbb{N} \nonumber \, s.t. \, (x,y) = (2^{k + 1} + 1, \, 2^{k} + 1)
+\end{equation}
+
+\noindent 
+\begin{text}
+    And showing $P(x,y)$ holds, we are showing that the element $(x,y)$ also exists in $R$, and if we show that all elements in the set $S$ exists in $R$, then we essentially prove $S \subseteq R$, our end result.\\
+\end{text}
+
+\noindent
+\underline{Base Rule:}
+
+\noindent 
+\begin{text}
+    Let $(x,y)$ be constructed by the base rule such that $(x,y) = (3,2)$, thus we want to show $P(3,2)$ holds.
+    If we let $k = 0$, then:
+\end{text}
+
+\begin{align}
+    (x,y) &= (3,2)\nonumber\\
+    &= (2^1 + 1, \, 2^0 + 1) \nonumber\\
+    &= (2^{0 + 1} + 1, \, 2^{0} + 1)\nonumber\\
+    &= (2^{k + 1} + 1, \, 2^{k} + 1)\tag{Since we picked $k = 0$}\nonumber
+\end{align}
+
+\noindent 
+\begin{text}
+    Thus we have proven $P(x,y)$ for the base rule.\\
+\end{text}
+
+\noindent
+\underline{Recursive Rule:}
+
+\noindent 
+\begin{text}
+    Let $(x,y)$ be constructed by the recursive rule such that for any $(u,v) \in S$, $(x,y) = (3u-2v, u)$, given that $P(u,v)$ holds $(I.H)$. We want to show that $P(x,y)$ holds by showing that $\exists k \in \mathbb{N} \nonumber \, s.t. \, (x,y) = (2^{k + 1} + 1, \, 2^{k} + 1)$. But by the induction hypothesis, we know $\exists n \in \mathbb{N} \nonumber \, s.t. \, (u,v) = (2^{n + 1} + 1, \, 2^{n} + 1)$, thus we can write:
+\end{text}
+
+\begin{align}
+    (x,y) &= (3u-2v,u)\nonumber\\
+    &= (3(2^{n + 1} + 1) - 2(2^{n} + 1), (2^{n + 1} + 1)) \tag{By I.H}\nonumber\\
+    &= (3 \cdot 2^{n + 1} + 3 - 2^{n + 1} - 2, 2^{n + 1} + 1)\nonumber\\
+    &= (2^{(n + 1) + 1} + 1, 2^{(n + 1)} + 1)\nonumber\\
+    &= (2^{k + 1} + 1, 2^{k} + 1)\tag{Choose $k = n + 1$}\nonumber
+\end{align}
+
+\noindent 
+\begin{text}
+    Thus we have proven $P(x,y)$ holds for all construction rules, and therefore have shown that every element in $S$ also exists in $R$, proving the statement $S \subseteq R$ as required.\\
+\end{text}
+
+\hfill $\blacksquare$
+
+%END Q4
+\end{document}

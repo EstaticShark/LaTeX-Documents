@@ -1,0 +1,150 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\usetikzlibrary{automata,positioning}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{CSC263H1 Homework 5}
+\author{Tony Yang, Wendy Guo, Martin Chak}
+\date{March 12th 2020}
+
+\begin{document}
+
+%BEGIN TITLE PAGE
+
+\maketitle
+
+%END TITLE PAGE
+
+\newpage
+
+%BEGIN Q1
+
+\noindent
+\textbf{Question 1:}\\
+\textbf{Done by: Martin Chak; Written by: Martin Chak}\\
+
+\noindent
+\begin{text}
+    Consider a forest implementation of the disjoint set data structure with $n$ distinct elements, each beginning as a one node tree. We let $\sigma$ be any sequence of $k$ $UNIONs$ and $k'$ $FINDs$; such that all $UNIONs$ happen before the $FINDs$. Prove that if the algorithm, using path compression only (no weighted union rules), executes $\sigma$ in $O(k + k')$ time.\\
+    
+    \noindent
+    We must realize that through path compression, $FIND$ utilizes an amortization cost style implementation. So we must use the accounting method to properly analyze our operations. We start by looking at the $UNION$ operation.\\
+    
+    \noindent
+    It is clear that the actual cost of a $UNION$ is always $O(1)$, as proven in CLRS, so we can utilize this cheaper operation to build credit for more expensive operations in $FIND$. We decide to charge \$3 for the operation, \$1 for the actual $UNION$ and the remaining \$2 becomes credit. This is important since each $UNION$ operation can potentially increase the cost of future $FIND$ operations. To make later $FIND$ calls cheaper, we reserve \$1 of credit for traversing through a node and the other \$1 of credit for reassigning the node to its root.\\
+    
+    \noindent
+    For each $FIND$, we split the accounting between cases of how far down the element in question is from the root. We can decide to charge a constant \$4 per $FIND$, mainly to cover cheap $FIND$ operations when the element is the root or is a child of the root, where the operation has an actual cost of \$2 or less. For example, when using $FIND$ on an element in a tree that is either the root or the child of the root, the operation would just use \$1 to realize that the element itself is the root or use \$2 to traverse up and realize their parent is the root, and then we use the remaining credits to maintain the inequality $\sum Credits - \sum Actual_{}Cost \geq 0$, where they are never needed again. \\
+    
+    \noindent
+    We now need to show that the same above inequality persists with $FIND$ operations on elements farther down the tree, while maintaining the constant \$4 charge on the operation. If $FIND$ is used at any height greater than or equal to $2$, our initial \$4 charge will not be able to cover the operation while maintaining the constant cost, therefore we must pay for the operation using credits built up from the $UNIONs$. For any node traversed at height $2$ or more, there is already \$2 of credit stored away for each one of them. Each of these node will have \$1 credit to pay for the traversal and \$1 to have themselves relocated as a child of the root. The operation finishes by paying for the remaining node at height $0$ and $1$ with the constant \$4 charge. The consumed credits make future $FIND$ operations cheaper, since the relocated elements will always be at a height of $1$, meaning $FIND$ calls on these elements can be paid for with only constant \$4 charge, no longer requiring us to save up credits operate over them. Since there were \$2 of credit for any element at height 2 or greater of the original tree, any subsequent calls on these deeper elements will also be moved with the same algorithm and can be paid for with the constant \$4 charge and their stored $UNION$ created credits. Eventually we reach a point where the height of the tree is $1$ and each $FIND$ operation's cost is constant due to amortization, or we complete the necessary $k'$ $FINDs$. Meaning that the amortized cost of $FIND$ is $O(1)$.\\
+    
+    \noindent
+    We have then shown that through amortization cost analysis, that each individual $UNION$ and $FIND$ operation take constant time. Therefore completing the sequence of operations $\sigma$ takes $O(k + k')$.\\
+    
+    \hfill $\blacksquare$
+\end{text}
+
+%END Q1
+
+\newpage
+%BEGIN Q2
+
+\noindent
+\textbf{Question 2:}\\
+\textbf{Done by: Wentao Yang, Wendy Guo; Written by: Wentao Yang}\\
+\noindent
+\begin{enumerate} [label=(\alph*)]
+
+
+    \item
+    \begin{enumerate} [label=(\arabic*)]
+        \item{Assume that we can access the number of items in the adjacency list ($n$) in constant time.}
+        {\textbf{Worst-Case Space Complexity of G by Adjacency List L:}}\\
+        The number of vertices in the Adjacency list is $n$, and the number of edges in the list is $m$, hence the space complexity L will be $O(n+m)$ \\\\
+        \textbf{Worst-Case Space Complexity of G by Adjacency List $\overline{L}$:}\\
+        The number of vertices is $n$. Since we have $m$ number of edges in the list $L$, and $m$ is upper-bounded by $n^2$, we will have $O(n^2 - m)$ number of edges in $\overline{L}$. Hence we have the space complexity of $\overline{L}$ as $O(n^2 - m)$.
+        \item
+            \textbf{Degree(G, i):}\\
+            For both lists $L$ and $\overline{L}$, the time complexity of Degree(G,i) will be $O(n)$. For $L$, we need to increment our counter as we move along the linked list of $L[i]$, which contains $O(n)$ elements. On the other hand, $\overline{L}$ is also $O(n)$. In order to calculate the degree of $i\in\overline{G}.V$, we count down from $n$ by the amount of elements in $L[i]$ which can be at most $n-1$ elements, taking $O(n)$ time to then complete the counting.\\\\
+            \textbf{AverageDegree(G, i):}\\
+            For list $L$, the time complexity will be $O(n + m)$. Since there are $n$, vertices, we have $n$ linked lists that we need to check, which is $n$ steps. The algorithm needs to iterate through and count $m$ edges, then divide by $n$ (which takes constant time). A complete graph has $\frac{n(n-1)}{2}$ edges. Thus $\overline{L}$ has $\frac{n(n-1)}{2} - m$ edges, since it contains all the edges that are not in $L$. Iterating through and counting that many edges for $n$ linked lists is $O(n^2 - m).$ \\\\
+            \textbf{ContainsEdge(G, i, j):}\\
+            For both lists $L$ and $\overline{L}$, the time complexity will be $O(n)$. For $L$,
+            accessing $L[i]$ takes constant time, and the length of $L[i]$ is bounded by $n$. In the worst case, the edge $(i, j)$ is not in the graph, so iterating through the whole list takes $O(n)$. For $\overline{L}$, we access $\overline{L}[i]$ which also takes constant time, then to find whether or not $j$ is in that list takes $O(n)$ since if edge $(i,j)$ is in the graph it won't exist in $\overline{L}[i]$.\\\\
+            \textbf{InsertEdge(G, i, j):}\\
+            For list $L$ the time complexity of InsertEdge(G,i,j) is $O(1)$. This is because all that needs to be done is to add the other vertex to the adjacency list of the first vertex and repeat it for the second vertex's adjacency list, which takes constant time for a linked list. For $\overline{L}$, the time complexity would be $O(n)$, since inserting an edge in $\overline{G}$ is the equivalent of deleting an edge in $G$. Thus we must iterate through both adjacency lists of $L[i]$ and $L[j]$ and remove any instances of $j$ or $i$ in each respective list, taking at most $O(n)$ time.
+    \end{enumerate}
+    \item 
+        \begin{enumerate} [label=(\arabic*)]
+        \item\textbf{Space Complexity of AVL tree approach:}
+            In the AVL tree approach with the list of vertices $L'$, the worst case space complexity is $O(n + m)$. This is because storing each element in $L'$ will take $n$ space, and then since each element in the list has a tree of keys that represent adjacent vertices, then that would take another $O(m)$ space. The trees take $O(m)$ space since $m$ represents the number of edges, meaning in a standard adjacency list there would be approximately $2m$ items, this persists in the AVL implementation of the adjacency list, thus taking a total of $O(n + m)$ space.\\
+            
+        \item\textbf{Degree(G,i)}\\
+            We know that Degree takes $O(n)$ time for $L$. For $L'$, finding the degree of $i$ only requires us to count the amount of nodes in the AVL tree $L'[i]$ which takes at most $O(n)$ time since $L[i]$ can at most have $n-1$ elements.\\
+            
+        \textbf{AverageDegree(G)}\\
+            The AverageDegree case for both $L$ and $L'$ takes $O(n+m)$. To find the average degree of all elements in $L'$ we must find the degree of $n$ individual elements which takes at least $O(n)$ time to access each tree in $L'$. Then in order to find the degree of all elements we must take $O(m)$ time, since $m$ is a count of all the edges, therefore there must be approximately $2m$ elements in the adjacency list. Then in total, the AverageDegree operation on $L'$ would take $O(n + m)$.\\
+            
+        \textbf{ContainsEdge(G,i,j)}\\
+            ContainsEdge takes $O(n)$ time for the standard implementation of $L$. For $L'$, it will take $O(log(n))$. Since $L'$ is an AVL implementation of the adjacency list, it would take at most $O(log(n))$ to check if an item was within the tree.\\
+        
+        \textbf{InsertEdge(G,i,j)}\\
+            InsertEdge takes $O(1)$ time to complete for $L$. For $L'$ it will take $O(log(n))$ run-time since inserting an item into an AVL tree takes at most $O(log(n))$ with re-balancing taken into consideration.\\
+        
+        \end{enumerate}
+\end{enumerate}
+
+%END Q2
+\newpage
+%BEGIN Q3
+
+\noindent
+\textbf{Question 3:}\\
+\textbf{Done by: Wentao Yang, Wendy Guo; Written by: Wendy Guo}\\
+
+\noindent
+a. 
+\begin{lstlisting}[mathescape=true]
+def helper(start, target, D):
+    for each key in D: 
+        key.COLOUR = white; 
+        key.PARENT = NIL; 
+    start.COLOUR = grey;
+    Q <- empty;
+    ENQ(Q, start);
+    while Q is not empty:
+        u = DEQ(Q);
+        for i in range k:
+            for char in range a to z:
+                v = u; // copy of u, not aliases
+                v[i] = char;
+                if v == target:
+                    v.PARENT = u;
+                    return linked list starting from v using PARENT as next pointer;
+                else if v in D and v.COLOUR == white:
+                    v.COLOUR = grey;
+                    v.PARENT = u;
+                    ENQ(Q, v);
+        u.COLOUR = black;
+return "No sequence exists!";
+
+\end{lstlisting}
+\begin{text}
+b. The algorithm first initializes the COLOUR and PARENT values for each of the $n$ strings in the dictionary, which is $O(n)$ by assumption. For each string $u$, it searches at most $26k$ other strings. To search for each of those strings in the dictionary takes $O(log n)$. The worst case would involve doing those searches for all of the $n$ strings in the dictionary, so it would have an upper bound of $n + k(\text{log} n)(n)$ steps, which is $\Theta(nk\text{log} n )$
+
+\end{text}
+
+\end{document}

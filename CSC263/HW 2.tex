@@ -1,0 +1,228 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\usetikzlibrary{automata,positioning}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{CSC263H1 Homework 2}
+\author{Tony Yang, Wendy Guo, Martin Chak}
+\date{January 30th 2020}
+
+\begin{document}
+
+%BEGIN TITLE PAGE
+
+\maketitle
+\noindent
+\textbf{Question 1:}\\
+\begin{text}
+    Done by:\\
+    Written by:\\
+\end{text}
+
+\noindent
+\textbf{Question 2:}\\
+\begin{text}
+    Done by:\\
+    Written by:\\
+\end{text}
+
+\noindent
+\textbf{Question 3:}\\
+\begin{text}
+    Done by:\\
+    Written by:\\
+\end{text}
+
+%END TITLE PAGE
+
+\newpage
+
+%BEGIN Q1
+\section*{Question 1}
+
+\textbf{Done By: Wendy Guo, Wentao Yang}\\
+\textbf{Written By: Wendy Guo, Wentao Yang}\\
+
+\begin{text}
+    For the given question we must write operations such that for a set of $n$ orders:
+\end{text}
+
+\begin{align}
+    Insert(n) &: \text{Insert an order $n$ with a worst-case time of $O(log(n))$}\nonumber\\
+    Extract-Max &: \text{Extract and order with the max incentive, with a worst-case time of $O(log(n))$}\nonumber\\
+    Max-Incentive &: \text{Report the maximum incentive currently in the set of orders, with worst-case time of $O(1)$ }\nonumber\\
+    Union &: \text{Merge two different sets with a worst-case time of $O(log(n))$}\nonumber
+\end{align}
+
+
+\noindent
+\begin{text}
+    We intend to use the binomial heap to store and keep track of orders for this particular problem. More specifically, we will be using a modified max binomial heap, which has the addition of a max pointer which references the node with the highest incentive. 
+\end{text}
+\\
+
+\noindent
+\begin{text}
+    We outline our algorithm in pseudocode:
+    
+\end{text}
+%Coding environment goes here%
+\begin{lstlisting}
+    
+    
+    class Heap:
+        '''
+        This class is our data structure, it is a max binomial heap 
+        with a pointer to the root of its smallest tree and a pointer
+        to the node with the largest incentive.
+        '''
+        
+        head: Node
+        max: Node
+        
+        ...
+    
+    
+    class Node:
+        '''
+        This class represents our orders.
+        '''
+        
+        incentive: int        
+        
+        ...
+
+
+1     def Insert(Heap T, Node x):
+2         Insert(T, x) # max binomial heap insert algorithm
+3         if T.max is None:
+4             T.max = x
+5             T.head = x
+6             return
+7         # traverse head node and check all roots
+8         curr = T.head
+9         while curr.next: #next points to root of neighbouring tree
+10            if curr.incentive > T.max.incentive:
+11                T.max = curr
+12            curr = curr.next
+13    
+14     def Extract-Max(Heap T):
+15         # CLRS_Extract_Max returns the max node and also reorganizes T
+16         max_node = CLRS_Extract_Max(T)
+17         curr = T.head
+18         while curr.next: #next points to root of neighbouring tree
+19             if curr.incentive > T.max.incentive:
+20                 T.max = curr
+21             curr = curr.next
+22         return max_node
+23        
+24     def Max-Incentive(Heap T):
+25         return T.max
+26        
+27     def Union(Heap T1, Heap T2):
+28         T = CLRS_Union(T1, T2) # The Union function provided in the textbook
+29         T.max = max(T1.max, T2.max)
+29         curr = head
+30         while curr.next: # next points to root of neighbouring tree
+31             if curr.incentive > T.max.incentive:
+32                 T.max = curr
+33             curr = curr.next
+34         return T
+
+\end{lstlisting}
+
+\noindent
+\begin{text}
+    Essentially, our codes are similar to the algorithms covered in class, with two main changes. First, we have an additional pointer in the heap that keeps track of the max incentive order. Second, we have pointers to the root of each tree within our heap (called headers) and each root node also has a pointer that refer to the root node of its neighbouring tree (called next).  
+\end{text}
+
+\begin{description}
+    \item[Insert(n)]: Based on CLRS, it takes $O(log(n))$ to insert the order. But we also need to update the pointer for max. Since we have at most $log(n)$ trees in a heap, we will have at most $log(n)$ root nodes to compare and update our max pointer. Hence the worst case runtime for this operation is $O(log(n))$;
+    
+    \item[Extract - Max]: Based on CLRS, it takes $O(log(n))$ to extract the max incentive order from our structure and reorganize the trees into a max heap that still maintain property. Again, we still need to update the pointer for max. Since we have at most $log(n)$ trees in a heap, we will have at most $log(n)$ root nodes to compare and update our max pointer. Hence the worst case runtime for this operation is $O(log(n))$;
+    
+    \item[Max-Incentive]: Since we have a pointer to the particular value, we can just return the pointer and it will give us the max-incentive order. Note that based on our algorithm for updating the max pointer, we always return the FIRST max-incentive order seen if there were multiple orders with the same max-incentive. Overall the operation of returning the pointer takes $O(1)$
+    
+    \item[Union]: Based on CLRS, it takes $O(log(n))$ to merge two sets of heaps when n represents the combined number of orders from both sets. Again, when we merge the two sets, we will need to update the value for our max pointer. Since we have at most $log(n)$ trees in a heap (where n is the total number of nodes from both sets), we will have at most $log(n)$ root nodes to compare and update our max pointer. Hence the worst case runtime for this operation is $O(log(n))$;
+\end{description}
+
+
+
+%END Q1
+
+\newpage
+
+%BEGIN Q2
+\section*{Question 2}
+
+\textbf{Done By: Martin Chak}\\
+\textbf{Written By: Martin Chak}\\
+
+\noindent
+\begin{text}
+    A binomial heap has 56 entries. What is the degree of the root of the smallest tree in this heap (the degree of a node is the number of children the node has)? After an $Extract-Min$ is carried out, what is the degree of the root of the smallest tree?\\
+\end{text}
+
+\noindent
+\begin{text}
+    To find the respective binomial forest, we first calculate 56 in binary. We find that $(56)_2 = <111000>$, meaning that in order to have 56 entries, we have three trees, one with 8 nodes, one with 16 nodes and the last one with 32 nodes. The degree of our smallest tree, with 8 nodes, is 3.\\
+    
+    \noindent
+    Now we what is the degree of the root of the smallest tree as we carry out $Extract-Min$. Of our original trees we cannot tell which tree will have a node extracted from it, but by construct of the binomial heap, we know that the node removed will always be the root of one of the trees. We can note that the extraction pf a root leaves behind a binomial forest of trees such that the trees are of the form $B_{k-1}, ..., B_{1}$, where $k$ is the level of the tree that the minimum was extracted from ($k \in \mathbb{N} \, \, s.t. \, \, 2^k = \text{Number of nodes in tree}$). By this observation, we know that the smallest tree after the operation will always be just a singular node and therefore the degree of the smallest tree will always be 0.
+\end{text}
+
+%END Q2
+
+\newpage
+
+%BEGIN Q3
+\section*{Question 3}
+
+\textbf{Done By: Martin Chak}\\
+\textbf{Written By: Martin Chak}\\
+
+\begin{text}
+    Consider the following, $B_1$ and $B_2$ are binary search trees, where every key in $B_1$ is smaller than every key in $B_2$. Describe an algorithm, given pointers $b_1$ and $b_2$ to the roots of $B_1$ and $B_2$, that merges $B_1$ and $B_2$ into a single binary search tree $T$ such that:\\
+    
+    \noindent
+    1. Its worst-case running time is $O(min\{h_1, h_2\})$, where $h_1$ and $h_2$ are the heights of $B_1$ and $B_2$.\\
+    2. The height of the merged tree $T$ is at most $max\{h_1, h_2\} + 1$.\\
+    
+    \noindent
+    Note that the heights $h_1$ and $h_2$ are not given to the algorithm and that the tree does not have to be balanced.\\
+    
+    \noindent
+    Now we describe the algorithm we have created to merge the trees:
+\end{text}
+
+\begin{itemize}
+    \item Using the pointer $b_2$, find the smallest value in $B_2$, we can do this by continually traversing to the left child until the child is a leaf or it does not have a left child. We do the same to tree $B_1$ and we continually traverse the right child until the child is a leaf or it does not have a right child.
+    \item For the above algorithm, we switch between making one check in $B_2$ and then one check in $B_1$, we continue until we find the smallest node in $B_2$ or the largest node in $B_1$
+    \item We name the smallest/largest node $m$ and then extract $m$ from its tree and make its left child $b_1$ and its right child $b_2$. Meanwhile, if $m$ had any children, at most 1, the child will take $m$'s original spot. Therefore the binary tree structure will persist with all nodes on the left of $m$ being less than the value of $m$ and all nodes on the right having values greater than $m$
+\end{itemize}
+
+\noindent
+\begin{text}
+    For this algorithm, its worst-case happens if the both the paths of the smallest value of the right tree and the largest value of the left tree are at the full height of their trees, and the node $m$ has a child. This causes a total of $2*min\{h_1, h_2\} + 2$ steps (Though this happens for any case), where we take $2*min\{h_1, h_2\}$ steps to traverse through both trees, $1$ step to move node $m$, and another to replace $m$'s old position. Therefore the worst-case run time is $O(min\{h_1,h_2\})$\\
+    
+    \noindent
+    The new tree will be at most $max\{h_1, h_2\} + 1$ in height. Since if we were to remove a node $m$, assuming the max of both tree's height remains the same (Otherwise it can only go down since we're removing a node), when we make $m$ the parent of both $b_1$ and $b_2$, the height of the tree can then at most be $1 + max\{h_1, h_2\}$, where $1$ represents $m$ and $max\{h_1, h_2\}$ represents the remaining sub-trees that at most can be $h_1$ or $h_2$ in height.
+    
+    \hfill $\blacksquare$
+\end{text}
+
+%END Q3
+
+\end{document}

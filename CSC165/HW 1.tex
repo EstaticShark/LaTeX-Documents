@@ -1,0 +1,105 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}		 	
+\usepackage{fancyheadings}
+\usepackage[margin=3cm]{geometry}
+
+\title{CSC165H1 Problem Set 1}
+\author{Martin Chak, Tony Yang, Jack Liu}
+\date{January 24th, 2019}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+
+\begin{enumerate}
+
+\item[1a)] $Answer: \forall p  \in  P , Attacks(p,p) \Rightarrow \neg House(p)$
+
+\item[b)] $Answer: \forall p_1  \in  P ,(\exists p_2 \in P ,  Attacks(p_1,p_2)  \land  p_1 \neq p_2 )\Rightarrow \neg Behaved(p_1)$
+
+\item[c)] Answer: There is at least one dog that will not attack any cat
+
+\item[d)] $Answer: \forall p_1, p_2 \in P, Attacks(p_1,p_2)\land Attacks(p_2,p_1) \land p_1 \neq p_2 \Rightarrow \neg House(p_1) \lor \neg House(p_2)$
+
+\end{enumerate}
+
+
+\newpage
+\section*{Question 2}
+
+\begin{enumerate}
+\item[2.a)] $Answer: HasCSC(s):\exists i \in\mathbb{N}, (0\leq i < |s|)\wedge (s[i] = C) \land (s[i+1] = S) \land (s[i+2] = C)$
+
+\item[b)] $Answer: Substring(s_1, s_2): \exists n\in\mathbb{N},\forall i\in\mathbb{N},  (0\leq i < |s_1|) \Rightarrow s_1[i] = s_2[i + n]$
+
+\item[c)] $Answer: Palindrome(s): \forall i\in\mathbb{N},0\leq i < |s| \Rightarrow s[i]=s[|s|-i-1]$
+
+\item[d)] Answer: False. The statement given by the question says that for any two strings, $s_1$ and $s_2$, $s_1$ is a substring of $s_2$ if and only if the length of $s_1$ is less or equal to the length of $s_2$. However, not every string $s_1$ which is shorter in length than $s_2$ will be a substring of $s_2$. For example, take $s_1=$ hi and $s_2=$ bye: $s_1$ is one character shorter than $s_2$ but $hi$ is not a substring of $bye$
+
+\end{enumerate}
+
+\newpage
+
+\section*{Question 3}
+
+\begin{enumerate}
+\item[3.a)] $Answer: \exists x, y \in \mathbb{R}, (x < y) \land (f_1(x) \geq f_1(y))$
+
+\item[b)] $Answer: (\exists x_1, y_1 \in \mathbb{R}, (x_1 < y_1) \land (f_2(x_1) \leq f_2(y_1))) \wedge (\exists x_2, y_2 \in \mathbb{R}, (x_2 < y_2) \wedge (f_2(x_2) \geq f_2(y_2)))$
+
+\item[c)] $Answer: \exists x, y  \in \mathbb{R}, \forall z \in \mathbb{R}, (x \neq y) \wedge (f_3(z) \leq f_3(x))  \wedge (f_3(z) \leq f_3(y))$
+
+\item[d)] $Answer: \forall f: \mathbb{R} \rightarrow \mathbb{R}, (\forall x_1, x_2 \in \mathbb{R}, x_1 < x_2 \Rightarrow f(x_1) < f(x_2)) \Rightarrow (\forall z \in \mathbb{R}, \exists y \in \mathbb{R}, f(y) > f(z))$
+
+\end{enumerate}
+\newpage
+\section*{Question 4}
+\begin{enumerate}
+\item [4.a)] Given the following statement: \[\forall x \in \mathbb{R}, P(x, 165) \Rightarrow P(x,1)\]
+\textbf{A Predicate P over $\mathbb{N}$ x $\mathbb{N}$ which make the statement TRUE is:}
+\[P(x, y): x > y, \text{where } x, y \in \mathbb{N}\]
+Using the definition of our Predicate we expand the original statement which gives us,
+\[\forall x \in \mathbb{R}, x > 165  \Rightarrow x > 1\]
+This statement says that every real number greater than 165 is also greater than 1. This is TRUE since we know 165 is greater than 1, hence any number greater than 165 will be greater than 1 as well by property of inequality.
+
+\textbf{A Predicate P over $\mathbb{N}$ x $\mathbb{N}$ which make the statement FALSE is:}
+\[P(x, y): x < y, \text{where } x, y \in \mathbb{N}\]
+Using the definition of our Predicate we expand the original statement which gives us,
+\[\forall x \in \mathbb{R}, x < 165  \Rightarrow x < 1\]
+This statement says that every real number less than 165 is also less than 1. \\
+This statement is FALSE because we know that not every real number less than 165 is also less than 1. For example, 100 is less than 165, but 100 is not less than 1. Hence we have shown that this statement is false. 
+\newpage
+\item [4.b)] Given the following statement: 
+\[\forall x \in \mathbb{R}, ((P(x) \Rightarrow Q(x)) \Rightarrow R(x)) \Leftrightarrow (P(x) \Rightarrow (Q(x) \Rightarrow R(x)))\]
+
+\textbf{Here are the definitions for a non-empty set U, and predicates P, Q, and R over U, that makes the above statement TRUE:}
+\[U = \{5\} \]
+\[P(x): x > 3, \text{where } x \in U\]
+\[Q(x): x > 2, \text{where } x \in U\]
+\[R(x): x > 1, \text{where } x \in U\]
+
+Given this set U, all of our predicates P, Q, and R are TRUE for every x in U, and thus substituting into the original statement we get, 
+\[((\text{True} \Rightarrow \text{True}) \Rightarrow \text{True}) \Leftrightarrow (\text{True} \Rightarrow (\text{True} \Rightarrow \text{True}))\]
+which satisfies the property of biconditional operators, thus is a TRUE statement.
+
+
+\textbf{Here are the definitions for a non-empty set U, and predicates P, Q, and R over U, that makes the above statement FALSE:}
+\[U = \{1\} \]
+\[P(x): x > 1, \text{where } x \in U\]
+\[Q(x): x > 2, \text{where } x \in U\]
+\[R(x): x > 3, \text{where } x \in U\]
+
+Given this set U, all of our predicates P, Q, and R are FALSE for every x in U, and thus substituting into the original statement we get, 
+\[((\text{False} \Rightarrow \text{False}) \Rightarrow \text{False}) \Leftrightarrow (\text{False} \Rightarrow (\text{False} \Rightarrow \text{False}))\]
+\[(\text{True} \Rightarrow \text{False})  \Leftrightarrow (\text{False} \Rightarrow \text{True})\]
+\[\text{True} \Leftrightarrow \text{False}\]
+which does not follow the property of biconditional operators as we want both side to have the same truth value and thus is a FALSE statement.
+
+\end{enumerate}
+
+
+\end{document}

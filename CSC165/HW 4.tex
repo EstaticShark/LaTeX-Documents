@@ -1,0 +1,213 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 	
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+
+\title{CSC165H1 Problem Set 4}
+\author{Martin Chak}
+\date{March 28, 2019}
+
+\begin{document}
+
+\maketitle
+% BEGIN QUESTION 1
+\newpage
+\section*{Question 1}
+\begin{enumerate}
+    % Begin 1a
+    \item[1.a)] We are trying to find a theta bound for the function $\sum_{i = 1}^{n}\ceil{n/i}$
+    \begin{align}
+        \sum_{i = 1}^{n}n/i &\leq \sum_{i = 1}^{n}\ceil{n/i} < \sum_{i = 1}^{n}(n/i + 1) \tag{By Fact 2}
+    \end{align}
+    
+    We can then prove the bound of the function in the centre of the inequality by finding an upper-bound on the right side and a lower bound on the left side.\\
+    \underline{Right Side:}
+    \begin{align}
+        \sum_{i = 1}^{n}n/i + 1 &= \sum_{i = 1}^{n}n/i + \sum_{i = 1}^{n}1\nonumber\\
+        &= n\cdot\sum_{i = 1}^{n}(1/i) + n\nonumber
+    \end{align}
+    By Fact 1, we know that $n\cdot\sum_{i = 1}^{n}1/i + n \in \Theta(nlog(n) + n)$. For large values of $n$ in the function $nlog(n) + n$, $nlog(n)$ dominates the expression so the upper bound of the summation is $O(nlog(n))$.\\
+    
+    \underline{Left Side:}
+    By Fact 1, we immediately know that $\sum_{i = 1}^{n}n/i = n\cdot\sum_{i = 1}^{n}1/i\in \Theta(nlog(n))$, for which we know that the lower bound is $\Omega(nlog(n))$.\\
+    
+    Since we know the upper and lower bounds of the left and right functions we can write:
+    \begin{align}
+        c_1\cdot(nlog(n)) < \sum_{i = 1}^{n}n/i &\leq \sum_{i = 1}^{n}\ceil{n/i} < \sum_{i = 1}^{n}(n/i) + 1 < c_2\cdot(nlog(n)) \nonumber
+    \end{align}
+    The inequality above is an expanded version of what was found of the lower and upper bounds on the left and right sides respectively where $c_1$ and $c_2$ are from their respective definitions. And since we are trying to show $RT(n) = \sum_{i = 1}^{n}\ceil{n/i}\in\Theta(nlog(n))$, we must show:
+    \begin{align}
+        \exists c_a, c_b, n_0 \in\mathbb{R^+}, \forall n \in\mathbb{N}, n\geq n_0 \Rightarrow c_a\cdot nlog(n) \leq RT(n) \leq c_b\cdot nlog(n)\nonumber
+    \end{align}
+    However this should be easy now that we have the above inequality. Let $c_a = c_1$, $c_b = c_2$ and $n_0 = max(n_1, n_2)$ where $n_1$ and $n_2$ are from the lower and upper bound definitions of the above inequalities. If we then let $n\in\mathbb{N}$ and assume $n \geq n_0$, then we know $c_a\cdot nlog(n) \leq RT(n) \leq c_b\cdot nlog(n)$
+    
+    Now that we have proved both bounds on both sides of the inequality, we have shown by definition the theta bound of $\sum_{i = 1}^{n}\ceil{n/i}$ is $nlog(n)$.
+    % End 1a
+    
+    % Begin 1b
+    \item [1.b)] We are looking to prove the runtime on a function called print\_multiples() which consists of a for loop with another for loop nested within. The outer for loop runs from $1$ to $n+1$ in steps of $1$, so that the amount of iterations it has is $\sum_{d = 1}^{n}1$, or $n$ iterations. The inner loop however depends on $d$ which we defined in the outer loop, it runs from $0$ to $n$ in steps of $d$. This makes the inner loop run $\ceil{n/d}$ times. If we now combine the functions for each loop we get: $\sum_{d = 1}^{n}\ceil{n/d}$ times. Now we can solve the summation to acquire the theta bound.
+    
+    \begin{align}
+        \sum_{d = 1}^{n}n/d &\leq \sum_{d = 1}^{n}\ceil{n/d} < \sum_{d = 1}^{n}(n/d + 1) \tag{By Fact 2}
+    \end{align}
+    
+    We can then prove the bound of the function in the centre of the inequality by finding an upper-bound on the right side and a lower bound on the left side.\\
+    \underline{Right Side:}
+    \begin{align}
+        \sum_{d = 1}^{n}n/d + 1 &= n\cdot\sum_{d = 1}^{n}1/d + \sum_{d = 1}^{n}1 \nonumber\\
+        &= n\cdot\sum_{d = 1}^{n}(1/d) + n\nonumber
+    \end{align}
+    By Fact 1, we know that $n\cdot\sum_{d = 1}^{n}1/d + n \in \Theta(nlog(n) + n)$. For large values of $n$ in the function $nlog(n) + n$, $nlog(n)$ dominates the expression so the upper bound of the summation is $nlog(n)$.\\
+    
+    \underline{Left Side:}
+    By Fact 1, we immediately know that $\sum_{d = 1}^{n}n/d = n\cdot\sum_{d = 1}^{n}(1/d) + n \in \Theta(nlog(n))$, for which we immediately know that the lower bound is $nlog(n)$.\\\\
+    
+    We have shown in 1a that when you find an upper bound to a greater function that the bound is transitive in between the inequalities and it is also an upper bound of the smaller function, vice-versa for the lower bound. So now that we have proved both bounds on both sides of the inequality, we have shown:\\
+    \begin{align}
+        (\sum_{d = 1}^{n}\ceil{n/d} \in \O(nlog(n))) \land (\sum_{d = 1}^{n}\ceil{n/d} \in \Omega(nlog(n))) \nonumber
+    \end{align}
+    Which by definition proves that the running time: $\sum_{d = 1}^{n}\ceil{n/d} \in \Theta(nlog(n))$\hfill \Box
+    % End 1b
+    
+    % Begin 1c
+    \item[1.c)] We now must find the theta bound of the function print\_multiples2() which is a modified version of the function found in 1b. The main difference is that in the outer loops, there contains a second nested for loop that iterates $d$ times for every time that $d$ is a multiple of 5. We can create a summation to describe the run-time:
+    
+    \begin{align}
+        RT(n) = \sum_{d = 1}^{n}\ceil{n/d} + \sum_{i = 1}^{\floor{n/5}}5i\nonumber
+    \end{align}
+
+    We already know that the first summation has a theta bound of $nlog(n)$, so the new bound depends on whether the second summation grows significantly enough to change the run-time.
+    \begin{align}
+        \sum_{i = 1}^{\floor{n/5}}5i &= 5\cdot\sum_{i = 1}^{\floor{n/5}}i\nonumber\\
+        &= 5\cdot \frac{\floor{n/5}(\floor{n/5} + 1)}{2}\nonumber\\
+        &= 5\cdot \frac{\floor{n/5}\cdot\floor{n/5} + \floor{n/5}}{2}\nonumber
+    \end{align}
+    
+    For large values of $n$, the summation is bounded by $\floor{n^2 + n}$ which we can rewrite as $n^2 + n$ since $n\in\mathbb{N}$, so now we can rewrite the run-time of the function as:
+    
+    \begin{align}
+        RT(n) = \sum_{d = 1}^{n}\ceil{n/d} + \sum_{i = 1}^{\floor{n/5}}5i\nonumber = \sum_{d = 1}^{n}\ceil{n/d} + 5\cdot \frac{\floor{n/5}\cdot\floor{n/5} + \floor{n/5}}{2}
+    \end{align}
+    
+    So we now know that $RT(n) \in \Theta(nlog(n) + n^2 + n)$ that for large values of $n$ the function is dominated by $n^2$ so that we can instead say $RT(n) \in \Theta(n^2)$ \hfill \Box
+    
+    
+    % End 1c
+    
+\end{enumerate}
+% END QUESTION 1
+
+% BEGIN QUESTION 2
+\newpage
+\section*{Question 2}
+\begin{enumerate}
+    
+    % Begin 2a
+    \item[2.a)] We are looking for an input family for the function alg() which makes the run-time have a theta bound of $2^n$, where $n \in \mathbb{N}$ and $n$ is the length of the input lst.\\\\
+    Before I define lst, I will use odd and even to represent integers that are odd or even respectively.\\
+    For this to be true we need it so that $lst = [even, even, ... , even, odd, odd]$ as a result lst is a list that contains all even numbers except for the last two elements. Let $lst = [2,2,2,2, ... ,2, 1, 1]$\\\\
+    The variables $i$ and $j$ start at $1$ and the while loop runs so long as $i < n$. There are two main blocks of code that is in the while loop. If lst[i] is even, then $i$ increases by $1$ and $j$ is doubled. But if lst[i] is odd, then $i$ is doubled and a for loop runs $j$ times.\\\\
+    By setting the first $n-2$ elements to be even, the if statement will be triggered $n-2$ times which changes the values of $i$ and $j$ so that $i = n-1$ and $j = 2^{n-2}$. The while loop stops once $i >= n$ so the next $n-1$th iteration break the loop since $i = n-1$. But since the next number is odd, the else statement will be triggered and the inner for loop will run. The for loop runs $j$ times, printing every number from 0 to $j$, so the for loop will run $2^{n-2}$ times as a result. Since this is the last iteration, we can add its run-time to all the earlier iterations to get $RT(n) = n-1 + 2^{n-2}$. For the function $RT(n) = n-1 + 2^{n-2}$. we know that for large values of $n$, $RT(n) \in O(2^{n})$ and $RT(n) \in\Omega(2^{n})$. Therefore for this family of inputs, $RT(n) \in \Theta(2^n)$ \hfill\Box
+    % End 2a
+    
+    
+    % Begin 2b
+    \item[2.b)] We need to find an input family whose run-time has a theta bound of $log(n)\cdot 2^\sqrt{n}$, where $n\in\mathbb{N}$ and $n$ is the length of the input lst.\\
+    
+    As we did in 2a, I will use odd and even to refer to integers that are odd or even respectively.\\
+     We need to let $lst = [even, even, ... , even, odd, ... , odd, odd]$ where the first $\floor{\sqrt{n}}$ terms are even and every other element after is odd. So let $lst = [2, 2, ..., 2, 1, ... , 1]$ where the first $\floor{\sqrt{n}}$ are 2 and all subsequent values are 1\\
+    
+    By setting the first $\floor{\sqrt{n}}$ terms to be even, the if statement runs $\floor{\sqrt{n}}$ times and so the values of the variables are $i = \floor{\sqrt{n}} + 1$ and $j = 2^{\floor{\sqrt{n}}}$. All other elements in the list are odd, so only the else statement will run in future iterations.\\
+    
+    We can define $k \in \mathbb{N}$ which will represent the remaining iterations after the the first $\floor{\sqrt{n}}$ iterations. Since only the else statement is run at this point, $i$ will double with each iteration and so the while loop runs until $2^k\cdot(\floor{\sqrt{n}} + 1) \geq n$.\\
+    
+    In addition, for each remaining iteration, the for loop in the else statement will run $j$ times, or more specifically $j = 2^{\floor{\sqrt{n}}}$ times. This amounts to $k\cdot 2^{\floor{\sqrt{n}}}$ steps from the for loop.\\
+    
+    Since we know that the steps that happened before $k$ started counting is $\floor{\sqrt{n}}$, the total number of steps in the while loop will be $\floor{\sqrt{n}} +k\cdot2^{\floor{\sqrt{n}}}$. And since we know that the loop only runs until $2^k\cdot(\floor{\sqrt{n}} + 1) \geq n$, we can isolate for $k$ to get a specific run-time:
+    \begin{align}
+        2^k\cdot(\floor{\sqrt{n}} + 1) &\geq n\nonumber\\
+        2^k &\geq \frac{n}{(\floor{\sqrt{n}} + 1)}\nonumber\\
+        k\cdot log(2) &\geq log(\frac{n}{(\floor{\sqrt{n}} + 1)})\nonumber\\
+        k &\geq \frac{log(\frac{n}{(\floor{\sqrt{n}} + 1)})}{log(2)}\nonumber\\
+        k &= \ceil{\frac{log(\frac{n}{(\floor{\sqrt{n}} + 1)})}{log(2)}}\tag{Since we only need the first $k$}
+    \end{align}
+    We know now that $k\in\Theta(\ceil{\frac{log(\frac{n}{(\floor{\sqrt{n}} + 1)})}{log(2)}})$ which we can simplify to saying that $k\in\Theta(log(n))$ or that the else statement of loop 1 has a theta bound of log(n) as required by the question. Now we can substitute the isolated $k$ into the equation $\floor{\sqrt{n}} +k\cdot2^{\floor{\sqrt{n}}}$\\
+    \begin{align}
+        RT(n) = \floor{\sqrt{n}} +k\cdot2^{\floor{\sqrt{n}}} = \floor{\sqrt{n}} +\ceil{\frac{log(\frac{n}{(\floor{\sqrt{n}} + 1)})}{log(2)}}\cdot2^{\floor{\sqrt{n}}} \nonumber
+    \end{align}
+    
+    We then know that $RT(n) \in \Theta(\floor{\sqrt{n}} +\ceil{\frac{log(\frac{n}{(\floor{\sqrt{n}} + 1)})}{log(2)}}\cdot2^{\floor{\sqrt{n}}} \nonumber)$ and for large values of $n$ this function is dominated by $log(n)\cdot 2^n$ so that $RT(n) \in \Theta({log(n)\cdot 2^\sqrt{n}})$ \hfill\Box
+    
+    % End 2b
+    
+    
+    % Begin 2c
+    \item[2.c)] We need to prove that the worst case run-time for the function alg() is $2^n$.\\
+    
+    We know that the while loop will run at most $n-1$ times since the while loop continues until $i\geq n$. In addition, in the else statement of the while loop there is a loop that iterates $j$ times but $i$ is doubled if this else statement runs. The variable $j$ starts at $1$ and every time the if statement is triggered, $j$ is doubled. So to find what input family creates the most steps, we need to find a perfect balance between how many times the if and else statements should be run.\\
+    
+    First thing that we can note is that we should never run the else statement when $\floor{\frac{n}{2}} \leq i < n-1$. If you run the else statement within the interval, you double $i$ to be greater or equal to than $n$ and waste potential iterations for the if statement which would also double $j$ and increase the run-time of your next run of the else statement. In that case we know that we should only call the else statement and consequentially double $i$ when $i = n-1$ since this indicates that the while loop is on its last iteration anyways.\\
+    
+    If we also examine running the else statement where $1 \leq i < \floor{\frac{n}{2}}$ we will find that it also wastes steps and does not represent the upper bound well. If we let the number of runs of the else statement be represented by a variable $k\in\mathbb{N}$, by letting the else statement run on every iteration we can make a calculation on how many steps it will take.
+    \begin{align}
+        i\cdot2^k &\geq n \tag{Loop stops when $i \geq n$}\nonumber\\
+        k &\geq \frac{log(n)}{log(2)}\nonumber\\
+        k &= \ceil{\frac{log(n)}{log(2)}}\nonumber
+    \end{align}
+    We now know that the while loop runs $k$ times, and since the else statement is run on every iteration, the inner for loop runs once each iteration since $j = 1$ and so running only else statements gives you at most $\frac{2\cdot log(n)}{log(2)}$ iterations which is not a proper upper bound. If we quantify this against running the if statement before running all else statements afterwards, by letting a variable $c\in\mathbb{N}$ represent the amount of times the if statement is allowed to run before only running else statements, then only $c$ steps are made for running the if statement $c$ amount of times. But as a result, consequential else statement calls will have a running time of $k\cdot2^c$, for a total run-time of $k\cdot2^c + c$, a significantly larger upper bound than $\frac{2\cdot log(n)}{log(2)}$ when you allow $c$ to grow as large as possible\\
+    
+    Of all the families of inputs, the largest upper bound is where the if statement is triggered $n-2$ times and the last iteration runs the else statement which iterates through the for loop $2^{n-2}$ times which we proved in question 2a to have a theta bound of $2^n$. Therefore by eliminating the inputs that would not produce the worst-case running time, we find that the worst-case running time is $O(2^n)$ or at most $2^n$.
+    % End 2c
+\end{enumerate}
+% END QUESTION 2
+
+% BEGIN QUESTION 3
+\newpage
+\section*{Question 3}
+\begin{enumerate}
+    % Begin 3a
+    \item[3.a)] (i) Define what it means for a function $f:\mathbb{N}\rightarrow\mathbb{R}^{\geq 0}$ to be an upper bound of a best-case running time of an algorithm\\
+    Answer: Function $f$ is an upper bound of the $BC_{func}(n)$, where $n\in\mathbb{N}$ and represents the size of the input, if and only if $f$ absolutely dominates $BC_{func}$. Or otherwise:
+    \begin{align}
+        \forall n\in\mathbb{N}, \exists x\in I_{func}, \text{running time of } f(x) \leq f(n)\nonumber
+    \end{align}
+    
+    (ii) Define what it means for a function $f:\mathbb{N}\rightarrow\mathbb{R}^{\geq 0}$ to be a lower bound of a best-case running time of an algorithm\\
+    Answer: Function $f$ is an lower bound of the $BC_{func}(n)$, where $n\in\mathbb{N}$ and represents the size of the input, if and only if $f$  is absolutely dominated $BC_{func}$. Or otherwise:
+    \begin{align}
+        \forall n\in\mathbb{N}, \forall x\in I_{func}, \text{running time of } f(x) \geq f(n)\nonumber
+    \end{align}
+    % End 3a
+    
+    % Begin 3b
+    \item[3.b)] We must find the theta bound for the best-case run-time of the function rearrange(). We will prove this by finding the lower and upper bound of the best-case running time\\
+    
+    \underline{Lower Bound of Best-Case Running Time:}\\
+    \textbf{WTS} $\forall n\in\mathbb{N}, \forall x\in I_{func}, \text{running time of } f(x) \geq f(n)\nonumber$\\
+    We are looking to prove the lower bound of the best-case run time. The function takes an input lst which is a list of integers. We will use a variable $n\in\mathbb{N}$ to represent a the length of the input list.\\
+    
+    The for loop iterates a variable $i$ from $2$ to $n$ and it will run for at least $n-2$ iterations. In each iteration either the if or else statement will run, depending on if lst[i] is even or odd respectively. In either case, a variable $j$ is set to $j = i - 2$ and in a while loop, lst[j] is swapped with lst[j+2] while $j$ decreases by 2 per iteration of the while loop until $j<0$ or until their respective inequality is False. However, each statement only switches values in lst and does not decrease the run-time.\\
+    
+    Regardless of which if or else statement runs, both will increase running-time equally and do not always run. Since each iteration takes one step there must be at least $n-2$ iterations in the best-case or that $n-2 \in \Omega(n)$.\\
+    
+    \underline{Upper Bound of Best-Case Running Time:}\\
+    \textbf{WTS} $\forall n\in\mathbb{N}, \exists x\in I_{func}, \text{running time of } f(x) \leq f(n)\nonumber$\\
+    We are looking to prove the upper bound of the best-case run time. The function takes an input lst which is a list of integers. We will use a variable $n\in\mathbb{N}$ to represent the length of the input list. We will also pick a list so that $lst = [0, 0,..., 0, 0]$ or a $n$ length list containing only the integers $0$.\\
+    
+    Since we have picked $lst$ to be a list with $n$ elements which all contain the element $0$ we can follow the best-case run-time. On the first iteration the if statement will run and assign $j = -2$, but then the while loop is skipped since $j < 0$ and $lst[j+2] == lst[j]$ (Though only one of them need to be true to skip the while loop). This first iteration takes exactly $1$ step, and since the following elements of $lst$ are all the same, then each consecutive step will also take $1$ step by always skipping the while loop. And because lst is iterated from $i = 2$ until $i\geq n$, then the best-case run-time is at most $n-2$ or $n-2 \in O(n)$\\
+    
+    
+    Therefore by proving  that $BC_{rearrange} \in O(n) \land BC_{rearrange} \in \Omega(n)$. We, by definition, prove the theta bound $BC_{rearrange} \in \Theta(n)$ \hfill\Box
+    % End 3b
+    
+\end{enumerate}
+% END QUESTION 3
+
+
+\end{document}

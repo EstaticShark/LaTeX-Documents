@@ -1,0 +1,530 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 	
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+
+\title{CSC165H1 Problem Set 3}
+\author{Martin Chak, Tony Yang, Jack Liu}
+\date{March 7, 2019}
+
+\begin{document}
+
+\maketitle
+% BEGIN QUESTION 1
+\newpage
+\section*{Question 1}
+%1a)
+\begin{enumerate}
+    \item[1.a)] Prove using induction that: 
+    \[\forall n \in \mathbb{Z^+}, d_{2n-1} \leq \sqrt{2n-1}\]
+    \underline{BASE CASE}: \\
+    Let $n = 1$ \\
+    WTS that $d_{2n-1} \leq \sqrt{2n-1}$
+    \begin{align*}
+        d_{2n-1} &= d_1 
+        \tag{since n = 1} \\
+        &= 1 \\
+        &= \sqrt{2 - 1} \\
+        &= \sqrt{2n - 1}
+        \tag{since n = 1}\\
+        &\leq \sqrt{2n - 1}
+    \end{align*}
+    \underline{INDUCTIVE STEP}:\\
+    We want to show that:
+    \[\forall k \in \mathbb{Z^+}, 
+    d_{2k-1} \leq \sqrt{2k-1} \Rightarrow
+    d_{2(k+1)-1} \leq \sqrt{2(k+1)-1}
+    \]
+    Let $k \in \mathbb{Z^+}$\\
+    Assume $d_{2k-1} \leq \sqrt{2k-1}$\\
+    We will show that, $d_{2(k+1)-1} \leq \sqrt{2(k+1)-1}$, ie, 
+    \[d_{2k+1} \leq \sqrt{2k+1}\]
+    By the definition of the sequence we conclude:
+    \begin{align*}
+        d_{2k+1} &= \frac{2k+1}{d_{2k}}\\
+        &= \frac{2k+1}{\frac{2k}{d_{2k-1}}}\\
+        &= (\frac{2k+1}{2k}) \cdot d_{2k-1}\\
+        &\leq (\frac{2k+1}{2k}) \cdot \sqrt{2k-1}
+        \tag{by Induction Hypothesis and since $\frac{2k+1}{2k} > 0$}\\
+        &= \frac{(\sqrt{2k+1} \cdot \sqrt{2k+1}) \cdot \sqrt{2k-1}}{2k}\\
+        &= \sqrt{2k+1} \cdot \frac{\sqrt{4k^2 -1}}{2k}
+        \tag{by Difference of Squares}\\
+        &= \sqrt{2k+1} \cdot \frac{\sqrt{4k^2 -1}}{\sqrt{4k^2}}\\
+        &= \sqrt{2k+1} \cdot \sqrt{\frac{{4k^2 -1}}{{4k^2}}}\\
+        &\leq \sqrt{2k+1} \cdot 1
+        \tag{since $0 < \frac{{4k^2 -1}}{{4k^2}} < 1$, we conclude 
+        $0 < \sqrt{\frac{{4k^2 -1}}{{4k^2}}} < 1$}\\
+        &\leq \sqrt{2k+1}
+    \end{align*}
+    As Required \hfill \Box
+\end{enumerate}
+
+%1b)
+\newpage
+\begin{enumerate}
+    \item[1.b)] Want to show that
+    \[\forall n \in \mathbb{N}, d_{2n} > \sqrt{2n}\]
+    We will split the proof into 2 cases where n is 0 and where n is positive integers so we can use what we concluded from 1a). If we prove both cases then we will have proven that this statement holds for all values of natural number\\\\
+    \underline{CASE 1}: Assume $n = 0$
+    \begin{align*}
+        d_{2n} &= d_{0}
+        \tag{since n = 0}\\
+        &= 1 
+        \tag{from definition of the sequence}\\
+        &> 0
+        = \sqrt{2\cdot0}
+        = \sqrt{2n}\\
+        d_{2n} &> \sqrt{2n}
+    \end{align*}
+    \underline{CASE 2}: Assume $n \in \mathbb{Z^+}$\\
+    By the definition of sequence, we conclude that:
+    \[
+        d_{2n} = \frac{2n}{d_{2n-1}}
+    \]
+    Since $n \in\mathbb{Z^+}$, by 1.a), we conclude:
+    \begin{align*}
+        d_{2n-1} &\leq \sqrt{2n - 1}
+        \tag{since $n\in\mathbb{Z^+},$ by 1.a)}\\
+        \frac{2n}{d_{2n-1}} &\geq \frac{2n}{\sqrt{2n-1}}
+        \tag{by property of inequality}\\
+        d_{2n} &\geq \frac{2n}{\sqrt{2n-1}}\tag{from definition of sequence}\\
+        &= \sqrt{2n} \cdot \frac{\sqrt{2n}}{\sqrt{2n-1}}
+        \tag{since $2n = \sqrt{2n} \cdot \sqrt{2n}$ and $2n > 0$}\\
+        &= \sqrt{2n} \cdot \sqrt{\frac{2n}{2n-1}}\\
+        &> \sqrt{2n} \cdot 1 \tag{since $\frac{2n}{2n-1}>1$, we conclude$ \sqrt{\frac{2n}{2n-1}}>1$}\\
+        d_{2n} &> \sqrt{2n}
+    \end{align*}
+    as required \hfill \Box
+    
+\end{enumerate}
+
+
+% BEGIN QUESTION 2
+\newpage
+\section*{Question 2}
+\begin{enumerate}
+
+% Begin 2a Answer
+\item[2.a)] $(Part$ $1)$ Write the decimal value of the balanced ternary number $(T011T)_{bt}$.\\
+\[(T011T)_{bt} = (-1)\cdot3^4 + 0\cdot3^3 + 1\cdot3^2 + 1\cdot3^1 + (-1)\cdot3^0 = -81 + 0 + 9 + 3 - 1 = -70\]
+$Answer: -70$\\\\
+$(Part$ $2)$ Write the balanced ternary representation of the decimal number 210 that doesn’t have any
+leading zeroes.\\
+$Answer: (10$TT$10)_{bt}$
+
+
+% Begin 2b Proof
+\item[2.b)] \textbf{WTS} $\forall n\in\mathbb{Z}^+,6|3^n-3$\\
+
+% Begin Base Case
+\underline{Base Case (n = 1):}\\
+- We want to prove the base case: $6|3^n-3$ for $n = 1$\\
+- Let $n = 1$\\
+- By expanding the definition of divisibility, we want to show that $\exists k \in\mathbb{Z}, 3^n-3 = 6k$
+
+\begin{align*}
+    3^n-3 &= 3^1-3\nonumber\\
+    &= 0\\
+    3^n-3 &= 6k \tag{Take k = 0}\nonumber
+\end{align*}
+
+- By the definition of divisibility we have proven the base case\\
+
+% Begin Induction Step
+% Need to specifically state the predicate
+\underline{Induction Step:}\\
+- We want to prove 
+\[\forall n\in\mathbb{Z}^+,6|3^n-3 \Rightarrow 6|3^{n + 1}-3\]
+- Let $n \in \mathbb{Z^+}$, we assume $6|3^{n}-3$, ie, there exists a $k$ such that  $6k = 3^n-3$\\
+- By expanding the definition of divisibility, we want to show that $\exists j \in\mathbb{Z}, 3^{n+1}-3 = 6j$
+
+\begin{align*}
+    3^{n+1}-3 &= 3^n\cdot3- 3 \nonumber\\
+    &= 3(3^n-1) \nonumber\\
+    &= 3((3^n - 3) + 2)\nonumber\\
+    &= 3(6k + 2)\tag{By Induction Hypothesis}\\
+    &= 18k+6\nonumber\\
+    &= 6(3k+1)\nonumber\\
+    3^{n+1}-3 &= 6j\nonumber\tag{Take j = 3k+1, so $j \in \mathbb{Z}$}
+\end{align*}
+
+- By the definition of divisibility we have proven the induction hypothesis\\
+- By proving the base case and the induction step we have shown $\forall n\in\mathbb{Z}^+,6|3^n-3$\\
+
+\newpage
+% Begin 2c proof
+% Problems:
+    %  z^+, not z
+    %  change the "so that" in the definition of the binary predicate, quantify x, and change di to d_0....to d_k-1.
+\item[2.c)]\textbf{WTS} $\forall n \in\mathbb{Z}^+, \forall x \in\mathbb{N},$ (x is n-digit positively balanced) $\Rightarrow (6\nmid x-2) \land (6\nmid x-5)$\\
+- Let $n \in\mathbb{Z}$ and let $x \in\mathbb{N}$\\
+- If x is n-digit positively balanced, then can assume that it can be described with a sequence of digits $(d_{k - 1},d_{k-2},\cdot\cdot\cdot ,d_{1},d_{0})_{bt}$ such that each digit $d_i$ is either 0 or 1 which is then used to multiply sums of base 3\\
+- n-digit positively balanced numbers can be represented by the sum: $\sum_{i = 0}^{k-1}d_i\cdot 3^i$ where $k \in\mathbb{N}$ and $k$ is $n$, which is the number of digits in the sequence\\
+- We want to show that $6\nmid x-2 \land 6\nmid x-5$ which we will do via induction and the Quotient Remainder Theorem (QRT) which states: $\forall n \in\mathbb{Z}, \forall d \in\mathbb{Z}^+,\exists q,r \in\mathbb{Z}, n = qd + r \land 0\leq r < d$\\
+- From the QRT (and the problem set 3 handout) we can realize that remainders are unique, so for example if we can prove $(6|x-4)$, then $x$ has a remainder of 4 when divided by 6, but by QRT we also prove that $(6\nmid x) \land (6\nmid x-1) \land (6\nmid x-2) \land (6\nmid x-3) \land (6\nmid x-5)$\\
+- By using induction we will use these assumptions to show that all n-digit positively balanced numbers will have either a remainder of 0, 1, 3 or 4 to show that $(6\nmid x-2) \land (6\nmid x-5)$\\
+- Lastly we will define a predicate to represent that for a natural number $k$, so that there exists a sequence where $x$ is a decimal representation of k-digit positively balanced number:\\
+\begin{align*}
+    P(k,x): \exists d_i \in \{0,1\}, x = \sum_{i = 0}^{k-1}d_i\cdot 3^i, \text{where } k\in\mathbb{N}
+\end{align*}
+\textbf{WTS} $\forall n \in\mathbb{Z}^+, \forall x \in\mathbb{N},$ P(n,x) $\Rightarrow (6\nmid x-2) \land (6\nmid x-5)$\\
+
+% Begin Base Case
+\textbf{Base Case (n = 1):}\\
+- We want to prove the base case of $\forall n\in\mathbb{Z}^+,\forall x\in\mathbb{N},P(1,x) \Rightarrow (6\nmid x-2) \land (6\nmid x-5)$\\
+- Let $n = 1$ and $x \in\mathbb{N}$\\
+- Assume $P(n,x)$, or otherwise now $P(1,x)$\\
+- Now we have to show $\forall x\in\mathbb{N},P(1,x) \Rightarrow (6\nmid x-2) \land (6\nmid x-5)$\\
+- By the assumption of the predicate $P(1,x)$, we know we can describe $x$ as a summation so that $x = \sum_{i = 0}^{k-1}d_i\cdot 3^i$, where $k = n = 1$
+\begin{align*}
+    x &= \sum_{i = 0}^{k-1}d_i\cdot 3^i \nonumber\\
+    &= \sum_{i = 0}^{0}d_i\cdot 3^i\nonumber\tag{Since $k = n$}\\
+    &= d_0\cdot 3^0\nonumber\\
+    &= d_0\nonumber\\
+    x &= \text{0 or 1} \tag{$d_i\in\{0,1\}$}
+\end{align*}
+
+- Because $n = 1$, and $d_i\in\{0,1\}$, $x$ can only be 0 or 1\\
+
+% Base Case Subcase 1
+\underline{Case 1 ($x = 0$):}\\
+- We want to show that $(6|x)$, or that $\exists k_1 \in\mathbb{Z}, 6k_1 = x$\\
+\begin{align*}
+    0 &= x\tag{Since assumption that $x = 0$}\\
+    x &= 6k_1 \tag{Since we can let $k_1 = 0$, then $6|x$}
+\end{align*}
+- Since $x = 0$, $(6|0) = (6|x)$\\
+- Then by QRT, $(6\nmid x-2) \land (6\nmid x-5)$\\
+
+
+% Base Case Subcase 2
+\underline{Case 2 ($x = 1$):}\\
+- We want to show that $(6|x-1)$, or that $\exists k_2 \in\mathbb{Z}, 6k_2 = x$\\
+\begin{align*}
+    0 &= x-1 \tag{Since assumption that $x = 1$}\\ 
+    x-1 &= 6k_2\tag{Since we can let $k_2 = 0$, then $6|x - 1$}\\
+\end{align*}
+- Since $x = 1$, $(6|0) = (6|x-1)$\\
+- Then by QRT, $(6\nmid x-2) \land (6\nmid x-5)$\\\\
+
+- Therefore we have shown that $(6\nmid x-2) \land (6\nmid x-5)$ for $n = 1$\\
+
+
+% Begin Induction Step
+\underline{Induction Step:}\\
+- Let $n \in\mathbb{Z}^+$ and $x \in\mathbb{N}$\\
+- Assume $x$ is an n-digit positively balanced number\\
+- We can now assume that $P(n,x) \Rightarrow (6\nmid x-2) \land (6\nmid x-5)$\\
+- We want to prove that $P(n+1,x) \Rightarrow (6\nmid x-2) \land (6\nmid x-5)$\\
+- By assumption of the predicate $P(n+1,x)$, we know we can describe $x$ as a summation so that $x = \sum_{i = 0}^{k-1}d_i\cdot 3^i$
+\begin{align*}
+    x &= \sum_{i = 0}^{k-1}d_i\cdot 3^i\nonumber\\ 
+    &= \sum_{i = 0}^{(n+1)-1}d_i\cdot 3^i\nonumber\tag{Since $k = n + 1$}\\
+    &= \sum_{i = 0}^{n}d_i\cdot 3^i\nonumber\\
+    \sum_{i = 0}^{n}d_i\cdot 3^i\nonumber &= \sum_{i = 0}^{n-1}d_i\cdot 3^i + d_n\cdot 3^n\nonumber
+\end{align*}
+- Since we can describe $x = \sum_{i = 0}^{n}d_i\cdot 3^i\nonumber = \sum_{i = 0}^{n-1}d_i\cdot 3^i + d_n\cdot 3^n\nonumber$, we can create a new variable $x_b$ for simplicity. So that $x_b = \sum_{i = 0}^{n-1}d_i\cdot 3^i$, where $x_b$ is an $x$ from our assumption of the predicate $P(n,x_b)$ such that $(6\nmid x_b-2) \land (6\nmid x_b-5)$\\
+- Now we can describe $x$ as $x = \sum_{i = 0}^{n}d_i\cdot 3^i\nonumber = x_b + d_n\cdot 3^n\nonumber$\\
+- Since we assume that $P(n,x) \Rightarrow (6\nmid x-2) \land (6\nmid x-5)$ then we equivalently know that $x_b = \sum_{i = 0}^{n-1}d_i\cdot 3^i \Rightarrow (6\nmid \sum_{i = 0}^{n-1}d_i\cdot 3^i-2) \land (6\nmid \sum_{i = 0}^{n-1}d_i\cdot 3^i-5)$\\
+- If $(6\nmid x_b-2) \land (6\nmid x_b-5)$ then by QRT, there must be a unique remainder such that $(6|x_b) \lor (6|x_b-1) \lor (6|x_b-3) \lor (6|x_b-4)$, and we will then split each of these 4 cases to show $(6\nmid x_b-2) \land (6\nmid x_b-5)$\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Induction Step Sub-Case 1
+\textbf{Case 1 $(6|x_b)$:}\\
+- If we assume $(6|x_b)$, then we know $\exists k_1\in\mathbb{Z}, 6k_1 = x_b$\\
+- Now we can express $\sum_{i = 0}^{n}d_i\cdot 3^i\nonumber$ using the definition of divisibility
+\begin{align*}
+    \sum_{i = 0}^{n}d_i\cdot 3^i &= x_b + d_n\cdot 3^n\nonumber\\
+    &= (6k_1) + d_n\cdot 3^n\nonumber\\
+\end{align*}
+- Now can continue with two more sub-cases, since $d_n$ can only be either 0 or 1 \\
+
+% Sub-case 1a
+\underline{Sub-case 1a ($d_n = 0$):}\\
+- We assume $d_n = 0$\\
+- We will want to show $(6|x)$, or that $\exists k_{1A} \in\mathbb{Z}, 6k_{1A} = x$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_1 + 0\cdot 3^n = 6k_1$ and therefore we can take $6k_{1A} = 6k_1$, so that $(6|x)$ since x is a multiple of 6\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$
+
+% Sub-case 1b
+\underline{Sub-case 1b ($d_n = 1)$:}\\
+- We assume $d_n = 1$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_1 + 3^n$\\
+- We will want to show that $(6|x-3)$, or that $\exists k_{1B} \in\mathbb{Z}, 6k_{1B} = x - 3$
+\begin{align*}
+    x - 3 &= (6k_1 + 3^n) - 3 \nonumber\\
+    &= 6k_1 + (3^n - 3) \nonumber\\
+    &= 6k_1 + (6k_{2b})\tag{By 2b), where $6k_{2b} = 3^n-3$}\\
+    &= 6(k_1 + k_2b) \nonumber\\
+    x - 3 &= 6k_{1B} \tag{Take $k_{1B} = k_1 + k_2b$}
+\end{align*}
+- We have then shown $x-3$ is a multiple of 6 so that $(6|x-3)$\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Induction Step Sub-Case 2
+\textbf{Case 2 $(6|x_b-1)$:}\\
+- If we assume $(6|x_b-1)$, then we know $\exists k_2\in\mathbb{Z}, 6k_2=x_b - 1$\\
+- Now we can express $\sum_{i = 0}^{n}d_i\cdot 3^i\nonumber$ using the definition of divisibility
+\begin{align*}
+    \sum_{i = 0}^{n}d_i\cdot 3^i &= x_b + d_n\cdot 3^n\nonumber\\
+    &= (6k_2+1) + d_n\cdot 3^n\nonumber\\
+\end{align*}
+- Now can continue with two more sub-cases, since $d_n$ can only be either 0 or 1 \\
+
+% Sub-case 2a
+\underline{Sub-case 2a ($d_n = 0$):}\\
+- We assume $d_n = 0$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_2 + 1$\\
+- We will want to show that $(6|x-1)$, or that $\exists k_{2A}\in\mathbb{Z}, 6k_{2A}=x_b - 1$\\
+\begin{align*}
+    x - 1 &= (6k_2 + 1) + 0\cdot 3^n- 1 \nonumber\\
+    &= 6k_2\nonumber\\
+    x - 1 &= 6k_{2A}\tag{Take $k_{2A} = k_2$}
+\end{align*}
+- We have shown that x - 1 is a multiple of 6 so that $(6|x-1)$\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$\\
+
+% Sub-case 2b
+\underline{Sub-case 2b ($d_n = 1$):}\\
+- We assume $d_n = 1$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_2 + 1 + 3^n$\\
+- We will want to show that $(6|x-4)$, or that $\exists k_{2B}\in\mathbb{Z}, 6k_{2B}=x_b - 4$
+\begin{align*}
+    x - 4 &= (6k_2 + 1 + 3^n) - 4 \nonumber\\
+    &= 6k_2 - 3 + 3^n \nonumber\\
+    &= 6k_2 + (3^n - 3) \nonumber\\
+    &= 6k_2 + (6k_{2b}) \tag{By 2b), where $6k_{2b} = 3^n-3$}\\
+    &= 6(k_2 + k_{2b}) \nonumber\\
+    x - 4 &= 6k_{2B}\tag{Take $k_{2B} = k_2 + k_{2b}$}
+\end{align*}
+- We have shown that x - 4 is a multiple of 6 so that $(6|x-4)$\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Induction Step Sub-Case 3
+\textbf{Case 3 $(6|x_b-3)$:}\\
+- If we assume $(6|x_b-3)$, then we know $\exists k_3\in\mathbb{Z}, 6k_3=x_b - 3$\\
+- Now we can express $\sum_{i = 0}^{n}d_i\cdot 3^i\nonumber$ using the definition of divisibility
+\begin{align*}
+    \sum_{i = 0}^{n}d_i\cdot 3^i &= x_b + d_n\cdot 3^n\nonumber\\
+    &= (6k_3+3) + d_n\cdot 3^n\nonumber\\
+\end{align*}
+- Now can continue with two more sub-cases, since $d_n$ can only be either 0 or 1 \\
+
+% Sub-case 3a
+\underline{Sub-case 3a ($d_n = 0$):}\\
+- We assume $d_n = 0$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_3 + 3$\\
+- We will want to show that $(6|x-3)$, or that $\exists k_{3A}\in\mathbb{Z}, 6k_{3A}=x_b - 3$
+\begin{align*}
+    x - 3 &= (6k_3 + 3 + 0\cdot 3^n) - 3 \nonumber\\
+    &= 6k_3\nonumber\\
+    x - 3 &= 6k_{3A}\tag{Take $k_{3A} = k_3$}
+\end{align*}
+- We have shown that $x - 3$ is a multiple of 6 so that $(6|x-3)$\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$\\
+
+% Sub-case 3b
+\underline{Sub-case 3b ($d_n = 1$):}\\
+- We assume $d_n = 1$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_3 + 3 + 3^n$\\
+- We will want to show that $(6|x)$, or that $\exists k_{3B}\in\mathbb{Z}, 6k_{3B}=x_b$
+\begin{align*}
+    x &= (6k_3 + 3 + 3^n) \nonumber\\
+    &= (6k_3 + 3^n + 3) + 3 - 3 \nonumber\\
+    &= 6k_3 + (3^n - 3) + 6 \nonumber\\
+    &= 6k_3 + (6k_{2b}) + 6 \tag{By 2b), where $6k_{2b} = 3^n-3$}\\
+    &= 6(k_3 + k_{2b} + 1)\nonumber\\
+    x &= 6k_{3B}\tag{Take $k_{3B} = k_3 + k_{2b} + 1$}
+\end{align*}
+- We have shown that x is a multiple of 6 so that $(6|x)$\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Induction Step Sub-Case 4
+\textbf{Case 4 $(6|x_b-4)$:}\\
+- If we assume $(6|x_b-4)$, then we know $\exists k_4\in\mathbb{Z}, 6k_4=x_b - 4$\\
+- Now we can express $\sum_{i = 0}^{n}d_i\cdot 3^i\nonumber$ using the definition of divisibility
+\begin{align*}
+    \sum_{i = 0}^{n}d_i\cdot 3^i &= x_b + d_n\cdot 3^n\nonumber\\
+    &= (6k_4+4) + d_n\cdot 3^n\nonumber\\
+\end{align*}
+- Now can continue with two more sub-cases, since $d_n$ can only be either 0 or 1 \\
+
+% Sub-case 4a
+\underline{Sub-case 4a ($d_n = 0$):}\\
+- We assume $d_n = 0$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_4 + 4$\\
+- We will want to show that $(6|x-4)$, or that $\exists k_{4A}\in\mathbb{Z}, 6k_{4A}=x_b - 4$
+\begin{align*}
+    x - 4 &= (6k_4 + 4 + 0\cdot 3^n) - 4 \nonumber\\
+    &= 6k_4\nonumber\\
+    x - 4 &= 6k_{4A}\tag{Take $k_{4A} = k_4$}
+\end{align*}
+- We have shown that $x - 4$ is a multiple of 6 so that $(6|x-4)$\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$\\
+
+% Sub-case 4b
+\underline{Sub-case 4b ($d_n = 1$):}\\
+- We assume $d_n = 1$\\
+- Let $x = \sum_{i = 0}^{n}d_i\cdot 3^i &= 6k_4 + 4 + 3^n$\\
+- We will want to show that $(6|x-1)$, or that $\exists k_{4B}\in\mathbb{Z}, 6k_{4B}=x_b - 1$
+\begin{align*}
+    x - 1 &= (6k_4 + 4 + 3^n) - 1\nonumber\\
+    &= (6k_4 + 3^n + 3) - 3 + 3 \nonumber\\
+    &= 6k_4 + (3^n - 3) + 3 + 3 \nonumber
+    &= 6k_4 + (3^n - 3) + 6 \nonumber\\
+    &= 6k_4 + (6k_{2b}) + 6 \tag{By 2b), where $6k_{2b} = 3^n-3$}\\
+    &= 6(k_4 + k_{2b} + 1) \nonumber\\
+    x - 1 &= 6k_{4B} \tag{Take $k_{4B} = k_4$}
+\end{align*}
+- We have shown that $x - 1$ is a multiple of 6 so that $(6|x-1)$\\
+- Then by QRT we have shown $(6\nmid x-2) \land (6\nmid x-5)$\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Conclusion
+- Therefore we have shown $P(n+1,x) \Rightarrow (6\nmid x-2) \land (6\nmid x-5)$ for all positive integers $n$ and natural numbers $x$\\
+
+\end{enumerate}
+% END OF QUESTION 2
+
+\newpage
+\section*{Question 3}
+\begin{enumerate}
+\item[3.a)] This statement is FALSE. To prove this we want to show the negation of the original statement: 
+\[\forall k \in \mathbb{N}, n^n \notin \mathcal O (n^k)\]
+Expanding the definition of Big-Oh this means, 
+\[\forall k \in \mathbb{N}, \forall c, n_0 \in \mathbb{R}^+, \exists n \in \mathbb{N}, (n \geq n_0) \wedge  (n^n > cn^k)\]
+\underline{Proof}\\
+Let $k \in \mathbb{N}.$
+Let $c \in \mathbb{R}^+.$ Let $n_0 \in \mathbb{R}^+.$\\\\
+Let $n = \ceil[\Big]{c^2 + n_0 + 2k + 1}$\\
+This means that by definition of ceiling and since $c > 0$ and $n_0 > 0$ that, \\
+$n > 1$ and $n > 2k + 1$ and $n > c^2$ and $n > n_0$.\\
+Because $ n > n_0$ this implies $n \geq n_0$\\\\
+Now beginning with the fact that $n > c^2$
+\begin{align*}
+    n &> c^2 \\
+    n^n &> c^2 \tag{since $n > 1$} \\
+    \sqrt{n^n} &> c \tag{Expression 1} 
+\end{align*}
+
+And starting with the fact that $n > 2k +1$
+\begin{align*}
+    n &> 2k + 1 \\
+    n - 2k &>  1 \\
+    n^{n-2k} &> 1 \tag{since $n > 1$ and $n - 2k >1$}\\ 
+    \frac{n^n}{n^{2k}} &> 1 \\
+    n^n &> n^{2k} \\
+    \sqrt{n^n} &> n^k \tag{Expression 2}
+\end{align*}
+
+Multiplying Expression 1 and 2 we are left with the result,
+\[ \sqrt{n^n}\sqrt{n^n} > cn^k\]
+\[n^n > cn^k\] as required \hfill \Box
+\newpage 
+\item[3.b)]
+This statement is TRUE. Expanding the definition of Big-Oh, we want to show, 
+\[\exists c, n_0 \in \mathbb{R}^+, \forall n \in \mathbb{N}, n \geq n_0 \Rightarrow 165n^5 + n^2 \leq c(n^5 -n^3)\]
+\underline{Proof}\\
+Let $c= 1000.$ Let $n_0 = 2.$\\
+Let $n \in \mathbb{N}.$ Assume $n \geq n_0.$ Which means $n \geq 2.$ \\
+Because $n \geq 2$ this means (1): $n^5 > n^2$\\\\
+\underline{WTS}: $165n^5 + n^2 \leq c(n^5 -n^3)$ 
+\begin{align*}
+    n &\geq 2 \\
+    n^2 &\geq 4 \\
+    834n^2 &\geq 4(834) > 1000 \\ 
+    834n^2 &> 1000 \\
+    834n^5 &> 1000n^3 \tag{since $n \geq 2$}\\
+    834n^5 + n^5 &> 1000n^3 + n^2 \tag{because (1): $n^5 > n^2$} \\
+    835n^5 &> 1000n^3 + n^2\\
+    (1000 - 165)n^5 &> 1000n^3 + n^2\\
+    1000n^5 - 165n^5 &> 1000n^3 + n^2\\
+    1000n^5 - 1000n^3 &> 165n^5 + n^2\\
+    c(n^5 -n^3) &> 165n^5 + n^2\\
+    165n^5 + n^2 &\leq c(n^5 - n^3)
+\end{align*}
+as required \hfill \Box
+\newpage 
+\item[3.c)]
+This statement is FALSE. To prove this we will show that $4^{n^2} \notin \Theta (4^{n^2 +n}). $\\
+Expanding the definition of Theta this means,
+    \[ \forall c_1, c_2, n_0 \in \mathbb{R}^+ , \exists n \in \mathbb{N}, n \geq n_0 \wedge ((c_14^{n^2 +n} > 4^{n^2}) \vee (c_24^{n^2 +n} < 4^{n^2}) )\]
+Let $c_1 \in \mathbb{R}^+.$ Let $c_2 \in \mathbb{R}^+.$ Let $n_0 \in \mathbb{R}^+.$\\\\
+Take $ n = \ceil[\Big]{max(n_0, -log_4c_1) + 1}$\\
+By the definition of ceiling, $n > 1, n > n_0$, and $n > -log_4c_1.$\\
+\\
+Because $n > n_0$, this implies that $n \geq n_0$.\\\\
+Now starting with the fact that $n > -log_4c_1$, we will show that $c_14^{n^2 +n} &> 4^{n^2}$ which will thus satisfy the entire statement of $4^{n^2} \notin \Theta (4^{n^2 +n})$ we wish to prove.
+\begin{align*}
+    n &> -log_4c_1 \\
+    n &> \frac{-log_2c_1}{log_24} \\
+    nlog_24 &> -log_2c_1 \tag{We can perform this manipulation since $log_24 > 0$}\\
+    -nlog_24 &< log_2c_1 \\
+    log_24^{-n} &< log_2c_1 \\
+    4^{-n} &< c_1 \\
+    1 &< c_14^{n} \tag{since $n > 1$} \\
+    4^{n^2} &< c_14^{n}4^{n^2} \\
+    4^{n^2} &< c_14^{n^2 +n} \\
+    c_14^{n^2 +n} &> 4^{n^2}
+\end{align*}
+as required \hfill \Box
+
+\newpage
+\item[3.d)]This statement is TRUE. 
+To prove this we will show that for every function $f: \mathbb{N} -> \mathbb{R}^{\geq 0}.$ If $f$ is non-decreasing and $f(n) = n^2$ for every $n \in \mathbb{N}$ that is a power of two, then $f\in \Theta(n^2).$\\
+\underline{\textbf{Proof}}\\
+Let $f$ be function such that $f: \mathbb{N} -> \mathbb{R}^{\geq 0}.$\\
+Assume $f$ is non- decreasing which means, $(\forall x, y \in \mathbb{N}, x \leq y \Rightarrow f(x) \leq f(y))$(1)\\
+Assume $f(n) = n^2$ for every $n \in \mathbb{N}$ that is a power of two which means,\\
+$(\forall n \in \mathbb{N}, (\exists k \in \mathbb{N}, n = 2^k \Rightarrow f(n) = n^2)$ (2) \\\\
+\textbf{WTS:} $f\in \Theta(n^2).$ Which means that we want to show that $f\in \Omega(n^2)$ and $f\in \mathcal{O}(n^2).$\\\\
+
+\underline{Proof of $f\in \mathcal{O}(n^2)$ \Leftrightarrow ($\exists c, n_0, \in \mathbb{R}^+, \forall n \in \mathbb{N}, n \geq n_0 \Rightarrow f(n) \leq cn^2$)}\\\\
+Let $c = 4.$ Let $n_0 = 2.$ Let $n \in \mathbb{N}.$ Assume $n \geq 2.$\\
+WTS: $f(n) \leq cn^2$\\
+If n is a power of 2, then we know from our assumptions that $f(n) = n^2$ and thus $f(n) \leq 4n^2 = cn^2$
+\begin{align*}
+    f(n) &= f(2^{log_2n}) \tag{because by log rules $n = 2^{log_2n}$}\\
+    &\leq f(2^{\ceil[]{log_2n}})\tag{because $f$ is non-decreasing}\\
+    &= (2^{\ceil[]{log_2n}})^2 \tag{because $\ceil[]{log_2n} \in \mathbb{N}$ and assumption (1)}\\
+    &= (2^{log_2n + \epsilon})^2 \tag{by Fact 1, where $0 \leq \epsilon < 1$} \\
+    &= (2^{log_2n} \cdot 2^{\epsilon})^2 \\
+    &= (n \cdot 2^{\epsilon})^2\\
+    &= n^2 \cdot 2^{2\epsilon}\\
+    &< 4n^2 \tag{because $\epsilon < 1, 2\epsilon < 2$ and thus $2^{2\epsilon} < 4$} \\
+    &= cn^2
+\end{align*}
+
+\underline{Proof of $f\in \Omega(n^2)$ \Leftrightarrow ($\exists c, n_0, \in \mathbb{R}^+, \forall n \in \mathbb{N}, n \geq n_0 \Rightarrow f(n) \geq cn^2$)}\\\\
+Let $c = \frac{1}{4}.$ Let $n_0 = 2.$ Let $n \in \mathbb{N}.$ Assume $n \geq 2.$\\
+WTS: $f(n) \geq cn^2$\\
+If n is a power of 2, then we know from our assumptions that $f(n) = n^2$ and thus $f(n) \leq 4n^2 = cn^2$
+\begin{align*}
+    f(n) &= f(2^{log_2n}) \tag{because by log rules $n = 2^{log_2n}$}\\
+    &\geq f(2^{\floor{log_2n}})\tag{because $f$ is non-decreasing }\\
+    &= (2^{\floor{log_2n}})^2 \tag{because $\floor{log_2n} \in \mathbb{N}$ and assumption (1)}\\
+    &= (2^{log_2n - \epsilon})^2 \tag{by Fact 2, where $0 \leq \epsilon < 1$} \\
+    &= (2^{log_2n} \cdot 2^{-\epsilon})^2 \\
+    &= (n \cdot 2^{-\epsilon})^2\\
+    &= n^2 \cdot 2^{-2\epsilon}\\
+    &> \frac{1}{4}n^2 \tag{because $\epsilon < 1, -2\epsilon > -2$ and thus $2^{-2\epsilon} > 1/4$} \\
+    &= cn^2
+\end{align*}
+Thus we have shown $f\in \Omega(n^2)$ and $f\in \mathcal{O}(n^2)$ as required \hfill \Box
+\end{enumerate}
+\end{document}

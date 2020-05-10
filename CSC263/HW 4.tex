@@ -1,0 +1,120 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\usetikzlibrary{automata,positioning}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{CSC263H1 Homework 4}
+\author{Tony Yang, Wendy Guo, Martin Chak}
+\date{February 13th 2020}
+
+\begin{document}
+
+%BEGIN TITLE PAGE
+
+\maketitle
+
+%END TITLE PAGE
+
+\newpage
+
+%BEGIN Q1
+
+\noindent
+\textbf{Question 1:}\\
+\textbf{Done by: Wentao Yang, Wendy Guo, Martin Chak; Written by: Martin Chak}\\
+
+\noindent
+\begin{text}
+    A famous csc263 alumni, Tony Soprano, proposes the following method of hashing that reduces the number of collisions when searching in a hash table. Suppose we have a hash table $T$ with $m$ slots and two independent hash functions $h_1$ and $h_2$. Each hash function satisfies the Simple Uniform Hashing Assumption (SUHA): every key in the universe $U$ hashes with equal probability to any hash slot of $T$, independently from the hash values of all other keys in $U$. When we insert a new element $x$, we add it to the chain in one of the two hash slots $T[h_1(x)]$ or $T[h_2(x)]$; we pick the slot in which the chain is shorter. If the chains are same length, we add x to the chain in $T[h_1(x)]$.\\
+\end{text}
+
+\noindent
+\begin{text}
+    \textbf{a.} If the number of \textbf{non-empty} slots in $T$ is $k$ before inserting $x$, what is the probability that $x$ is inserted into an \textbf{empty slot?} Justify your answer.\\
+    
+    \noindent
+    We can realize that calculating the probability of inserting $x$ into an empty slot is the same as calculating the complement of the probability of inserting $x$ into a non-empty slot, so we realize:
+\end{text}
+
+\begin{align*}
+    Pr[\text{x is inserted into an empty slot}] &= 1 - Pr[\text{x is inserted into a non-empty slot}]\\
+    &= 1 - Pr[\text{Both $T[h_1(x)]$ and $T[h_2(x)]$ are non-empty}]\\
+    &= 1 - (\frac{k}{m}\cdot\frac{k}{m})\tag{By SUHA assumptions}\\
+    &= \frac{m^2-k^2}{m^2}
+\end{align*}
+
+\noindent
+\begin{text}
+    We know this is a valid probability as $k \leq m$ at any time, thus the probability is within the bounds of 0 and 1. In addition, the more non-empty slots there are, the less likely that $x$ will be hashed into an empty slot.\\
+\end{text}
+
+\noindent
+\begin{text}
+    \textbf{b.} Suppose that $m = 4$, and $T[0]$ contains 4 elements, $T[1]$ contains 2 elements, and $T[2]$, $T[3]$ contain 6 elements each. What is the expected length of the chain $x$ is inserted into, not counting $x$ itself? Justify your answer.\\
+    
+    \noindent
+    Well we can just manually calculate the expected value with the given information:
+\end{text}
+
+\begin{align*}
+    E[\text{Length of chain $x$ is inserted into}] &= 4\cdot Pr[\text{$x$ is inserted into $T[0]$}]+
+    2\cdot Pr[\text{$x$ is inserted into $T[1]$}]+\\
+    &\,\,\,\,\,\,\,\,6\cdot Pr[\text{$x$ is inserted into $T[2]$}]+
+    6\cdot Pr[\text{$x$ is inserted into $T[3]$}]\\
+    &= 4 \cdot (\frac{5}{16}) + 2 \cdot (\frac{7}{16}) + 6 \cdot (\frac{2}{16}) + 6 \cdot (\frac{2}{16})\\
+    &= 3.625
+\end{align*}
+
+\noindent
+\begin{text}
+    The calculation for the expected value makes sense since our probabilities properly add up to $1$. And although more elements have longer chains like $4$ or $6$, the current hash algorithm favours smaller chains, thus giving them a higher probability of being hashed to.
+\end{text}
+
+%END Q1
+
+\newpage
+
+%BEGIN Q2
+\noindent
+\textbf{Question 2:}\\
+\textbf{Done by: Wentao Yang, Wendy Guo; Written by: Tony Yang, Martin Chak}\\
+
+\noindent
+\begin{text}
+    We use a disjoint forest to store the dinosaur bones. To obtain a run-time more efficient than $O(m \cdot 
+    n)$, where $m$ is the number of items in the input comparisons list $L$ and $n$ is the amount of bones, we describe the following algorithm.\\
+    
+    \noindent
+    We first make disjoint sets for each bone, creating $n$ distinct sets, having pointers store each set's size. We will then iterate through the list $L$ twice. On the first iteration we Union the sets containing elements specified by $S(i,j)$, we will use the weighted union heuristic, such that we Union the smaller or equal set to the bigger set, updating the size as we go and having each element in the set pointing at its representative set element, while representing the sets through a forest structure. On the second iteration of $L$ we find the elements specified by $D(i,j)$, where we check each element's representative set element. If the representative element is different we increment a counter representing the amount of distinct species, otherwise if the elements are the same it means there is an error and we output $ERROR \,\, FOUND$.\\
+    
+    \noindent
+    The run-time of the algorithm is at most $O(m \cdot log(n))$. The initialization of our data structure will take $O(n)$ time, which includes the time needed to create $n$ distinct sets with pointers to the set's size.\\
+    
+    \noindent
+    The on the first iteration of the list $L$, would at most take $O(m)$ time. This is because each Union only uses pointers to check which set is larger, then it combine the sets and have the representative of the smaller set point to the representative of the larger set. The Union itself will take $O(1)$ time, but it can happen at most $m$ times, thus leading to the $O(m)$ time complexity.\\
+    
+    \noindent
+    Then the second iteration will at most take $O(m \cdot log(n))$. This is because each Find will at most take $log(n)$ time, since we already have pointers to each bone, we go to the bone and head up the tree representing its set and find the representative element, taking $log(n)$ time. This can happen at most $m$ times, thus leading to the $O(m \cdot log(n))$ time complexity.\\
+    
+    \noindent
+    Therefore the algorithm will at most take $O(n + m + m \cdot log(n))$ time, implying $O(m \cdot log(n))$ run-time\\
+    
+    \hfill $\blacksquare$
+\end{text}
+
+%END Q2
+
+
+\end{document}

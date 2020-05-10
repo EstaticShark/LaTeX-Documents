@@ -1,0 +1,293 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{MAT246H1 HW1}
+\author{Martin Chak}
+\date{May 2020}
+
+\begin{document}
+
+%BEGIN Q1
+\noindent
+\begin{text}
+    {\bf (1) Prove by induction that any natural number is either even or odd.}
+    
+    \noindent
+    We want to show that for any $n \in \mathbb{N}$, that $n$ is even or odd. Where we define being even as there existing a $k \in \mathbb{Z}$ s.t. $n = 2k$ and being odd as there existing a $j \in \mathbb{Z}$ s.t. $n = 2j + 1$. We will prove by induction.\\
+    
+    \noindent
+    \underline{Base Case}\\
+    Let $n = 0$. We immediately find that $n$ is even since, for $k = 0$, $n = 2k$ as required.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    We assume $n \in \mathbb{N}$ such that $n$ is even or odd $(I.H)$, and we want to show that $n + 1$ is either even or odd. We separate this into cases where $n$ is even or odd.\\
+    
+    \noindent
+    If $n$ is even, then $n = 2k$ for some $k \in \mathbb{Z}$, thus $n + 1 = 2k + 1$, therefore for $j = k$ we know $n + 1$ is odd.\\
+    
+    \noindent
+    Otherwise if $n$ is odd, then $n = 2j + 1$ for some $j \in \mathbb{Z}$, thus $n + 1 = 2j + 2$. So if we take $k = j + 1$, then we know $n + 1$ is even.\\
+    
+    \noindent
+    Therefore we have shown that all $n \in \mathbb{N}$ is either even or odd. \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q2
+\noindent
+\begin{text}
+    {\bf (2) Prove by induction that $3^{2n+1} + 2^{n+2}$ is divisible by 7 for all $n \in \mathbb{N}$}\\
+    We want to show the above expression is divisible by 7 for all $n \in \mathbb{N}$, s.t. there exists a $k \in \mathbb{Z}$ such that $3^{2n+1} + 2^{n+2} = 7k$.\\
+    
+    \noindent
+    \underline{Base Case}\\
+    Let $n = 0$, thus:
+    \begin{align}
+        3^{2n+1} + 2^{n+2} &= 3^{1} + 2^{2}\nonumber\\
+        &= 7\nonumber\\
+        &= 7k\tag{For $k = 1$}
+    \end{align}
+    
+    \noindent
+    Thus we have shown the base case.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    We assume $n \in \mathbb{N}$ such that $3^{2n+1} + 2^{n+2} = 7k$ for some $k \in \mathbb{Z}$ $(I.H)$. We want to show that for $n+1$ that $3^{2n+3} + 2^{n+3} = 7j$ for some $j \in \mathbb{Z}$. So we find that:
+    \begin{align}
+        3^{2n+3} + 2^{n+3} &= 3^{2n+1} \cdot 3^{2} + 2^{n+2} \cdot 2\nonumber\\
+        &= 2(3^{2n+3} + 2^{n+3}) + 3^{2n+3} \cdot 7\nonumber\\
+        &= 2(7k) + 7\cdot3^{2n+3} \tag{By $I.H$}\nonumber\\
+        &= 7(2k + 3^{2n+3})\nonumber\nonumber\\
+        &= 7j \tag{For $j = 2k + 3^{2n+3}$}
+    \end{align}
+    
+    \noindent
+    Thus we have shown the induction step holds. Therefore we know that $3^{2n+3} + 2^{n+3}$ is divisible by 7 for all $n \in \mathbb{N}$
+    
+    \hfill $\blacksquare$
+\end{text}\\
+\newpage
+%BEGIN Q3
+\noindent
+\textbf{(3) Prove by induction that every natural number $n \geq 12$ can be written as a sum of 4's and 5's.}\\
+\begin{text}
+    We want to show that for all $n \in \mathbb{N}$, that if $n \geq 12$, that $n = 4j + 5k$ for some $j,k \in \mathbb{N}$\\
+    
+    \noindent
+    \underline{Base Case}\\
+    Assume $n = 12$, we want to show that $n$ can be written as a sum of 4's and 5's. We can simply just select $j = 3$ and $k = 0$ in this case to say $n = 4(3) + 5(0) = 12$.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    Assume $n \in \mathbb{N}$ and that $\n \geq 12$, and that for some $j,k \in \mathbb{N}$, $n = 4j + 5k$ holds $(I.H)$. We want to show that for $n + 1$, there exists $p,q \in \mathbb{N}$ s.t. $n + 1 = 4p + 5q$. Thus we can show:
+    
+    \begin{align}
+        n + 1 &= (4j + 5k) + 1 \tag{By I.H}\nonumber\\
+        &= 4(j-1) + 5k + 5\nonumber\\
+        &= 4(j - 1) + 5(k + 1)\nonumber\\
+        &= 4p + 5q\tag{Pick $p = j - 1$ and $q = k + 1$}\nonumber
+    \end{align}
+    
+    \noindent
+    Thus we have shown that the induction step holds. Therefore any natural number greater than or equal to 12 can be written as a sum of 4's and 5's
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGINE Q4
+\noindent
+\textbf{(4) Fix a natural number $n$. Use induction to prove that $(1 + n)^{3m}-1$ is divisible by $n$ for every $m \in \mathbb{N}$.}\\
+\begin{text}
+    We want to show that for every $m \in \mathbb{N}$, that there exists a $k \in \mathbb{Z}$ s.t. $(1 + n)^{3m}-1 = n \cdot k$ for some fixed $n$.\\
+    
+    \noindent
+    \underline{Base Case}\\
+    We assume $n \in \mathbb{N}$ and let $m = 0$. We can just realize that if $(1 + n)^{3m}-1 = 0$ if $m = 0$, thus the expression is divisible by $n$ if we pick $k = 0$.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    We assume $n,m \in \mathbb{N}$ s.t. $(1 + n)^{3m}-1 = n \cdot k$ holds for some $k \in \mathbb{N}$ $(I.H)$. We want to show that the same holds for $m + 1$, such that $(1 + n)^{3m + 3}-1 = n \cdot j$ holds for some $j \in \mathbb{N}$. So we can show:
+    
+    \begin{align}
+        (1 + n)^{3m + 3}-1 &= (1 + n)^{3m}\cdot (1 + n)^{3}-1\nonumber\\
+        &= (1 + n)^{3m} \cdot (n^3 + 3n^2 + 3n + 1) - 1\nonumber\\
+        &= (1 + n)^{3m} \cdot (n^3 + 3n^2 + 3n) + ((1 + n)^{3m} - 1)\nonumber\\
+        &= (1 + n)^{3m} \cdot (n^3 + 3n^2 + 3n) + n \cdot k \tag{By $I.H$}\nonumber\\
+        &= n \cdot ((1 + n)^{3m} \cdot (n^2 + 3n + 3) + k)\nonumber\\
+        &= n \cdot j \tag{Pick $j = (1 + n)^{3m} \cdot (n^2 + 3n + 3) + k$}
+    \end{align}\\
+    
+    \noindent
+    Thus we have shown that the induction step holds. Therefore for any fixed natural number $n$, the expression $(1 + n)^{3m}-1$ is divisible by $n$ for all $m \in \mathbb{N}$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+\newpage
+
+%BEGIN Q5
+\noindent
+\textbf{(5) Prove that $(\frac{1}{2}) (\frac{3}{4}) \cdot\cdot\cdot (\frac{2n-1}{2n}) \leq \frac{1}{\sqrt{3n+1}}$ for all $n\in \mathbb{N}$}\\
+\begin{text}
+    We want to show that the above inequality holds for all $n \in \mathbb{N}$.\\
+    
+    \noindent
+    \underline{Base Case}\\
+    If we let $n = 0$, then the inequality is undefined and is vacuously true. If we let $n = 1$, thus the inequality is $(\frac{1}{2}) \leq (\frac{1}{2})$ which already holds. We just show both $n = 0,1$ since both are unequal for uniquely different reasons\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    Let $n \in \mathbb{N}$, assume that $(\frac{1}{2}) (\frac{3}{4}) \cdot\cdot\cdot (\frac{2n-1}{2n}) \leq \frac{1}{\sqrt{3n+1}}$ holds $(I.H)$. We want to show that the inequality $(\frac{1}{2}) (\frac{3}{4}) \cdot\cdot\cdot (\frac{2n-1}{2n}) (\frac{2n+1}{2n+2}) \leq \frac{1}{\sqrt{3n+4}}$ holds. So we can show:
+    
+    \begin{align}
+        (\frac{1}{2}) (\frac{3}{4}) \cdot\cdot\cdot (\frac{2n-1}{2n}) (\frac{2n+1}{2n+2}) &\leq (\frac{1}{\sqrt{3n+1}}) \cdot (\frac{2n+1}{2n+2})\nonumber\\
+        &= (\frac{1}{\sqrt{3n+4}}) \cdot (\frac{\sqrt{3n+4} \cdot (2n+1)}{\sqrt{3n+1} \cdot (2n+2)})\nonumber\\
+        &= (\frac{1}{\sqrt{3n+4}}) \cdot (\frac{\sqrt{(3n+4) \cdot (2n+1)^2}}{\sqrt{(3n+1) \cdot (2n+2)^2}})\nonumber\\
+        &= (\frac{1}{\sqrt{3n+4}}) \cdot (\sqrt{\frac{12n^3 + 28n^2 + 19n + 4}{12n^3 + 28n^2 + 20n + 4}})\nonumber\\
+        &\leq (\frac{1}{\sqrt{3n+4}})\nonumber
+    \end{align}
+    
+    \noindent
+    There we have shown that the inequality is true and the induction step holds. Therefore the original equality must hold.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q6
+\noindent
+\textbf{(6) Let $a,b,c$ be integers satisfying $a^2+b^2=c^2$.  Give two proofs that the product $abc$ must be even, (a) by considering various parity cases, or (b) by using an argument by contradiction.}\\
+\begin{text}
+    (a) We want to show that the product of $abc$ is even by considering different cases of parity. We first consider the requirements of to fulfill $a^2 + b^2 = c^2$.\\
+    
+    \noindent
+    We can note that if either $a$, $b$ or $c$ is even, then the product $abc$ is even since it can be written as $2(kbc)$, $2(kac)$ or $2(kbc)$, where $k$ represents half of the even variable. Otherwise, if all three variables are odd, then the product of three odd variables would be odd since $(2j+1)(2k+1)(2i+1) = 2(4jki+2jk+2ji+j+2ki+k+i)+1$ for any $j,k,i \in \mathbb{Z}$.\\
+    
+    \noindent
+    But we can notice that if $c$ were to be odd, then either $a$ or $b$ would have to be even, since the sum of two squared odd numbers would have to be even, as $(2j+1)^2 + (2k+1)^2 = 2(2j^2 + 2j + 2k^2 + 2k + 1)$ for any $j,k \in \mathbb{Z}$. Therefore we can never have all three variables be odd, and as a result the product of $abc$ must be even as described above.
+    
+    \hfill $\blacksquare$\\
+    
+    \noindent
+    (b) We want to show that the product of $abc$ is even through contradiction. So we then assume that for $a, b, c$ that satisfies $a^2 + b^2 = c^2$, that the product of $abc$ is odd.\\
+    
+    \noindent
+    However, for $abc$ to be odd, not a single variable can be even, since we had shown in (a) that if at least a single variable is even, then the product of the three must also be even. This brings up another issue, since if all three variables must be odd, then the condition $a^2 + b^2 = c^2$ cannot be fulfilled. Thus there is a contradiction and the product $abc$ must be even.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+\newpage
+%BEGIN Q7
+\noindent
+\textbf{(7)  For each natural number $n > 1$, find distinct natural numbers $x$ and $y$ such that $\frac{1}{x}+\frac{1}{y}=\frac{1}{n}$.}\\
+\begin{text}
+    We just need to find distinct $x$ and $y$ that fulfill the above expression.\\
+    
+    \noindent
+    Let $x = n(n+1)$ and $y = n + 1$. The system $x = y$ has no solution if $n > 1$, so we can show:
+    
+    \begin{align}
+        \frac{1}{x} + \frac{1}{y} &= \frac{1}{n(n+1)} + \frac{1}{n+1}\nonumber\\
+        &= \frac{n + 1}{n(n+1)}\nonumber\\
+        &= \frac{1}{n}\nonumber
+    \end{align}
+    
+    \noindent
+    Therefore we have shown that there are unique pairs of distinct natural numbers such that the above expression holds true for all natural numbers $n > 1$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q8
+\noindent
+\textbf{(8) Prove that a set with $n$ elements has $2^n$ subsets. For example, the set $\{a, b, c\}$ has eight subsets: $\emptyset, \{a\}, \{b\}, \{c\}, \{a, b\}, \{a, c\}, \{b, c\}, \{a, b, c\}$.}\\
+\begin{text}
+    We can prove that the amount of subsets of an $n$ item set is $2^n$ through induction.
+    
+    \noindent
+    \underline{Base Case}\\
+    Let $n = 0$, so the set has no elements, therefore it only has one subset which is itself. This fulfills the requirement that there should be $2^n$ subsets.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    Let $n \in \mathbb{N}$, assume that a set with $n$ elements has $2^n$ possible subsets. We want to show that a set with $n + 1$ elements has $2^{n+1}$ possible subsets. We let $m$ represent the $n + 1 th$ element and $S_{n}$ represent the set with $n$ elements, and $S_{n+1}$ represent the set with $n + 1$ elements.\\
+    
+    \noindent
+    We can realize that every possible subset of $S_{n+1}$ that does not contain $m$ must be a possible subset of $S_{n}$. Therefore any new possible subset must contain the element $m$. In this case there can only be $2^n$ new possible subsets, since each subset represents an old subset with $m$ pushed into it. Therefore, our total amount of subsets are $2^n + 2^n = 2(2^n) = 2^{n+1}$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+\newpage
+%BEGIN Q9
+\noindent
+\textbf{(9) Let $x$ be a real number such that $x + x^{-1}$ is an integer. Prove that $x^n + x^{-n}$ is an integer for all $n \in \mathbb{N}$.}\\
+\begin{text}
+    We assume that $x \in \mathbb{R}$ and that $x + x^{-1}$ is an integer. We want to show that $x^{n} + x^{-n}$ for $x \in \mathbb{N}$ using complete induction.\\
+    
+    \noindent
+    \underline{Base Case}\\
+    For cases $n = 0,1$, we can easily show $x^n + x^{-n}$ is an integer. For $n = 0$, the expression evaluates to $2$ no matter the value of $x$. And then the case for $n = 1$ is already assumed by construction of the question.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    For $n,j \in \mathbb{N}$ where $1 \leq j \leq n$, we assume that $x^j + x^{-j}$ is an integer $(I.H)$. We want to show that for $n + 1$, that $x^{n+1} + x^{-n-1}$ is also an integer. So we can realize that:
+    
+    \begin{align}
+        (x^n + x^{-n}) \cdot (x^1 + x^{-1}) &= (x^{n + 1} + x^{- n - 1}) + (x^{n - 1} + x^{- n + 1})\nonumber\\
+        (x^{n + 1} + x^{- n - 1}) &= (x^n + x^{-n}) \cdot (x^1 + x^{-1}) - (x^{n - 1} + x^{- n + 1})\nonumber
+    \end{align}\\
+    
+    \noindent
+    The RHS comprises of two terms. However each term is shown to be an integer by the induction hypothesis. Therefore, since $(x^{n + 1} + x^{- n - 1})$ can be written as the sum of two integers then the induction step holds. We have therefore shown that the $(x^n + x^{-n})$ is an integer for all $n \in \mathbb{N}$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q10
+\noindent
+\textbf{(10) Find a prime number $p$ such that the number $(2 \cdot 3 \cdot 5 \cdot 7 \cdot \cdot \cdot p) + 1$ is not prime.}\\
+\begin{text}
+    So we can just pick any prime $p$ that makes the above expression not prime.\\
+    
+    \noindent
+    With a bit of guess and check we can find that picking $p = 13$ will make the expression non-prime, so:
+    
+    \begin{align}
+        (2 \cdot 3 \cdot 5 \cdot 7 \cdot 11 \cdot 13) + 1 &= 30031\nonumber\\
+        &= 509 \cdot 59\nonumber
+    \end{align}
+    
+    \noindent
+    So $p = 13$ works as required.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q11
+\noindent
+\textbf{(11) Prove that, for every natural number $n > 2$, there is a prime number between $n$ and $n!$. [Hint: There is a prime number that divides $n! - 1$.]}\\
+\begin{text}
+    We want to prove that for any $n > 2$, that there exists a prime number $p$ between $n$ and $!n$.\\
+    
+    \noindent
+    We can realize that for any natural number $m$, s.t. $1 < m < n + 1$, that $m$ must divide $n!$ by it's definition. We can also realize that because $m > 1$ and $m$ divides $n!$, that it cannot divide $n! - 1$. Given the hint that $n! - 1$ must be divisible by a prime, and that it cannot be divided by any number between $1$ and $n + 1$, it must then be divided by a $n < p < n!$. So either the prime number must be $n! - 1$ or some other number between $n$ and $n!$
+    
+    \hfill $\blacksquare$
+\end{text}
+
+\end{document}

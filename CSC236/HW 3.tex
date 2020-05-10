@@ -1,0 +1,320 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+
+\title{CSC236H1 Assignment 3}
+\author{Martin Chak and Tony Yang}
+\date{December 5, 2019}
+
+\begin{document}
+
+%BEGIN TITLE PAGE
+
+\maketitle
+
+%END TITLE PAGE
+
+\newpage
+
+%BEGIN Q1
+\section*{Question 1}
+
+\begin{text}
+    For the algorithm $Div(a,b)$ with the following pre-conditions and post-conditions:
+\end{text}
+\begin{align}
+    \textbf{Pre-condition}&: a, b \in \mathbb{N}, b > 0\nonumber\\
+    \textbf{Post-condition}&: a = b \cdot q + r \text{\, and \,} q \geq 0 \text{\, and \,} 0 \leq r < b\nonumber
+\end{align}
+
+\begin{enumerate}[label=(\alph*),leftmargin=0cm]
+    \item 
+    \begin{text}
+        Give the appropriate loop invariant (Don't have to prove it):
+    \end{text}
+    \begin{align}
+        LI(t)&: \text{So if the loop in $Div$ loops at least $t$ times, then:}\nonumber\\
+        &(1): r_t = a - b \cdot q_t\nonumber\\
+        &(2): a \geq b \cdot q_t\nonumber\\
+        &(3): 0 \leq q_t \leq a\nonumber
+    \end{align}
+    
+    \item
+    \begin{text}
+        Prove Partial Correctness for $Div(a,b)$
+    \end{text}
+    
+    \begin{text}
+        - Want to show $Pre \land Term \Rightarrow Post$\\
+        - The assume that $a, b \in \mathbb{N}$ and that $b > 0$\\
+        - Then assume that the loop at line 3 terminates after $k \in \mathbb{N}$ iterations so that $r \geq b$ is not true\\
+        - We need to show that $a = b \cdot q + r$, $q \geq 0$ and $0 \leq r < b$ at the end of the program\\
+        - By LI Statement (1), we know $r_t = a - b \cdot q_t$, and by definition that $r = r_k$ and $q = q_k$, then we know:
+        \begin{align}
+            r_t &= a - b \cdot q_t \nonumber\\
+            r &= a - b \cdot q \nonumber\tag{By definition}\\
+            a &= b \cdot q + r\nonumber\tag{We have solved the first Post-condition requirement}
+        \end{align}
+        - Since $k$ represents the number of iterations needed for the while loop to end, then we know $k \geq 0$. Therefore, since we know $q_t = t$ as $q$ is incremented by 1 on every pass of line 4, we know $q_k = k$, and then by definition that $q = q_k$, $q \geq 0$ holds\\
+        - We know that from LI Statement (1) that $r = a - b \cdot q$, and that from (2), that $a \geq b \cdot q$, therefore because $a - b \cdot q \geq 0$ we also know that $r \geq 0$. We then know that by assumption of termination, that since $r \geq b$ no longer holds, that $r < b$, therefore we have shown $0 \leq r < b$\\
+        - We have then proven the Partial Correctness of $Div(a,b)$ \hfill \blacksquare
+    \end{text}
+    
+    
+    \item
+    \begin{text}
+        Prove the termination of $Div(a,b)$
+    \end{text}
+    
+    \begin{text}
+        - We begin the proof for termination by letting $m_k = \ceil{\frac{a}{b}} - q_k$. We want to show: $m_k \in \mathbb{N} \land m_k < m_{k-1}$\\
+        - We can show that the loop measure is an element of natural numbers by showing its components are all elements of natural numbers and that the $m_k \geq 0$.\\
+        - We know $\ceil{\frac{a}{b}} \in \mathbb{N}$ as $a, b \in \mathbb{N}$, and $b > 0$, and we also know $k \in \mathbb{N}$ and $k \geq 0$ by assumption that $k$ is the number of iterations\\
+        - Then to prove that $m_k \geq 0$, $k \geq 0$ and by LI Statement (2), we know that $a \geq b \cdot q_k$. We move around the inequality to see that $\frac{a}{b} \geq q_k$, and since $\ceil{ \frac{a}{b} } \geq \frac{a}{b}$, the inequality is maintained with $\ceil{ \frac{a}{b} } \geq q_k$. Thus we know $m_k \in \mathbb{N}$
+        - Now to show that $m_k < m_{k-1}$:
+        
+        \begin{align}
+            m_k &= \ceil{\frac{a}{b}} - q_k \nonumber\\
+            &< \ceil{\frac{a}{b}} - q_k + 1\nonumber\\
+            &= \ceil{\frac{a}{b}} - (q_k - 1)\nonumber\\
+            &= \ceil{\frac{a}{b}} - q_{k-1}\nonumber\\
+            &= m_{k-1}\nonumber
+        \end{align}
+    \end{text}
+    \hfill \blacksquare
+\end{enumerate}
+
+%END Q1
+
+\newpage
+
+%BEGIN Q2
+\section*{Question 2}
+
+\begin{text}
+    Considering the algorithm $Sort$, we want to prove its correctness, defined by the given conditions:
+\end{text}
+\begin{equation}
+    \textbf{Pre-condition: } \text{$A$ is a list of numbers; $len(A) \geq 1; s, e \in \mathbb{N}$; and $0 \leq s \leq e < len(A)$ (indexing of $A$ starts at 0)}\nonumber
+\end{equation}
+\begin{equation}
+    \textbf{Post-condition: } \text{$A[s : e + 1]$ is sorted in non-decreasing order.}\nonumber
+\end{equation}
+
+\noindent
+\begin{text}
+First we must find what is the precondition of the loop. Before the first iteration of the loop, $s < e$ must hold in order for the condition in line 1 to be true in order for the loop to be reached. Thus the pre-condition for the loop is:
+\end{text}
+\begin{equation}
+    \textbf{Loop Pre-condition: } s < e \text{ and } i, j = s\nonumber
+\end{equation}
+\noindent
+\begin{text}
+    We also find the loop invariant, which we define as:
+\end{text}
+\begin{align}
+    LI(t)&: \text{If the loop iterates at least $t$ times, then:}\nonumber\\
+    (&1): s \leq i_t \leq j_t \leq e\nonumber\\
+    (&2): A[x] < A[e], \text{ where } x \in [s:i_t]\nonumber\\
+    (&3): A[y] \geq A[e], \text{ where } y \in [i_t:j_t]\nonumber 
+\end{align}
+\begin{text}
+    We want to prove the loop invariant. We want to show $LI(t)$ holds for all $t \in \mathbb{N}$ assuming the loop-precondition holds true\\
+\end{text}
+
+\noindent
+\textbf{Base Case: }\\
+\begin{text}
+    Let $t = 0$, such that the loop iterates at least $0$ times. Since we assume the loop-invariant holds, we know that $i, j = s$ and that the if statement one line 1 must hold since $s < e$. By the initial assumption of the loop-precondition, LI statement (1) holds by default as $i_0 = j_0 \land s < e \implies s \leq i_o \leq j_o \leq e$. Then since $s = i_0$, the list of indices, $[s:i_0]$, is empty and statement (2) holds by default. The same goes for $[i_0:j_0]$ which is also empty and thus makes (3) hold by default. Therefore we have shown that the loop invariant's base case holds.\\
+\end{text}
+
+
+\noindent
+\textbf{Induction Step: }\\
+\begin{text}
+    Let $k \in \mathbb{N}$, and assume $LI(k)$ holds. We want to show that $LI(K+1)$ holds. Since we assume $LI(k)$, we know from statement (1) that $s \leq i_k \leq j_k \leq e$. For the new iteration, we know that $j_{k+1} = j_{k} + 1$, since on every iteration, line 8 will execute and $j$ will increment by 1. However the same does not hold for $i$, and $i_{k+1} = i_{k} + 1$ if and only if $A[j_k] < A[e]$ holds for the if-statement to hold true at line 5 which leads into $i$ being incremented by 1 at line 7. In addition, we know $j_{k+1} \leq e$ since by the condition of the loop, $j_k < e$ and the loop terminates when $j_K = e$, therefore we know statement (1) holds for $LI(k+1)$.\\
+    
+    \noindent
+    By assumption of $LI(k)$ we know that statement (2) holds for $k$. Since we know $i_k$ only increments if the condition on line 5 holds, we have two cases. If the condition on line 5 does not hold, then $i_{k+1} = i_k$, then by IH, statement (2) holds for $LI(k+1)$. But if the condition on line 5 does hold, then we need to show that the new element $A[i_k]$ is less than $A[e]$ (Since the indices are now $[s:i_k+1]$). However, this is almost given, as line 5 shows that $A[j_k] < A[e]$, and then by line 6, $A[j_k]$ swaps with $A[i_k]$ and guarantees that $A[i_k] < A[e]$ holds, thus statement (2) still holds.\\
+    
+    \noindent
+    By assumption of $LI(k)$ we know that statement (3) holds for $k$. We again have two cases to solve, one where the condition on line 5 holds and one where the condition does not hold. If the condition does not hold, then the only change from $LI(k)$ we need to show is that for the new element, $j_k$ (since the indices are now $[i_k:j_{k+1}]$), that $A[j_k] \geq A[e]$ holds. However, this is already true, given that line 5's condition does not hold iff $A[j_k] \geq A[e]$, thus statement (2) holds. But if the condition on line 5 holds, then we need to show that all elements in $A[i_{k} + 1:j_{k+1}]$ are greater or equal than than $A[e]$. By IH, we already know elements $A[i_{k}:j_k]$ are greater or equal than $A[e]$ at the beginning of this loop iteration, we just need to show the element $A[j_k] \geq A[e] \land A[i_k + 1] \geq A[e]$ at the end of this loop iteration. However, we already know $A[j_k] \geq A[e]$ since if the condition of line 5 holds, then $A[j_k] < A[e]$, but then by line 6, $A[j_k]$ swaps with $A[i_k]$ (And by IH we knew $A[i_k] \geq A[e]$ before the swap). For the second inequality, we already also know that $A[i_k + 1] \geq A[e]$ holds since by IH, all elements in $A[i_{k}:j_k]$ are greater to or equal than $A[e]$.\\
+\end{text}
+
+\noindent
+\begin{text}
+    Therefore we have proven the loop invariant for $Sort$\\
+\end{text}
+
+\noindent
+\begin{text}
+    We have been given the assumption that the loop terminates, so now we must prove the correctness of $Sort$ such that for all $n \in \mathbb{N}$ where $n \geq 1$, $P(n)$ holds, where we define $P(n)$ to be:
+\end{text}
+\begin{equation}
+    P(n): \text{For a list of $A$ of length $n$, Pre-condition $\land$ Termination $\implies$ Post-condition} \nonumber
+\end{equation}
+
+\noindent
+\textbf{Base Case: }\\
+\begin{text}
+    Let $n = 1$, we want to show that $P(n)$ holds. Since we assume the precondition, we know that $0 \leq s \leq e < 1$, thus $s = e = 0$ and $A[s:e+1] = A[0]$. Then since $A[s:e+1]$ represents a single element, $A[s:e+1]$ is sorted in non-decreasing order and $P(n)$ holds.\\
+\end{text}
+
+\noindent
+\textbf{Induction Step: }\\
+\begin{text}
+    We define $j, n \in \mathbb{N}$, such that $n > 1$ and $1 \leq j < n$, where $P(j)$ holds. We want to show that $P(n)$ holds. We then let $s, e \in \mathbb{N}$ such that $0 \leq s \leq e < len(A)$ by the assumption of the pre-condition. We need to show that $P(n)$ holds for all $s$ and $e$, so we will make divide the induction step into two subcases, one where $s = e$ and $s < e$:\\
+\end{text}
+
+\noindent
+\underline{Case 1: $s = e$}\\
+\begin{text}
+    If $s = e$, then $A[s: e + 1] = A[s]$. Therefore the post-condition holds and $P(n)$ holds.\\
+\end{text}
+
+\noindent
+\underline{Case 2: $s < e$}\\
+\begin{text}
+    Since we assume $s < e$, then the if-statement condition on line 1 must hold and so must the loop pre-condition, such that $i, j = s$. By assumption of termination, we also know that the loop will terminate after at least $k$ iterations such that $j_k = e$. Now we can use the assumption of $LI(k)$ that $A[x] < A[e]$ where $x \in [s:i_k]$ and $A[y] \geq A[e]$ where $y \in [i_k:j_k]$, which is equivalent to $y \in [i_k:e]$. After the loop terminates, line 9 swaps $A[i_k]$ with $A[e]$, so now we know $A[y] \geq A[e]$ where $y \in [i_k:e + 1]$, since $A[i_k] \geq A[e]$. Then the last 4 lines of the program are made of if statements, which we will look into by cases.\\
+    
+    \noindent
+    At line 10, the if-statement holds if $s < i_k - 1$. If the condition holds, then by IH, we know line 11 will sort $A[s:i_k]$ in a non-decreasing order. If the condition does not hold, where $s \geq i_k - 1$, then we know $A[s:i_k] = A[s:s]$ or $A[s:i_k] = A[s:s+1]$ holds, then $A[s:i_k]$ is sorted no matter which condition holds.\\
+    
+    \noindent
+    At line 12, the if-statement holds if $i_k + 1 < e$. If the condition holds, then by IH, we know line 13 will sort $A[i_k:e+1]$ in a non-decreasing order. If the condition does not hold, where $i_k + 1 \geq e$, then we know $A[i_k:e+1] = A[i_k:i_k]$ or $A[i_k:e+1] = A[i_k:i_k + 1]$ holds, then $A[i_k:e+1]$ is sorted no matter which condition holds.\\
+    
+    \noindent
+    Then since $A[s:i_k]$ and $A[i_k:e+1]$ are individually sorted in non-decreasing order, and then since all elements in $A[s:i_k]$ are less that $A[e]$ and all elements in $A[i_k:e+1]$ are more than or equal to $A[e]$, this implies that $A[s:i_k] + A[i_k:e+1] = A[s:e + 1]$ is sorted in non-decreasing order.
+    
+    \hfill $\blacksquare$
+\end{text}
+
+%END Q2
+
+\newpage
+
+%BEGIN Q3
+\section*{Question 3}
+
+\begin{text}
+    Let $a, b \in \mathbb{N}$. Consider the following function $f: \mathbb{N} \to \mathbb{N}$.
+\end{text}
+
+\begin{equation}
+    f(n) = 
+    \begin{cases}
+      a, & n = 0\nonumber\\
+      b, & n = 1\nonumber\\
+      2f(n-1) - f(n-2) + 1, & n \geq 2 \nonumber
+    \end{cases}
+\end{equation}
+
+\noindent
+\begin{text}
+    We must find the closed form expression of the equation. Assume $n \geq 2$:
+\end{text}
+
+\begin{align}
+    f(n) &= 2f(n-1) - f(n-2) + 1 \tag{$i = 1$}\nonumber\\
+    f(n) &= 2(2f(n-2) - f(n-3)) + 1) - f(n-2) + 1\nonumber\\
+    f(n) &= 3f(n-2) - 2f(n-3) + 3 \tag{$i = 2$}\nonumber\\
+    f(n) &= 3(2f(n-3) - f(n-4) + 1) - 2f(n-3) + 3\nonumber\\
+    f(n) &= 4f(n-3) - 3f(n-4) + 6 \tag{$i = 3$}\nonumber\\
+    f(n) &= (i+1) \cdot f(n - i) - (i) \cdot f(n - i - 1) + \sum_{j=1}^{i+1}(j - 1)\nonumber\\
+    f(n) &= (n) \cdot f(n - (n - 1)) - (n - 1) \cdot f(n - (n)) + \sum_{j=1}^{n}(j-1)\tag{Realize that $n = i + 1$}\nonumber\\
+    f(n) &= (n) \cdot f(1) - (n - 1) \cdot f(0) + \frac{n^2-n}{2} \tag{Realize $\sum_{j=1}^{n}(j - 1) = \frac{n^2-n}{2}$}\nonumber\\
+    f(n) &= b \cdot (n) - a \cdot (n - 1) + \frac{n^2-n}{2}\tag{Since $f(0) = a$ and $f(1) = b$}\nonumber
+\end{align}
+
+\noindent
+\begin{text}
+    We find that the closed form expression of $f(n)$ is: $f(n) = b \cdot (n) - a \cdot (n - 1) + \frac{n^2-n}{2}$\\
+\end{text}
+
+$\hfill \blacksquare$
+
+%END Q3
+
+\newpage
+
+%BEGIN Q4
+\section*{Question 4}
+
+\begin{text}
+    Considering the recursive algorithm $maj(A, f, \ell)$. We let $T(n)$ denote the worst-case running time of $maj$ on inputs of size $n$. Write a recurrence relation satisfied by $T$. Then, give an asymptotic upper-bound for the worst-case running time of the algorithm.\\
+    
+    \noindent
+    We can assume that $len(A[f : \ell + 1])$ and $len(A)$ are powers of 2. Which explicitly means that $len(A[f : \ell + 1]) \in \{1, 2, 4, 8, ...\}$ and $len(A) \in \{1, 2, 4, 8, ...\}$. And we also assume $n = (\ell + 1) - f$.
+\end{text}
+
+\begin{equation}
+    T(n) = 
+    \begin{cases}
+      a, & n = 1 \nonumber\\
+      T((\floor{\frac{f + \ell}{2}} + 1) - f) + T((\ell + 1) - \floor{\frac{f + \ell}{2}} - 1) + (\ell + 1 - f) \cdot c + b, & n\geq 2\nonumber
+    \end{cases}
+\end{equation}
+
+\noindent
+\begin{text}
+    We define $a$ to be the constant run-time of the base case in lines 1 and 2, $c$ to be the run-time of lines within the while loop and $b$ to be the constant run-time of the assignment statements 3, 5 and 6.\\
+
+    \noindent
+    We cannot use the Master Theorem on our recurrence relation at this moment, but we can realize that $(\floor{\frac{f + \ell}{2}} + 1) - f$ is equivalent to $(\ell + 1) - \floor{\frac{f + \ell}{2}} - 1$:
+\end{text}
+
+\begin{align}
+    (\floor{\frac{f + \ell}{2}} + 1) - f = (\ell + 1) - \floor{\frac{f + \ell}{2}} - 1 &\iff \floor{\frac{f + \ell}{2}} = \frac{\ell + f - 1}{2}\nonumber
+\end{align}
+
+\noindent
+\begin{text}
+    Since we know that $(\ell + 1) - f = 2^m$ for some $m \in \mathbb{N}$, we know that $\ell = 2^m + f - 1$, then we can show that:
+\end{text}
+\begin{align}
+    \floor{\frac{f + \ell}{2}} &= \floor{\frac{f + (2^m + f - 1)}{2}}\nonumber\\
+    &= \floor{2^{m-1} + f - \frac{1}{2}}\nonumber
+\end{align}
+
+\noindent
+\begin{text}
+    Since $2^{m-1} + f \in \mathbb{N}$, the above implies that:
+\end{text}
+\begin{align}
+    \floor{2^{m-1} + f - \frac{1}{2}} &= 2^{m-1} + f - 1\nonumber\\
+    &= \frac{2^m + 2f - 2}{2}\nonumber\\
+    &= \frac{\ell + f - 1}{2}\nonumber
+\end{align}
+
+\noindent
+\begin{text}
+    Thus we have shown that $(\floor{\frac{f + \ell}{2}} + 1) - f$ is equivalent to $(\ell + 1) - \floor{\frac{f + \ell}{2}} - 1$ and we can simplify the recurrence relation and remove the floors to:
+\end{text}
+
+\begin{equation}
+    T(n) = 
+    \begin{cases}
+      a, & n = 1 \nonumber\\
+      2T(\frac{\ell + 1 - f}{2}) + g(n), & n\geq 2\tag{Where $g(n) = (\ell + 1 - f) \cdot c + b$}\nonumber
+    \end{cases}
+\end{equation}
+
+\noindent
+\begin{text}
+    Then since the recurrence relation is in the correct form and $g(n) \in \mathcal{O}(n^1)$, we can then use the Master Theorem to find the upper bound of the relation. Since $k = 1$, $c = 2$ and $d = 2$, we know $k = log_{d}c$, as $1 = log_{2}2$. Therefore by the Master Theorem, the upper bound of the relation is $T(n) \in \mathcal{O}(n \cdot log(n))$.\\
+    
+    $\hfill \blacksquare$
+\end{text}
+%END Q4
+
+\end{document}
