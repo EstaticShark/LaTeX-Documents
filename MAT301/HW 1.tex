@@ -1,0 +1,324 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{MAT301H1 HW1}
+\author{Martin Chak}
+\date{May 2020}
+
+
+\begin{document}
+
+%BEGIN Q1
+\noindent
+\textbf{Problem (1) For each of the following relations on $\mathbb{R}$, identify which of the listed properties
+it has (‘yes’ or ‘no’). Wherever you say ‘no’, give a counterexample.}\\
+\textbf{(a) $x - y < 1$:}\\
+\begin{text}
+    \indent Reflexive\\ 
+    \indent Not Symmetric since $x = -1$ and $y = 0$\\
+    \indent Not Anti-symmetric since $x = 0$ and $y = 0.1$\\
+    \indent Not Transitive since $x = -4$, $y = -4.5$ and $z = -5$\\
+\end{text}
+\textbf{(b) $x \neq y$:}\\
+\begin{text}
+    \indent Not Reflexive since $x,y = 0$ (Or anything in $\mathbb{R}$ really)\\ 
+    \indent Symmetric\\
+    \indent Not Anti-symmetric since $x = 0$ and $y = 1$\\
+    \indent Not Transitive since $x = 1$, $y = 2$ and $z = 1$\\
+\end{text}
+\textbf{(c) $|x - y| < 1$:}\\
+\begin{text}
+    \indent Reflexive\\ 
+    \indent Symmetric\\
+    \indent Not Anti-symmetric since $x = 0$ and $y = 0.5$\\
+    \indent Not Transitive since $x = 1$, $y = 1.5$ and $z = 2$\\
+\end{text}
+\textbf{(d) $xy > 0$:}\\
+\begin{text}
+    \indent Not Reflexive since $x,y = 0$\\ 
+    \indent Symmetric\\
+    \indent Not Anti-symmetric since $x = 1$ and $y = 2$\\
+    \indent Transitive\\
+\end{text}
+\textbf{(e) $x - y \in \mathbb{Q}$:}\\
+\begin{text}
+    \indent Reflexive\\ 
+    \indent Symmetric\\
+    \indent Not Anti-symmetric since $x = 0$ and $y = 1$\\
+    \indent Transitive\\
+\end{text}
+
+%BEGIN Q2
+\noindent
+\textbf{Problem (2) Let $f$ be a self-map on a set $X$. For $x, y \in X$ define $x \sim y$ if and only if $f^n(x) = f^m(y)$ for some integers $n, m \geq 0$. Show that $\sim$ is an equivalence relation.}\\
+\begin{text}
+    \noindent
+    To show that the $\sim$ is an equivalence relation, we must show that $\sim$ is reflexive, symmetric and transitive. So we show each trait separately.\\
+    
+    \noindent
+    The relation is Reflexive, since for $n, m = 1$ we know $f(x) = f(x)$.\\
+    
+    \noindent
+    The relation is also symmetric, since if we assume $f^n(x) = f^m(y)$, we know that $f^p(y) = f^q(x)$ for $p = m$ and $q = n$.\\
+    
+    \noindent
+    Lastly, we can show that the relation is transitive, since if $f^n(x) = f^m(y)$ and $f^p(y) = f^q(z)$, then $f^{n}(x) = f^{q + (m - p)}(z)$ will hold if $m \geq p$ or $f^{n + (p - m)}(x) = f^{q}(z)$ will hold if $m < p$.\\
+    
+    \noindent
+    Therefore since $\sim$ is reflexive, symmetric and transitive, it must be an equivalence relation
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q3
+\noindent
+\textbf{Problem (3)}\\
+\begin{text}
+    (a) List all subsets of $\{0, 1\}$\\
+    The possible subsets are: $\{\emptyset\}, \{0\}, \{1\}, \{0,1\}$\\
+    
+    \noindent
+    (b) Write down all permutations of the set $\{1,2,3\}$ using two-line notation\\
+    
+    $\begin{pmatrix}
+        1 & 2 & 3\\
+        1 & 2 & 3
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 2 & 3\\
+        1 & 3 & 2
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 2 & 3\\
+        2 & 1 & 3
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 2 & 3\\
+        2 & 3 & 1
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 2 & 3\\
+        3 & 1 & 2
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 2 & 3\\
+        3 & 2 & 1
+    \end{pmatrix}$\\
+    
+    \noindent
+    (c) Find all complex numbers $\zeta$ satisfying $\zeta^8 = 1$ in Cartesian form.\\
+    
+    \noindent
+    For $\zeta = a + bi = re^{i\theta}$ for some real $a$ and $b$, we can then realize that:\\
+    
+    \begin{align}
+        (re^{i\theta})^8 &= r^{8}e^{8i\theta}\nonumber\\
+        &= r^{8} \cdot (cos(8\theta) + i\cdot sin(8\theta))\nonumber\\
+        &= r^{8} \cdot cos(8\theta) + r^{8} \cdot i \cdot sin(8\theta)\nonumber
+    \end{align}
+    
+    \noindent
+    So we realize that in order for $\zeta^8$ to evaluate to 1, we need $r^{8} \cdot i \cdot sin(8\theta)$ to evaluate to 0. In order for that to happen, either $r$ or $sin(8\theta)$ must first evaluate to 0. However, $r$ cannot evaluate to 0 without $\zeta^8$ evaluating to 0, thus we must have $\theta = \frac{\pi k}{8}$ for $k \in \mathbb{Z}$. In this case, $cos(8\theta)$ will evaluate to 1 or $-1$, and since $r^8 \geq 0$, we must have $\theta = \frac{2\pi k}{8} = \frac {\pi k}{4}$. Thus $\zeta^8 = 1$ when $r = 1$ and $\theta = \frac {\pi k}{4}$.\\
+    
+    \noindent
+    (d) Determine all invertible 2-by-2 matrices $A$ such that the coefficients of $A$ and $A^{−1}$ are in $\{-1, 0, 1\}$\\
+    
+    \noindent
+    We can show that:
+    
+    \begin{align}
+        \left(
+        \begin{matrix}
+            a & b\\
+            c & d
+        \end{matrix}
+        \,\, \middle\vert \,\,
+        \begin{matrix}
+            1 & 0\\
+            0 & 1
+        \end{matrix}
+        \right) 
+        &=>
+        \left(
+        \begin{matrix}
+            1 & \frac{b}{a}\\
+            c & d
+        \end{matrix}
+        \,\, \middle\vert \,\,
+        \begin{matrix}
+            \frac{1}{a} & 0\\
+            0 & 1
+        \end{matrix}
+        \right)\nonumber\\
+        &=>
+        \left(
+        \begin{matrix}
+            1 & \frac{b}{a}\\
+            0 & \frac{ad - bc}{a}
+        \end{matrix}
+        \,\, \middle\vert \,\,
+        \begin{matrix}
+            \frac{1}{a} & 0\\
+            \frac{-c}{a} & 1
+        \end{matrix}
+        \right)\nonumber\\
+        &=>
+        \left(
+        \begin{matrix}
+            1 & \frac{b}{a}\\
+            0 & 1
+        \end{matrix}
+        \,\, \middle\vert \,\,
+        \begin{matrix}
+            \frac{1}{a} & 0\\
+            \frac{-c}{ad-bc} & \frac{a}{ad-bc}
+        \end{matrix}
+        \right)\nonumber\\
+        &=>
+        \left(
+        \begin{matrix}
+            1 & 0\\
+            0 & 1
+        \end{matrix}
+        \,\, \middle\vert \,\,
+        \begin{matrix}
+            \frac{d}{ad-bc} & \frac{-b}{ad-bc}\\
+            \frac{-c}{ad-bc} & \frac{a}{ad-bc}
+        \end{matrix}
+        \right)\nonumber
+    \end{align}
+    
+    \noindent
+    Therefore the inverse is:
+    
+    \begin{align}
+        A^{-1}
+        =
+        \begin{pmatrix}
+            \frac{ad}{a(ad-bc)} & \frac{b}{ad-bc}\\
+            \frac{-c}{ad-bc} & \frac{a}{ad-bc}
+        \end{pmatrix}
+        =
+        \frac{1}{ad-bc}
+        \begin{pmatrix}
+            d & -b\\
+            -c & a
+        \end{pmatrix}\nonumber
+    \end{align}
+    
+    \noindent
+    So for all the coefficients to be -1, 0 or 1, $ad - bc$ must not be zero, meaning $ad \neq bc$, thus $a$ and/or $d$ cannot be zero while either $b$ or $c$ is zero and vice-versa. Also, any single coefficient divided by $ad - bc$ must evaluate to -1, 0 or 1.\\
+    
+    \noindent
+    Let us consider the case where an element has a coefficient of zero, in order for that to happen, $a$ and/or $d$ must be zero or $b$ and/or $c$ must be zero, but both cannot be true at once. Consider the case where $d = 0$, thus in order for the remaining elements to be in $\{-1, 0 , 1\}$, the expressions $|bc| = |b|$, $|bc| = |c|$, and $|bc| = |a|$ must hold (considering $a$ isn't 0). The system of equations evaluates to $a,b,c \in \{-1, 1\}$. If $a$ is 0, then the same result holds for $b$ and $c$. Otherwise for the remaining cases where $b$ and/or $c$ are 0, the same argument holds such that $a,d \in \{-1, 1\}$.\\
+    
+    \noindent
+    If neither $a, b, c, d$ are 0, then $|a|,|b|,|c|,|d| = |ad-bc|$ must hold. However this implies $|a| = |b| = |c| = |d|$, therefore $|ad - bc| = |a^2 + a^2| = 2a^2$, where $a$ can be substituted with any other variable. Therefore if we sub in this new value to the matrices we can find that (We don't care about the negative signs unless the affect the value of the expression since the coefficient can be either $-1$ or $1$):
+    
+    \begin{align}
+        \frac{1}{ad-bc}
+        \begin{pmatrix}
+            d & -b\\
+            -c & a
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            \frac{d}{2d^2} & \frac{-b}{2b^2}\\
+            \frac{-c}{2c^2} & \frac{a}{2a^2}
+        \end{pmatrix}
+        \nonumber\tag{From the previous implication}\\
+        &=
+        \begin{pmatrix}
+            \frac{1}{2d} & \frac{-1}{2b}\\
+            \frac{-1}{2c} & \frac{1}{2a}
+        \end{pmatrix}\nonumber
+    \end{align}
+    
+    \noindent
+    However, in this case, the coefficients of $A^{-1}$ cannot be of $-1$ or $1$ without each variable's value being $-0.5$ or $0.5$ which breaks the initial assumption that $A$ must have coefficients of $\{-1, 0, 1\}$, therefore at least one or more variable must be $0$ in order for the conditions to be met.\\
+    
+    \noindent
+    So in order for $A$ and $A^{-1}$ to have the coefficients of $\{-1, 0, 1\}$, $a$ and/or $d$ must be 0, and all the non-zero variables must be $-1$ or $1$, or $b$ and/or $c$ must be 0, and all the non-zero variables must be $-1$ or $1$.
+\end{text}\\
+
+%BEGIN Q4
+\noindent
+\textbf{Problem (4)}\\
+\begin{text}
+    (a) What are the first twelve multiples of $[7]$ in $\mathBB{Z}_{12}$? What about $[8]$?\\
+    
+    \noindent
+    The first twelve multiples of $[7]$ are all $[7]$, and the first twelve multiples of $[8]$ are all $[8]$.\\
+    
+    \noindent
+    (b) Compute $[2]^k$ in $\mathbb{Z}_5$ for $k = 1, . . . , 10$. What do you notice?\\
+    
+    \noindent
+    For $k \in [1, ... ,10]$, $[2]^k$ is: $[2], [4], [3], [1], [2], [4], [3], [1], [2], [4]$\\
+    
+    \noindent
+    (c) For each $m = 2, . . . , 10$ find the product of all non-zero equivalence classes in $\mathbb{Z}_m$. Based on your observations, formulate a conjecture regarding any modulus $m > 1$.\\
+    
+    \noindent
+    We can just realize that for any $\mathbb{Z}_m$ that the value is equivalent to $m!$, thus if we apply $m! mod m$, the result would always be 0. Thus for $m > 1$, the product of all non-zero equivalence classes in $\mathbb{Z}_m$ is 0.
+\end{text}\\
+
+%BEGIN Q5
+\noindent
+\textbf{Problem (5)}\\
+\begin{text}
+    (a) The commutator of $a, b$ in $G$ is the element $[a, b] = aba^{-1}b^{-1}$. Show that $G$ is abelian if and only if every commutator is trivial.\\
+    
+    \noindent
+    To show the relationship is true we will prove the expression both ways.\\
+    
+    \noindent
+    Assume that $G$ is abelian such that for any $a, b \in G$, that $ab = ba$, therefore for the commutator expression:
+    
+    \begin{align}
+        [a,b] &= aba^{-1}b^{-1}\nonumber\\
+        &= baa^{-1}b^{-1}\nonumber\tag{Since $ab = ba$}\\
+        &= bb^{-1}\nonumber\\
+        &= e\tag{Where $e$ is an identity element in $G$}
+    \end{align}\\
+    
+    \noindent
+    Therefore we have proven from the left side. If we instead assume that every commutator is trivial, we can show:
+    
+    \begin{align}
+        aba^{-1}b^{-1} &= e\nonumber\\
+        aba^{-1} &= b\nonumber\\
+        ab &= ba\nonumber
+    \end{align}
+    
+    \noindent
+    So we have shown that the original statement holds
+    
+    \hfill $\blacksquare$
+    \\
+
+    \noindent
+    (b) Suppose $a^2 = e$ for every $a$ in $G$. show that $G$ is abelian.\\
+    
+    \noindent
+    To show that $G$ is abelian, we just need to show that the group is commutative. Specifically we need to show that for all $a, b \in G$, that $ab = ba$.\\
+    
+    \noindent
+    We can just realize that since $a^2 = e$, that $a = a^{-1}$ and $b = b^{-1}$. So then since $a^2 = e = b^2$, which is equal to $aa^{-1} = e = bb^{-1}$, which then implies the relationship $ab = ba$ after solving for $ab$.
+    
+    \hfill $\blacksquare$
+\end{text}
+\end{document}
