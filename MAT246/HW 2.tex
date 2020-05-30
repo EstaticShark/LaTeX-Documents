@@ -1,0 +1,280 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{MAT246H1 HW1}
+\author{Martin Chak}
+\date{May 2020}
+
+\begin{document}
+
+%BEGIN Q1
+\noindent
+\textbf{(1) Use induction to prove that the product of any three consecutive natural numbers is divisible by 6.}
+\begin{text}
+    We want to show, with induction, that for a number $n \in mathbb{N}$, that the product $p$ of $n$, $n + 1$, and $n + 2$ is divisible by 6.\\
+    
+    \noindent
+    \underline{Base Case}\\
+    Let $n = 0$, therefore the product is $p = 0 \cdot 1 \cdot 2 = 0$. Therefore because the product is 0, then it must be divisible by 6.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    Let $n \in \mathbb{N}$, assume that $p = n \cdot (n + 1) \cdot (n + 2)$ is divisible by 6 such that $p \equiv 0$ mod $6$ (equivalent to $n^3 + 3n^2+ 2n = 6k$ for some $k \in \mathbb{N}$) (I.H). We want to show that $p_+ = (n + 1) \cdot (n + 2) \cdot (n + 3)$ is also divisible by 6. So we can show:
+    
+    \begin{align}
+        (n+1) \cdot (n+2) \cdot (n+3) &= n^3 + 6n^2 + 11n + 6\nonumber\\
+        &=(n^3 + 3n^2 + 2n) + 3(n^2 + 3n + 2)\nonumber\\
+        &= 6k + 3(n + 1)(n + 2)\nonumber\tag{By I.H}\\
+        &= 6(k + \frac{3(n + 1)(n + 2)}{6})\tag{Since 3 times an even number is divisible by 6}\\
+        &= 6m\tag{Where $m = k + \frac{3(n + 1)(n + 2)}{6}$}\nonumber
+    \end{align}
+    
+    \noindent
+    Therefore the induction hypothesis holds and the product of any three consecutive natural numbers is divisible by 6.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q2
+\noindent
+\textbf{(2) Let $r \neq 1$ be a real number. Prove by induction that for all
+natural numbers $n$,
+}
+\begin{align}
+    1 + r + r^2 + \cdot \cdot \cdot + r^n = \frac{1 - r^{n + 1}}{1 - r}\nonumber
+\end{align}
+\begin{text}
+    \noindent
+    We want to show  by induction that the above expression is true for all $n \in \mathbb{N}$ such that $r \neq 1$ is a real number\\
+    
+    \noindent
+    \underline{Base Case}\\
+    Let $n = 0$, therefore:
+    
+    \begin{align}
+        1 &= \frac{1 - r}{1 - r}\nonumber\\
+        &= \frac{1 - r^{0 + 1}}{1 - r}\nonumber\\
+        &= \frac{1 - r^{n + 1}}{1 - r}\nonumber
+    \end{align}
+    
+    \noindent
+    Therefore the base case holds.\\
+    
+    \noindent
+    \underline{Induction Step}\\
+    Let $n \in \mathbb{N}$ such that $1 + r + r^2 + \cdot \cdot \cdot + r^n = \frac{1 - r^{n + 1}}{1 - r}$ (I.H). We want to show that: $1 + r + r^2 + \cdot \cdot \cdot + r^n + r^{n+1}= \frac{1 - r^{n + 2}}{1 - r}$. So we can see that:
+    
+    \begin{align}
+        1 + r + r^2 + \cdot \cdot \cdot + r^n + r^{n+1} &= \frac{1 - r^{n + 1}}{1 - r} + r^{n + 1}\nonumber\\
+        &= \frac{1 - r^{n + 1} + r^{n + 1} - r^{n + 2}}{1 - r}\nonumber\\
+        &= \frac{1 - r^{n + 2}}{1 - r}\nonumber
+    \end{align}
+    
+    \noindent
+    Therefore the induction step holds and the original expression is true.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q3
+\noindent
+\textbf{(3) Let $p$ be a prime. Prove that $mod$ $p$, every nonzero number
+has a unique multiplicative inverse. That is, if $x \in \{1, 2, 3, . . . , p - 1\}$ then there is a unique $y \in \{1, 2, 3, . . . , p - 1\}$ such that $xy \equiv 1$ $mod$ $p$}\\
+\begin{text}
+    \noindent
+    We let $x \in \{1, 2, ... , p-1\}$, we want to find a $x \in \{1, 2, ... , p-1\}$ such that the remainder of $x \dot y$ divided by a prime $p$ is 1.\\
+    
+    \noindent
+    We know that for a fixed $x$, we have $(p-1)$ possible products of $xy$, such that $xy \in [x, x(2), ... , x(p-1)]$ since $y \in \{1, 2, 3, . . . , p - 1\}$. We realize that the prime $p$ cannot divide $xy$, since $1 \leq x,y \leq p - 1$, so and by the fundamental theorem of arithmetic, any multiple of $p$ must contain $p$ since it is prime, and by construction of $x$ and $y$ the product $xy$ cannot be a multiple of $p$. Therefore, $xy$ mod $p$ will always return a remainder.\\
+    
+    \noindent
+    We can also realize that each $p - 1$ remainder is unique, if $y_0 \neq y_1$, and assume $xy_0$ mod $p = xy_1$ mod $p \Longrightarrow xy_0 \equiv xy_1$ mod $p \Longrightarrow x(y_0 - y_1) \equiv 0$ mod $p$, but this creates a contradiction, since this implies that there is an $xy$ that is divisible by $p$, which we proved to be impossible earlier. Therefore each of the $p - 1$ remainders are unique.\\
+    
+    \noindent
+    Then since there are $p - 1$ unique remainders for $xy$ mod $p$, then there must be a $y$ for every $x$ such that $xy \equiv 1$ mod $p$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q4
+\noindent
+\textbf{(4) Find all primes $p$ such that $p^2 + 2$ is also prime.}
+\begin{text}
+    \noindent
+    We want to find primes $p$ so that $p^2 + 2$ is prime, so we can realize:
+    
+    \begin{align}
+        p^2 + 2 &= (p - 1)(p + 1) + 3\nonumber
+    \end{align}
+    
+    \noindent
+    So we can realize that in the sequence $(p - 1), p, (p + 1)$, that one of the three must be divisible by 3. If either $(p - 1)$ or $(p + 1)$ are divisible by three, then we know by the above expression that $p^2 + 2$ must be divisible by 3, therefore it would not be a prime. As a result, $p$ must be a multiple of 3. However, $p$ is a prime so the only multiple of 3 it can be is 3 itself, and since  $3^2 + 2 = 11$, we realize that the only prime $p$ that allows $p^2 + 2$ to also be prime is $p = 3$.
+\end{text}\\
+
+%BEGIN Q5
+\noindent
+\textbf{(5) Let $a, b, c \in \mathbb{Z}$ be three integers such that $a^2 + b^2 = c^2$. Prove that $3 \,|\, ab$.}\\
+\begin{text}
+    \noindent
+    Let $a, b, c \in \mathbb{Z}$ such that $a^2 + b^2 = c^2$, we want to show that the product $ab$ is divisible by 3.\\
+    
+    \noindent
+    We realize that if either $a$ and $b$ are multiples of 3, then the product $ab$ must be divisible by 3. Therefore we must show that there is no $a$ and $b$ such that $a^2 + b^2 = c^2$ holds and allows both $a$ and $b$ to be non-multiples of 3.\\
+    
+    \noindent
+    We assume the contradiction such that $a$ and $b$ are both not multiples of 3 so that 3 does not divide $ab$. Therefore we have either $a \equiv 1$ mod $3$ or $a \equiv 2$ mod $3$, and $b \equiv 1$ mod $3$ or $b \equiv 2$ mod $3$. But we can realize that for either case of each variable $a$ or $b$, $a^2 \equiv 1$ mod $3$ will hold since $a^2 \equiv 2^2$ mod $3 \Longrightarrow a^2 \equiv 1$ mod $3$. Therefore $a^2 + b^2 \equiv 2$ mod $3$ must hold. We can then show:
+    
+    \begin{align}
+        a^2 + b^2 \equiv 2 \text{ mod } 3 &\Longrightarrow c^2 \equiv 2 \text{ mod } 3\nonumber
+    \end{align}
+    
+    \noindent
+    But this is a contradiction since we had shown earlier that no squared integer could be congruent to 2 modulo 3. Therefore the assumption that $ab$ is not divisible by 3 is incorrect, and by construction of $a$ and $b$, their product must be divisible by 3.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q6
+\noindent
+\textbf{(6) Let $a, b$ be two integers and let $p, q$ be two distinct primes. Suppose that the two congruence's $x \equiv a (mod \,p)$ and $x \equiv b (mod \,q)$ have a simultaneous solution $x_0$. Prove that this solution is unique modulo $pq$. That is prove that if $x_1$ is another simultaneous solution, then $x_0 \equiv x_1 (mod \,pq)$.}\\
+\begin{text}
+    \noindent
+    Lets assume that for some integers $a, b$ and for two distinct primes $p, q$, that there are two simultaneous solutions to $x \equiv a \, mod \, p$ and $x \equiv b \, mod \,q$ which we will call $x_0$ and $x_1$. We will show that $x_0 \equiv x_1 \, mod \, pq$ holds.\\
+    
+    \noindent
+    First we can realize that $p | x_0 - a$ and $p | x_1 - a$, together this implies: $p | (x_0 - a) - (x_1 - a) \Longrightarrow p | x_0 - x_1$. The same argument goes for $q | x_0 - x_1$.\\
+    
+    \noindent
+    Since both $p$ and $q$ are prime so that neither can be a multiple of the other, and they both divide $x_0 - x_1$, by the fundamental theorem of arithmetic, $x_0 - x_1$ must be made up of $p, q$ and none or more primes. Therefore this implies that any simultaneous solutions $x_0$ and $x_1$ must fulfill $x_0 \equiv x_1$ mod $pq$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q7
+\noindent
+\textbf{(7) Let $p$ and $q$ be distinct primes. Suppose $a$ and $b$ are integers satisfying $a \equiv b \, mod \, p$ and $a \equiv b \, mod \, q$. Show that $a \equiv b \, mod \, pq)$.}
+\begin{text}
+    \noindent
+    Similar to question 6, we assume that there are distinct primes $p$ and $q$ such that there are integers $a$ and $b$ that fulfill the above congruences.\\
+    
+    \noindent
+    We can realize that because $a \equiv b$ mod $p$ and $a \equiv b$ mod $q$ that $p | a - b$ and $q | a - b$. By the fundamental theorem of arithmetic, it must be possible to describe $a - b$ as a product of primes, and since $a - b$ can be divided by distinct primes $p$ and $q$, $a - b$ must be describable as a product of $p$, $q$ and none or more primes. Therefore $pq | a - b \Longrightarrow a \equiv b$ mod $pq$ as required.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q8
+\noindent
+\textbf{(8) Let $p$ and $q$ be distinct primes and $a$ a natural number relatively prime to $pq$. Prove that $a^{(p-1)(q-1)} \equiv 1 \, mod \, pq$.}
+\begin{text}
+    \noindent
+    We let $p$ and $q$ be distinct primes and let $a$ be a natural number relatively prime to $pq$. We want to prove the above congruency.\\
+    
+    \noindent
+    Since $pq$ and $a$ are relatively prime, we know that their greatest common divisor must be 1, therefore $a$ is not divisible by $p$ nor $q$. Thus by Fermat's Little Theorem we can say that $a^{(p-1)} \equiv 1$ mod $p$ and $a^{(q-1)} \equiv 1$ mod $q$ must hold. We can combine the two congruences to show:
+    
+    \begin{align}
+        a^{(p-1)(q-1)} \equiv 1 \text{ mod } p &\iff a^{(p-1)(q-1)} \equiv 1 \text{ mod } q\nonumber\\
+        &\Longrightarrow a^{(p-1)(q-1)} \equiv 1 \text{ mod } pq\tag{By question 7}\nonumber
+    \end{align}
+    
+    \noindent
+    Therefore we have proven the congruence as required.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q9
+\noindent
+\textbf{(9) Find $10^{5^{101}} \, mod \, 18$}\\
+\begin{text}
+    We can realize that:
+    
+    \begin{align}
+        10^{5^{101}} = ((10^5)^5 \cdot\cdot\cdot)^5\tag{$10^5$, 101 times}
+    \end{align}
+    
+    \noindent
+    So we can simplify the calculation by first calculating the integer $p$, where $10^5 \equiv p$ mod $18$ and expanding $p$ into the above expression. Thus:
+    
+    \begin{align}
+        10 \equiv -8 \text{ mod } 18 &\Longrightarrow (10)^5 \equiv (-8)^5 \text{ mod } 18\nonumber\\
+        &\Longrightarrow (10)^5 \equiv (64) \cdot (64) \cdot (-8) \text{ mod } 18\nonumber\\
+        &\Longrightarrow (10)^5 \equiv (10) \cdot (10) \cdot (-8) \text{ mod } 18\nonumber\tag{Since $64$ mod $18 = 10$}\\
+        &\Longrightarrow (10)^5 \equiv (10) \cdot (-8) \text{ mod } 18\nonumber\tag{Since $100$ mod $18 = 10$}\\
+        &\Longrightarrow (10)^5 \equiv (10) \text{ mod } 18\nonumber\tag{Since $-80$ mod $18 = 10$}
+    \end{align}
+    
+    \noindent
+    So $p = 10$, and thus the inner most expanded bracket is congruent to 10 mod 18. We must continue the expansion to find the value of the original expression. But we can realize that when we replace $10^5$ with $10$, since $10^5 \equiv 10$ mod $18$, we return the the same problem we had just solved, as we are again finding an integer $p$ such that $10^5 \equiv p$ mod $18$ holds.\\
+    
+    \noindent
+    This implies that the congruence holds as we recursively expand the expression, therefore concluding that $10^{5^{101}}$ mod $18 = 10$.
+\end{text}\\
+
+%BEGIN Q10
+\noindent
+\textbf{(10) Let $p$ be a prime larger than 5. Prove that there is a power of $p$ that ends with the digits $00001$.}\\
+\begin{text}
+    \noindent
+    We let $p$ be any prime greater than 5, we want to show that there will always be a natural $n$ such that $p^n \equiv 1$ mod $10^5$.\\
+    
+    \noindent
+    We start by saying that since there are an infinite amount of primes, and that there are only finite amount of (mod $10^5$) values, then it must be inevitable that there will be a mod value that will be repeated. We describe the powers of $p$ with repeated mod values with $m$ and $n$, where $n > m$. Therefore we can then show:
+    
+    \begin{align}
+        p^n - p^m \text{ mod } 10^5 &\Longrightarrow p^m(p^{n-m} - 1) \text{ mod } 10^5\nonumber
+    \end{align}
+    
+    \noindent
+    Since $p^m(p^{n-m} - 1)$ is divisible by $10^5$, $10^5$ must divide either $p^m$ or $(p^{n-m} - 1)$. But since $p$ is prime, $10^5$ cannot divide $p^m$, therefore it must be able to divide $(p^{n-m} - 1)$. This implies that $p^{n-m} \equiv 1$ mod $10^5$, meaning that $p^{n-m}$ must end in the digits $00001$ as required.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q11
+\noindent
+\textbf{(11) Suppose that $p$ is a prime greater than $2$ and $a \equiv b^2 \, mod \,p$ for some natural number $b$ that is not divisible by $p$. Prove that $a^{\frac{p-1}{2}} \equiv 1 \, mod \, p$.}\\
+\begin{text}
+    We let $p$ be a prime greater than 2 and let $a \equiv b$ mod $p$ for some natural $b$ such that $p \nmid b$. We want to prove that $a^{\frac{p-1}{2}} \equiv 1$ mod $p$.\\
+    
+    \noindent
+    We can realize that because $p$ is prime and $p \nmid b$, that $p \nmid b^2$. Therefore there exists some integer $q$ such that $b \equiv q$ mod $p \iff b^2 \equiv q^2$ mod $p$. For our integer $q$ we know that $p \nmid q^2$, otherwise it would imply $p \mid b^2$, since $p \mid b^2 - q^2$ but $b^2$ mod $q \neq 0$.\\
+    
+    \noindent
+    We then want to show that $p \nmid a$ so we can use Fermat's Little Theorem. We know that $p \mid a - b^2$ and $p \nmid b^2$. We can show that $a$ is not divisible by contradiction, we assume $p \mid a$ and then show:
+    
+    \begin{align}
+        (a \equiv 0 \text{ mod } p) - (b^2 \equiv q^2 \text{ mod } p) \Longrightarrow a - b^2 \equiv -q^2 \text{ mod } p \nonumber
+    \end{align}
+    
+    \noindent
+    And since $p \nmid q$ and $q$ must be non-zero since $p \nmid b$, this becomes a contradiction since assuming $p \mid a$ makes it impossible for $p \mid a - b^2$ to also hold. Therefore $p \nmid a$.\\
+    
+    \noindent
+    Then by Fermat's Little Theorem, we know that $a^{p-1} \equiv 1$ mod $p$. Then we can show that:
+    
+    \begin{align}
+        a^{p - 1} \equiv 1 \text{ mod } p \Longrightarrow (a^{p - 1})^{\frac{1}{2}} \equiv (1)^{\frac{1}{2}} \text{ mod } p \Longrightarrow a^{\frac{p - 1}{2}} \equiv 1 \text{ mod } p\nonumber
+    \end{align}
+    
+    \noindent
+    Therefore we have proven the required expression.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+\end{document}
