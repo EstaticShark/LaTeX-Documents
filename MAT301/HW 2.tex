@@ -1,0 +1,263 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{MAT301H1 HW1}
+\author{Martin Chak}
+\date{May 2020}
+
+
+\begin{document}
+
+%BEGIN Q1
+\noindent
+\textbf{Problem 1. Verify that each of the following sets is a group under the indicated binary operation. [You may assume in each case that the operation is associative.] State whether
+each group is abelian.}\\
+\begin{text}
+    \noindent
+    a) The set $\mathbb{Z}[x]$ of all polynomials with integer coefficients, under addition.\\
+    
+    The identity element is $0$ and all $a \in \mathbb{Z}[x]$ exist, since the negation of all coefficients gives us the inverse of the element $a$, so $\mathbb{Z}[x]$ is a group. This group's operation is also clearly commutative so the group must be abelian.\\
+
+    \noindent
+    b) The set: $\mu_{\infty} = \bigcup_{n \geq 1}\mu_{n}$, under multiplication.\\
+    
+    The identity element $1$ is in the set $\mu_{\infty}$. For an element $z \in \mu_{\infty}$, the inverse would be $z^{n-1}$, which should also be in the set, since by assumption, $z^{(n-1)^{n}} = 1$, so $z^{n - 1}$ must be in the set and be the inverse to $z$. The group should be abelian since complex multiplication is also commutative.\\
+    
+    \noindent
+    c) The set of all functions $\mathbb{R} \longrightarrow \mathbb{R}$ of the form $x \longmapsto ax + b$ where $a, b \in \mathbb{R}, a \neq 0$ under composition.\\
+    
+    The identity of this binary operation is $g(x) = x$, such that $f(g(x)) = ax + b$, where $f$ is a function in the set, and $a$ and $b$ are real numbers. The inverse should also exist such that $f(g(x)) = x$, since for $f = ax + b$ and $g = cx + d$, we can show:
+    
+    \begin{align}
+        f(g(x)) &= a(cx + d) + b\nonumber\\
+        &= acx + (ad + b)\nonumber\\
+        &= x\tag{Since we can let $c = \frac{1}{a}$ (since $a \neq 0$) and $d = -b$}
+    \end{align}
+    
+    Therefore the inverse must exist. The set must be a group, but cannot be abelian since: $f(g(x)) = a(cx + d) + b \neq c(ax + b) + d = g(f(x))$.\\
+    
+    \noindent
+    d) The set $P(X)$ of all subsets of a set $X$, under the operation: $A \Delta B = (A \setminus B) \cup (B \setminus A)$\\
+    
+    To make it easier for us we can realize that an equivalent binary operation is: $A \Delta B = A \cup B \setminus A \cap B$. We can realize that the identity element is the empty subset $\emptyset \subset X$, thus $A \cup \emptyset \setminus A \cap \emptyset = A$. This group is also obviously abeliean as a result of the set based nature of the operations\\
+    
+    \noindent
+    e) The set $\mathbb{T}$ of equivalence classes $\{x\}$ for the relation $x \sim y$ iff $x - y \in \mathbb{Z}$ on $\mathbb{R}$, under the inherited addition.\\
+    
+    We first show that the identity $[0]$ is in the set. We know that $[0] = \{ x : x \in \mathbb{R} \text { and } x \sim 0\}$. So 0 is obviously in $T$, since $(x - 0) \in \mathbb{Z}$ for any $x \in \mathbb{Z}$ holds.\\
+    
+    We also know that for any $x$, the inverse must also be $x$, since $(x - x) \in \mathbb{Z}$ must hold for any $x \in \mathbb{R}$.\\
+    
+    This group operation is also abelian, since for any $x \sim y$, we know $y \sim x$ will hold since it is equivalent to saying:
+    $(x - y) \in \mathbb{Z} \iff (y - x) \in \mathbb{Z}$ which is true.
+\end{text}\\
+
+%BEGIN Q2
+\noindent
+\textbf{Problem 2. Let $G$ be a finite abelian group, written multiplicatively}\\
+\begin{text}
+    \noindent
+    a) Explain why we may unambiguously refer to the product of all the elements of $G$\\
+    
+    We may easily refer to the product of all elements of $G$ since $G$ is abelian. Therefore the multiplicative operation is commutative and there is no need for explicit notation to describe the products.\\
+    
+    \noindent
+    b) Let $a$ be the product of all the elements in $G$. Show that $a$ is equal to the product of all the involutions in $G$. [Hint. Involutions are self-inverse; elements of larger order are not.]\\
+    
+    Using the hint we can realize that for any $b$ that is an involution, $b^2 = e$, but $bc \neq e$ for $c \in G$ that is $b \neq c$, therefore any element that is not an involution must have an inverse in $G$ that is also not an involution. Thus we can show that for $a$:
+    
+    \begin{align}
+        a &= g_1 \cdot g_2 \cdot \cdot \cdot g_n\nonumber\\
+        &= b_1 \cdot \cdot \cdot b_m \cdot g_1 \cdot g_1^{-1} \cdot \cdot \cdot g_n \cdot g_1^{-n}\nonumber\tag{Since we have shown each inverse is in $G$}\\
+        &= b_1 \cdot \cdot \cdot b_m\nonumber
+    \end{align}
+    
+    Therefore the product of all elements in $G$ is equal to the product of all involutions in $G$.\\
+    
+    \noindent
+    c) What is $a^2$?\\
+    
+    We had previously proven that the product of all elements was equal to the product of all involutions, then $a^2$ is the product of all involutions squared. And by definition of involutions such that any involution $b$, $b^2 = e$, we know that since $G$ is abelian that we can use the commutative property to group the involutions and say $a^2 = e$.\\
+    
+    \noindent
+    d) Suppose $G$ is cyclic of order $n$ with generator $g$. What is $a$? [Hint. Your answer should depend on the parity of $n$.]\\
+    
+    We can use the results of the previous questions to help us. If $n$ is odd, then we know that $G$ cannot have an involution since all elements are generated by $g$ and the only way an element $a^2 = e$ is if $(g^{\frac{n}{2}})^2 = e$, but if $n$ is odd, then $g^{\frac{n}{2}} \notin G$ and as a consequence $a = 1$.\\
+    
+    If $n$ is even, then $G$ must have at least one involution. From question $b$ we can just notice that $a$ would have to be the product of all the involutions.
+\end{text}\\
+
+%BEGIN Q3
+\noindent
+\textbf{Problem 3. Let $G$ be a group, possibly infinite. The exponent of $G$, denoted $exp(G)$, is the least positive integer $n$ such that $g^n = e$ for all $g \in G$. If no such integer exists, we say $G$ has infinite exponent.}\\
+\begin{text}
+    a) Give an example of a group with infinite exponent but every element has finite order. [Hint. There’s one on this page.]\\
+    
+    We can use the set in 1b as an example, the set is: $\mu_{\infty} = \bigcup_{n \geq 1}\mu_{n}$. This fulfils the conditions since $\mu_{\infty}$ is the union of finite $\mu_i$ sets that have an $i$ such that an $u \in \mu_i$ implies $u^i = 1$, but since there is an infinite amount of sets made up of infinitely increasing $i$, there will never be a smallest exponent such that every element in $\mu_{\infty}$ fulfills $g^n = 1$.\\
+    
+    \noindent
+    b) Suppose $exp(G)$ is finite. Show that $exp(G) = lcm\{o(g) : g \in G\}$.\\
+    
+    We assume that $exp(G) = n$ since it is finite. We want to show that $n = lcm\{o(g) : g \in G\}$. Assuming that $exp(G)$ is finite, we can realize that for every $g_i \in G$, that there exists an $m_i | n$, such that $g^{m_i} = e$ (which by definition, $o(g_i) = m_i$).\\
+    
+    For any $g_i$, if the exponent is any number $r$ such that $r$ mod $m_i \neq 0$, then $g_i^{r} \neq e$, therefore $n$ must be a multiple of each $m_i$. In this case since $n$ is the least positive integer such that $g^n = e$, then $n$ must be the lowest common multiple of all $o(g_i)$, therefore $exp(G) = lcm\{o(g) : g \in G\}$.
+    
+    \hfill $\blacksquare$\\
+    
+    \noindent
+    c) Let $G$ be a finite group. Show that $exp(G) | o(G)$.\\
+    
+    We want to show that $exp(G) | o(G)$. We can first use Lagrange's Theorem to realize that the order of every subgroup divides $o(G)$. We partition $G$ into subsets of single elements, therefore we know that the order of each subset must divide $o(G)$. As a result, $o(G)$ must then be divisible by the lowest common multiple, which implies that $exp(G) | o(G)$.
+    
+    \hfill $\blacksquare$\\
+
+    \noindent
+    d) Let $G$ be a finite abelian group. Show that $exp(G) = o(G)$ iff $G$ is cyclic. Give an example of a finite nonabelian group whose exponent and order are equal.\\
+    
+    We want to prove the right hand side first. So we assume that $exp(G) = o(G)$. By Lagrange's Theorem, we know that the order of each element must divide the order of the group $G$. And since we know that the order of an element is equivalent to the order of the cylic subgroup it creates, if we can show that there is an element $g$ such that $o(g) = o(G)$, then it the equivalent to showing $g$ is the generator for $G$\\
+    
+    We can realize that since $exp(G) = lcm\{o(g) : g \in G\}$ and any element of $G$ must have an order that divides $o(G)$, that there must be an element $g \in G$ that $o(g) = o(G)$. Therefore $g$ is a generator and $G$ is a cyclic group.\\
+    
+    We want to prove the converse now, assume that $G$ is cyclic so that there is a generator $g$ such that all elements in $G$ are generated off of $g$. Assuming that there is a sufficiently large enough $m = exp(G)$, we can show that any element of $g^n$ shows:
+    
+    \begin{align}
+        (g^{n})^{m} &\Longrightarrow g^{nm}\nonumber\\
+        &\Longrightarrow (g^{o(G)})^{r}\tag{Since $G$ is abelian we let $r = \frac{nm}{o(G)}$}\nonumber\\
+        &\Longrightarrow (e)^r\tag{Since $g$ is the generator}\nonumber\\
+        &\Longrightarrow e\nonumber
+    \end{align}
+    
+    However this may only happen if $m = exp(G)$ is at least $o(G)$ large, since we had shown that $nm \geq o(G)$ needs to hold, and if $exp(G)$ is not at least $o(G)$, then the generator could break the condition. Therefore according to the definition of $exp(G)$, it must be equal to $o(G)$.
+    
+    \hfill $\blacksquare$
+    
+    We can pick a finite nonabelian group with equal exponents and orders to be $S_3$
+\end{text}\\
+
+%BEGIN Q4
+\noindent
+\textbf{Problem 4. Let $H$ be the hyperbola $xy = 1$ and let $O$ be the point $(1, 1)$.}\\
+\begin{text}
+    \noindent
+    a) Find an explicit formula for $P \oplus Q$ in terms of the Cartesian coordinates of $P$ and $Q$.\\
+    
+    We assume that $P,Q: y = \frac{1}{x}$, we first solve for the slope of $PQ$:
+    
+    \begin{align}
+        \frac{y_2 - y_1}{x_2 - x_1} = \frac{\frac{1}{x_2} - \frac{1}{x_1}}{x_2 - x_1} = \frac{ \frac{x_1 - x_2}{x_1 \cdot x_2} }{ x_2 - x_1 } = \frac{-1}{x_1 \cdot x_2} \nonumber
+    \end{align}
+    
+    So we find that the slope is $m = \frac{-1}{x_1 \cdot x_2}$. For a line that is parallel to $PQ$, that also goes through $O$, we solve to find that the equation is $y = mx + (1 - m)$. We then have to solve the system of equations $y = \frac{1}{x}$ and $y = mx + (1 - m)$. After some computations we can find that the solutions are $(1, 1) = O$ and $(\frac{-1}{m}, -m) = (x_1 \cdot x_2, \frac{1}{x_1 \cdot x_2}) = P \oplus Q$. So for $P = (x_1, y_1)$ and $Q = (x_2, y_2)$, we get:
+    
+    \begin{align}
+        (x_1, y_1) \oplus (x_2, y_2) = (x_1 \cdot x_2, y_1 \cdot y_2)\nonumber
+    \end{align}
+    
+    \noindent    
+    b) What is the $\oplus$-inverse of $(x, y)$ in $H$?\\
+    
+    The $\oplus$-inverse is the coordinate such that $(x, y) \oplus (a, b) = (1, 1)$. In this case for a $P = (x,y)$, the inverse is $P^{-1} = (\frac{1}{x}, \frac{1}{y})$.\\
+    
+    \noindent
+    c) Find all elements of finite order in the group $H$\\
+    
+    An element $h \in H$ has finite order $n$ when $h^n = h \oplus ... \oplus h = (1, 1)$. We had previously realized that $(x_1, y_1) \oplus (x_2, y_2) = (x_1 \cdot x_2, y_1 \cdot y_2)$, so for any element $(x, y) \in H$, the element is only finite if $(x^n,y^n) = (1, 1)$. This relationship implies that $x^2 = 1$ and $y^2 = 1$, therefore the only elements that can be finite are $(1, 1), (-1, -1), (1, -1)$ and $(-1, 1)$.
+\end{text}\\
+
+%BEGIN Q5
+\noindent
+\textbf{Problem 5. Let $\tilde{\infty}$ be a symbol and let $G = \mathbb{R} \cup \{\tilde{\infty}\}$. Define a binary operation $\star$ on $G$ by setting}
+
+$x \star y =$
+$
+\begin{cases}
+  \frac{x + y}{1 - xy} & \text{If } xy \neq 1\\    
+  \tilde{\infty} & \text{If } xy = 1
+\end{cases}$\\
+\textbf{for all $x,y \neq \tilde{\infty}$}\\
+\begin{text}
+    \noindent
+    a) The definition of $\star$ is incomplete. By considering various limits such as $lim_{y \longrightarrow \pm \infty}$, for inspiration, extend the definition of $\star$ to all of $G$.\\
+    
+    There is already definitions for $x, y \neq \tilde{\infty}$ but no definitions for cases where $x$ or $y$ are equal to $\tilde{\infty}$. So we continue the definition by defining:
+    
+    $
+    x \star y =
+    \begin{cases}
+        -x & \text{If $x \in \mathbb{R}, y = \tilde{\infty}$}\\
+        -y & \text{If $y \in \mathbb{R}, x = \tilde{\infty}$}\\
+        0 & \text{If both $x$ and $y$ are $\tilde{\infty}$}
+    \end{cases}
+    \text {, for all $x, y$ where $x$ and/or $y$ is $\tilde{\infty}$}\\
+    $
+    
+    \noindent
+    b) What is the identity element of $G$?\\
+    
+    The identity element is $0$. Since for a $g \in G$ we have the operation:
+    
+    \begin{align}
+        g \star 0 = \frac{(g) + (0)}{1 - (g)(0)} = g\nonumber
+    \end{align}
+    
+    \noindent
+    c) Let $x \in G$. What is the $\star$-inverse of $x$?\\
+    
+    The inverse of an element $x$ would be $-x$ since:
+    
+    \begin{align}
+        x \star -x = \frac{(g) + (-g)}{1 - (g)(-g)} = 0\nonumber
+    \end{align}
+    
+    \noindent
+    d) Find an element of order 2 in $G$, and prove it’s the only one.\\
+
+    For an element $x$ to have an order of $2$, $x$ would have to be its own inverse such that: $x \star x = 0$. So we can show that:
+    
+    \begin{align}
+        x \star x &= \frac{(x) + (x)}{1 - (x)(x)}\nonumber\\
+        &= \frac{2x}{1-x^2}\tag{$x$ cannot be 0 since $o(0) = 1$}\nonumber\\
+        &= 0\tag{Only when $x = \tilde{\infty}$ since $\tilde{\infty} \star \tilde{\infty} = 0$}\nonumber
+    \end{align}
+
+    Therefore, since there are no reals that can have order 2, the only element that can be an involution in $G$ is $\tilde{\infty}$.\\
+
+    \noindent
+    e) Show that 1 has order 4.\\
+    
+    If $1$ has order $4$, then $1 \star 1 \star 1 \star 1 = 0$. So through the definition of $\tilde{\infty}$, we can show that:
+    \begin{align}
+        1 \star 1 \star 1 \star 1 &= \tilde{\infty} \star 1 \star 1\nonumber\\
+        &= -1 \star 1\nonumber\\
+        &= 0\nonumber
+    \end{align}
+    So the element 1 must be of order 4.\\
+    
+    \noindent
+    f) What are all the elements of order 3 in $G$? [Hint. Find a formula for $x \star x \star x$.]\\
+    
+    We know from 5d that $x \star x = \frac{2x}{1-x^2}$, so we can calculate $x \star x \star x$ by showing:
+    \begin{align}
+        \frac{2x}{1-x^2} \star x &\Longrightarrow (\frac{2x}{1-x^2} + x) \div (1 - (\frac{2x}{1-x^2})(x))\nonumber\\
+        &\Longrightarrow (\frac{2x + x - x^3}{1 - x^2}) \div (\frac{1 - x^2 -2x^2}{1 - x^2})\nonumber\\
+        &\Longrightarrow \frac{x^3 - 3x}{3x^2 - 1}\nonumber\\
+        &\Longrightarrow \frac{x(x^2 - 3)}{3x^2 - 1}\nonumber
+    \end{align}
+    
+    So we find that $x \star x \star x = 0$ when $x = 0, -\sqrt{3}, \sqrt{3}$, but already know from 5d that the element $0$ must have an order of 0, so the only elements that have order 3 are $-\sqrt{3}$ and $\sqrt{3}$.
+\end{text}
+
+\end{document}
