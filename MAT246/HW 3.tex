@@ -1,0 +1,236 @@
+\documentclass[20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}		 
+\usepackage{enumitem}
+\usepackage{fancyheadings}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{fancybox}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{changepage}
+\usepackage{listings}
+
+\title{MAT246H1 HW3}
+\author{Martin Chak}
+\date{May 2020}
+
+\begin{document}
+
+%BEGIN Q1
+\noindent
+\textbf{(1)}\\
+\begin{text}
+    a) The set $T = \{ a \cdot 1, a \cdot 2, ... , a \cdot 15, a \cdot 16\}$ is just the set $S = \{1, 2, ... , 15, 16\}$ but with all elements multiplied by $a = 9$. It is constructed so that each element in $T$ is congruent mod $a$ to its parallel element in $S$\\
+    
+    \noindent
+    b) We want to show that the numbers in $S$ are congruent to the numbers in $T$. By construction of $S$ so that it has all numbers from $1$ to $16$, we know that for all $s \in S$, that $s$ mod 17 would uniquely return every possible mod value for 17 except for 0, therefore no two numbers are congruent to each other in $S$.
+    
+    For the set $T$, we can recognize that every element $t \in T$ is just some multiple of an element in $S$ such that $t = a \cdot s$ for a unique $s$. And because we know that $gcd(a, p) = 1$, since $p$ is prime and neither are multiples of each other, then the existence of all mod values from 1 to 16 must persist in the set $T$.
+    
+    Therefore, because each set $T$ and $S$ have the same unique mod 17 values, each $t$ has an $s$ such that $t$ is congruent to $s$ mod 17.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q2
+\noindent
+\textbf{(2)}\\
+\begin{text}
+    a) We have $m = 14$, so $S$ is the set of numbers that are relatively prime to $m$. Therefore $S = \{1, 3, 5, 9, 11, 13\}$\\
+    
+    \noindent
+    b) Since $a = 9$, our set $T = \{a, 3 \cdot a, 5 \cdot a, 9 \cdot a, 11 \cdot a, 13 \cdot a\}$\\
+    
+    \noindent
+    c) We want to show that in this case, the set $S$ is congruent to the numbers in $T$.\\
+    
+    \noindent
+    We first want to show that no two unique elements $s_1, s_2 \in S$ are congruent to each other. Since all elements in $S$ are positive and $s_1 \neq s_2$, we know that $0 < s_1 - s_2 < m$. Therefore since $m$ cannot divide any element in $S$ or any difference of any two elements in $S$, we know that each element in $S$ must have unique mod $m$ values. Therefore no two elements in $S$ are congruent to each other.\\
+    
+    \noindent
+    We use the previous implication to show that no two elements $t_1,t_2 \in T$ are congruent. Since we know that $t_i = a \cdot s_i$, we can show:
+    \begin{align}
+        t_1 - t_2 &= a \cdot s_1 - a \cdot s_2 = a (s_1 - s_2)\nonumber
+    \end{align}
+    \noindent
+    And since we know that no elements in $S$ are congruent and that $m$ cannot divide $a$, that implies that $t_1$ and $t_2$ are not congruent, therefore each element in $T$ must have unique mod $m$ values from each other. We can make a further implication since we know $gcd(a, m) = 1$, therefore the existence of all mod values in $S$ must persist in $T$\\
+    
+    \noindent
+    Therefore, each element in $S$ must have an element in $T$ that is congruent modulo $m$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q3
+\noindent
+\textbf{(3)}\\
+\begin{text}
+    a) We let $S = \{r_1, r_2, \cdot \cdot \cdot , r_{\phi(m)}\}$ such that for some $m$, the set $S$ represents all relatively prime natural numbers less than $m$. We want to show that for each $r_i \in S$ that there exists a $r_i^{-1} \in \mathbb{Z}^+$ such that $r_i \cdot r_i^{-1} \equiv 1$ mod $m$\\
+    
+    \noindent
+    The next question asks how we can find a multiplicative inverse within the set $S$ so we can just be lazy in this sub-question. We can realize that because $r_i$ and $m$ are relatively prime, that we can say $r_i^{\phi(m)} \equiv 1$ mod $m$ as a result of the euclidean algorithm. So we can just let $r_i^{-1} = r_i^{\phi(m) - 1}$, which fufills the requirement that $r_i \cdot r_i^{-1} \equiv 1$ mod $m$.\\
+    
+    \noindent
+    b) We let $S = \{r_1, r_2, \cdot \cdot \cdot , r_{\phi(m)}\}$ such that for some $m$, the set $S$ represents all relatively prime natural numbers less than $m$. We want to show that for each $r_i \in S$ that there exists a $r_i^{-1} \in S$ such that $r_i \cdot r_i^{-1} \equiv 1$ mod $m$\\
+    
+    \noindent
+    We can use some of our answer from 3a to help us. We know that $r_i^{\phi(m) - 1}$ is a multiplicative inverse to $r_i$, however it is not guaranteed to be in the set $S$. So in order to show that there is a multiplicative inverse in $S$, we just have to show that there is an element in $S$ that is congruent to $r_i^{\phi(m) - 1}$.\\
+    
+    \noindent
+    We know that the set $S$ is the set of every positive integer that is relatively prime to and less than $m$. So to show that there is a congruent element, we just need to show that $r_i^{\phi(m) - 1}$ is relatively prime to $m$.\\
+    
+    \noindent
+    We can easily show this by contradiction, by assuming $r_i^{\phi(m) - 1}$ is not relatively prime to $m$ this implies that $gcd(r_i^{\phi(m) - 1}, m) > 1$. However this assumption creates a contradiction since we know $r_i$ is relatively prime to $m$ such that if $r_i$ can be described as a product of primes, each of which (except 1) cannot divide $m$. Therefore when we have the exponent $\phi(m) - 1$, it does not change that the largest number that makes up $r_i^{\phi(m) - 1}$ that can divide $m$ is 1, implying the greatest common divisor is 1 and thus bringing upon a contradiction. As a result, $r_i^{\phi(m) - 1}$ is relatively prime to $m$, therefore there must be an integer in $S$ that is congruent to $r_i^{\phi(m) - 1}$ and therefore is a multiplicative modular inverse to $r_i$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q4
+\noindent
+\textbf{(4)}
+\begin{text}
+    We want to prove for all primes $p > 3$, that $2 \cdot (p - 3)! \equiv -1$ mod $p$.\\
+    
+    \noindent
+    We let $p$ be any prime such that $p > 3$. We can use Wilson's Theorem to say that $(p-1)! \equiv -1$ mod $p$ which we can imply that:
+    \begin{align}
+        (p - 1)! \equiv -1 \text{ mod } p &\Longrightarrow 2 \cdot (p - 1)(p - 2)(p - 3)! \equiv -2 \text{ mod } p\nonumber\\
+        &\Longrightarrow 2 \cdot (-1)(-2)(p - 3)! \equiv -2 \text{ mod } p\nonumber\\
+        &\Longrightarrow 2 \cdot (p - 3)! \equiv \frac{-2}{(-1)(-2)} \text{ mod } p\nonumber\\
+        &\Longrightarrow 2 \cdot (p - 3)! \equiv -1 \text{ mod } p\nonumber
+    \end{align}
+    \noindent
+    Therefore we have shown that $2 \cdot (p - 3)! \equiv -1 \text{ mod } p$ holds for all primes greater than 3.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q5
+\noindent
+\textbf{(5)}
+\begin{text}
+    We want to find all primes $p$ such that $p$ divides $(p - 2)! + 6$.\\
+    
+    \noindent
+    We want to first address the term $(p - 2)!$ by finding a congruent number. We can use Wilson's Theorem to show:
+    \begin{align}
+        (p - 1)! \equiv -1 \text{ mod } p &\Longrightarrow (p - 1)(p - 2)! \equiv -1 \text{ mod } p\nonumber\\
+        &\Longrightarrow (-1)(p - 2)! \equiv -1 \text{ mod } p\nonumber\\
+        &\Longrightarrow (p - 2)! \equiv 1 \text{ mod } p\nonumber
+    \end{align}
+    Then when we recombine the expression we get:
+    \begin{align}
+        ((p - 2)! \equiv 1 \text{ mod } p) + (6 \equiv 6 \text{ mod } p) \Longrightarrow ((p - 2)! + 6 \equiv 7 \text{ mod } p)\nonumber
+    \end{align}
+    So we find that no matter what the prime is, the expression will be congruent to 7 mod $p$. Therefore there is only one prime that divides the expression and that is $p = 7$.
+\end{text}\\
+
+\newpage
+
+%BEGIN Q6
+\noindent
+\textbf{(6) Let $p$ be a prime number, we want to show that $\phi(p^2) = p^2 - p$}\\
+\begin{text}
+    We let $p$ be any prime number. We want to show that there are $p^2 - p$ positive integers that are coprime to $p^2$.\\
+    
+    \noindent
+    Since $p$ is prime, we know immediately that $\phi(p) = p - 1$, where each value represents a positive integer in the set $S = \{1, 2, ... , p - 2, p - 1\}$. When we calculate $\phi(p^2)$, we can recognize that the only numbers in the interval $[1, p^2]$ that are not coprime to $p^2$ are multiples of $p$. We can realize that this set of non-relatively prime numbers is $p \cdot S \cup \{p^2\} = \{p, 2p, ... , p^2 - 2p, p^2 - p, p^2\}$ which contains $p$ elements. Therefore, out of $p^2$ elements, there are only $p$ elements that we ignore, so $\phi(p^2) = p^2 - p$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q7
+\noindent
+\textbf{(7)}
+\begin{text}
+    We want to show that an integer $a$ only has a multiplicative inverse modulo $m$ iff $a$ and $m$ are relatively prime.\\
+    
+    \noindent
+    We can prove this relationship by proving separately from both sides. We can first show that if $a$ has a multiplicative inverse modulo $m$, then $a$ and $m$ must be relatively prime.\\
+    
+    \noindent
+    By assumption of the multiplicative inverse, we know that $ax + my = 1$ for some integers $x$ and $y$. We know there must exist an integer $d = gcd(a, m)$. So then by its definition we know $d |(ax + my)$, by extension this implies that $d|1$ must also hold. Since $d \in \mathbb{Z}$, then $d = 1$ must hold. Therefore $gcd(a, m) = 1$ as required.\\
+    
+    \noindent
+    Now we will show that the converse is true. We want to show that if $a$ and $m$ are relatively prime, then $a$ must have a multiplicative inverse modulo $m$.\\
+    
+    \noindent
+    Since $a$ and $m$ are relatively prime, we can use Euler's Theorem to state that $a^{\phi(m)} \equiv 1$ mod $m$. Therefore $a$ must have a multiplicative inverse modulo $m$, as we can let $a^{-1} = a^{\phi(m) - 1}$. If the multiplicative inverse has to be less than $m$ we had also proven in $3b$ that $a^{\phi(m) - 1}$ must have a congruent positive integer that is both less than and is relatively prime to $m$.\\
+    
+    \noindent
+    Therefore we have proven the relation as required.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q8
+\noindent
+\textbf{(8)}
+\begin{text}
+    We want to show that if $m$ and $n$ are relatively prime numbers and that if $a$ and $b$ are any integers, then there should be an $x$ such that $x \equiv a$ mod $m$ and $x \equiv b$ mod $n$.\\
+
+    \noindent
+    We know that since $m$ and $n$ are relatively prime such that $gcd(m, n) = 1$, that there must exist integers $p$ and $q$ such that $mp + nq = 1$, which we can use later. To find the criterion for the integer $x$ we can show that the existence of $x$ implies that:
+    \begin{align}
+        x \equiv a \text{ mod } m \Longrightarrow x - a = ms\tag{For some integer $s$} &\Longrightarrow x = ms + a\nonumber\\
+        &\Longrightarrow (ms + a) \equiv b \text{ mod } m\tag{Since $x \equiv b \text{ mod } m$}\nonumber\\
+        &\Longrightarrow (ms + a) - b = nt \tag{For some integer $t$ s.t. $x - b = nt$}\nonumber\\
+        &\Longrightarrow ms - nt = b - a\nonumber
+    \end{align}
+    We can use the above relation to help us find a possible $x$. Remember that $mp + nq = 1$, we can use this as a second equation to solve for $x$:
+    \begin{align}
+        mp + nq = 1 &\Longrightarrow mp - nq_o = 1\tag{Since $q \in \mathbb{Z}$, we can take $q_o = -q$}\nonumber\\
+        &\Longrightarrow m(p(b - a)) - n(q_o(b - a)) = (b - a)\nonumber\\
+        &\Longrightarrow s = p(b - a) \text{ and } t = q_o(b - a)\tag{Equivalence to the first equation}\nonumber\\
+        &\Longrightarrow (\frac{x - a}{m}) = p(b - a) \text{ and } (\frac{x - b}{n}) = q_o(b - a)\nonumber\\
+        &\Longrightarrow x = p(b - a)m + a \text{ and } x = q_o(b - a)n + b\tag{Solving implies $mp - nq_o = 1$}\nonumber
+    \end{align}
+    As solving implies the initial implication of the argument, we know that both assignments of $x$ are true such that we could let $x$ be either $p(b - a)m + a \text{ or } q_o(b - a)n + b$ and it would be the same solution. Therefore, we have shown that there is an $x$ that fulfills $x \equiv a$ mod $m$ and $x \equiv b$ mod $n$.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q9
+\noindent
+\textbf{(9)}
+\begin{text}
+    We want to show that for an integer $m$, if there is an integer $a$ such that $a^{m - 1} \equiv 1$ mod $m$ and $a^k \not\equiv 1$ mod $m$ for every natural number $k < m - 1$, then $m$ must be a prime.\\
+    
+    \noindent
+    We can show that $m$ is prime via contradiction. We assume that there is an integer $a$ such that $a^{m - 1} \equiv 1$ mod $m$ and $a^k \not\equiv 1$ mod $m$ for every natural number $k < m - 1$ and as a result $m$ is not prime.\\
+    
+    \noindent
+    We can try to imply a contradiction by showing that there is no $a \in \{1, 2, ... , m - 1\}$ that fulfills the initial assumptions. We split this into cases of each $a$'s greatest common divisors with $m$.\\
+    
+    \noindent
+    For the first case, we assume $gcd(a, m) \neq 1$, which means $a$ and $m$ are not relatively prime. Using question 7, we know that because $a$ and $m$ are not relatively prime, that $a$ has no multiplicative inverse modulo $m$, which implies $a \cdot a^{m - 2} = a^{m - 1} \not\equiv 1$ mod $m$, which is a contradiction. Therefore, $a$ cannot be any integer such that $gcd(a, m) \neq 1$.\\
+    
+    \noindent
+    We can contradict the remaining integers by assuming $gcd(a, m) = 1$. In this case, since $a$ and $m$ are relatively prime, we can immediately use Euler's Theorem to say that $a^{\phi(m)} \equiv 1$ mod $m$. Since $m$ is composite, we know that $\phi(m) < m - 1$, since $m$ must be divisible by more than just 1 and itself. Therefore this is a contradiction since $a^{\phi(m)} \equiv 1$ mod $m$ implies that there is a $k < m - 1$ such that $a^k \equiv 1$ mod $m$ which is a direct contradiction to one of the assumptions. Therefore $a$ cannot be any integer such that $gcd(a, m) = 1$.\\
+    
+    \noindent
+    As a result of each case's contradiction, we have shown that $m$ cannot be a composite integer, therefore proving that $m$ is prime.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+%BEGIN Q10
+\noindent
+\textbf{(10)}
+\begin{text}
+    We want to show that the product of two consecutive natural numbers is never a perfect square.\\
+    
+    \noindent
+    We assume that $n \in N$. We want to show that $(n)(n+1) = n^2 + n$ cannot be a perfect square. We know that for any perfect square $p$, $p = m^2$ for some natural $m$. By that definition, since by FTA $m = c_1 \cdot c_2 \cdot \cdot \cdot c_k$, this implies that $p = (c_1 \cdot c_1) \cdot (c_2 \cdot c_2) \cdot \cdot \cdot (c_k \cdot c_k)$ so that any perfect square can be described as a product of squared primes.\\
+    
+    \noindent
+    We go back to look at the product of consecutive natural numbers $n$ and $n + 1$, and by the Fundamental Theorem of Arithmetic we know we can describe each as a product of primes such that $n = a_1 \cdot a_2 \cdot \cdot \cdot a_{i}$ and $n + 1 = b_1 \cdot b_2 \cdot \cdot \cdot b_j$. However, since we know that $gcd(n, n + 1) = 1$, as $(n + 1) \equiv (n) \text{ mod } gcd(n,  n + 1) \Longrightarrow gcd(n, n + 1) = 1$, we know that there are no common primes that can be used to describe both $n$ and $n + 1$. Therefore the product $n(n+1)$ cannot be described as a product of squared primes and therefore is not a perfect square.
+    
+    \hfill $\blacksquare$
+\end{text}\\
+
+\end{document}
